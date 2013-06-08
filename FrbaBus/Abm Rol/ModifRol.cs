@@ -13,10 +13,13 @@ namespace FrbaBus.Abm_Rol
     public partial class ModifRol : Form
     {
         string nombreRol;
+        string nombreFunc;
 
         public ModifRol()
         {
             InitializeComponent();
+            comboBox2.Enabled = false;
+            comboBox3.Enabled = false;
             using (SqlConnection conexion = new SqlConnection("Server=localhost\\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;"))
             {
                 //cargar comboBox rol
@@ -47,10 +50,12 @@ namespace FrbaBus.Abm_Rol
 
         private void button5_Click(object sender, EventArgs e)
         {
+            comboBox2.Enabled = true;
+            comboBox3.Enabled = true;
             nombreRol = comboBox1.Text;
             using (SqlConnection conexion = new SqlConnection("Server=localhost\\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;"))
             {
-                //cargar comboBox funcionalidades que tiene el rol
+
                 try
                 {
                     conexion.Open();
@@ -63,13 +68,24 @@ namespace FrbaBus.Abm_Rol
 
                     SqlCommand funcRol = new SqlCommand("USE GD1C2013 SELECT Nombre_Funcionalidad FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol_Funcionalidad r JOIN LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad f on (r.Codigo_Funcionalidad = f.Codigo_Funcionalidad)WHERE r.Codigo_Rol=" + codigoRol, conexion);
 
-                    SqlDataAdapter adapter = new SqlDataAdapter(funcRol);
-                    DataTable tablaDeNombres = new DataTable();
+                    SqlDataAdapter adapter1 = new SqlDataAdapter(funcRol);
+                    DataTable tablaDeNombres1 = new DataTable();
 
-                    adapter.Fill(tablaDeNombres);
+                    adapter1.Fill(tablaDeNombres1);
 
-                    comboBox1.DisplayMember = "Nombre_Funcionalidad";
-                    comboBox1.DataSource = tablaDeNombres;
+                    comboBox2.DisplayMember = "Nombre_Funcionalidad";
+                    comboBox2.DataSource = tablaDeNombres1;
+
+
+                    SqlCommand funcs = new SqlCommand("USE GD1C2013 SELECT * FROM LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad", conexion);
+
+                    SqlDataAdapter adapter2 = new SqlDataAdapter(funcs);
+                    DataTable tablaDeNombres2 = new DataTable();
+
+                    adapter2.Fill(tablaDeNombres2);
+
+                    comboBox3.DisplayMember = "Nombre_Funcionalidad";
+                    comboBox3.DataSource = tablaDeNombres2;
 
                 }
                 catch (Exception ex)
@@ -89,16 +105,16 @@ namespace FrbaBus.Abm_Rol
             nombreRol = comboBox1.Text;
             string nuevoNombreRol = textBox1.Text;
             using (SqlConnection conexion = new SqlConnection("Server=localhost\\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;"))
-            {                
+            {
                 try
                 {
-                    
+
                     conexion.Open();
-                    SqlCommand modRol = new SqlCommand("USE GD1C2013 UPDATE LOS_VIAJEROS_DEL_ANONIMATO.Rol SET Nombre_Rol='" + nuevoNombreRol + "' where Nombre_Rol='" + nombreRol + "'",conexion);                   
+                    SqlCommand modRol = new SqlCommand("USE GD1C2013 UPDATE LOS_VIAJEROS_DEL_ANONIMATO.Rol SET Nombre_Rol='" + nuevoNombreRol + "' where Nombre_Rol='" + nombreRol + "'", conexion);
                     modRol.ExecuteNonQuery();
                     comboBox1.Text = nuevoNombreRol;
-                    new Dialogo("Nombre de " + nombreRol + " modificado \n 1 fila afectada", "Aceptar").ShowDialog();
-                                     
+                    new Dialogo("Rol " + nombreRol + " modificado a " + nuevoNombreRol + "\n 1 fila afectada", "Aceptar").ShowDialog();
+
                 }
                 catch (Exception ex)
                 {
@@ -107,5 +123,121 @@ namespace FrbaBus.Abm_Rol
                 }
             }
         }
-    }
+
+        //boton modificar nombre func
+        private void button2_Click(object sender, EventArgs e)
+        {
+            nombreFunc = comboBox2.Text;
+            string nuevoNombreFunc = textBox2.Text;
+            using (SqlConnection conexion = new SqlConnection("Server=localhost\\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;"))
+            {
+                try
+                {
+
+                    conexion.Open();
+                    SqlCommand modFunc = new SqlCommand("USE GD1C2013 UPDATE LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad SET Nombre_Funcionalidad='" + nuevoNombreFunc + "' where Nombre_Funcionalidad='" + nombreFunc + "'", conexion);
+                    modFunc.ExecuteNonQuery();
+                    comboBox1.Text = nuevoNombreFunc;
+                    new Dialogo("Funcionalidad " + nombreFunc + " modificada a " + nuevoNombreFunc + "\n 1 fila afectada", "Aceptar").ShowDialog();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex.Message);
+                    (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
+                }
+            }
+        }
+
+
+        //boton elimimar func
+        private void button3_Click(object sender, EventArgs e)
+        {
+            nombreRol = comboBox1.Text;
+            nombreFunc = comboBox2.Text;            
+
+            using (SqlConnection conexion = new SqlConnection("Server=localhost\\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;"))
+            {
+                try
+                {
+
+                    conexion.Open();
+
+                    SqlCommand codRol = new SqlCommand("USE GD1C2013 SELECT * FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Rol.Nombre_Rol = '" + nombreRol + "'", conexion);
+                    int codigoRol = (int)codRol.ExecuteScalar();
+
+                    SqlCommand codFunc = new SqlCommand("USE GD1C2013 SELECT * FROM LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad WHERE Nombre_Funcionalidad = '" + nombreFunc + "'", conexion);
+                    int codigoFunc = (int)codFunc.ExecuteScalar();
+
+                    SqlCommand delRolFunc = new SqlCommand("USE GD1C2013 DELETE FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol_Funcionalidad WHERE Codigo_Rol=" + codigoRol + "and Codigo_Funcionalidad=" + codigoFunc, conexion);
+                    delRolFunc.ExecuteNonQuery();
+
+                    comboBox2.Update();
+
+                    new Dialogo("La funcionalidad " +nombreFunc+ ", fue eliminada de " +nombreRol+ "\n 1 fila afectada", "Aceptar").ShowDialog();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex.Message);
+                    (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
+                }
+            }
+        }
+
+
+        //boton agregar func
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+            nombreRol = comboBox1.Text;
+            nombreFunc = comboBox3.Text;
+
+            using (SqlConnection conexion = new SqlConnection("Server=localhost\\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;"))
+            {
+                try
+                {
+                    conexion.Open();
+
+                    SqlCommand codRol = new SqlCommand("USE GD1C2013 SELECT * FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Rol.Nombre_Rol = '" + nombreRol + "'", conexion);
+                    int codigoRol = (int)codRol.ExecuteScalar();
+
+                    SqlCommand codFunc = new SqlCommand("USE GD1C2013 SELECT * FROM LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad WHERE Nombre_Funcionalidad = '" + nombreFunc + "'", conexion);
+                    int codigoFunc = (int)codFunc.ExecuteScalar();
+
+                    SqlCommand cmd = new SqlCommand("USE GD1C2013 SELECT COUNT(*) FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol_Funcionalidad WHERE Codigo_Rol =" + codigoRol + "and Codigo_Funcionalidad=" +codigoFunc, conexion);
+
+                    int cantidadDeFilas = (int)cmd.ExecuteScalar();
+
+                    if (cantidadDeFilas != 0)
+                    {
+                        (new Dialogo("El rol " +nombreRol+ " ya posee la funcionalidad " +nombreFunc, "Aceptar")).ShowDialog();                        
+                    }
+                    else
+                    {
+                        SqlCommand addRolFunc = new SqlCommand("USE GD1C2013 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Rol_Funcionalidad VALUES ("+codigoRol+","+codigoFunc+")", conexion);
+                        addRolFunc.ExecuteNonQuery();
+                        new Dialogo("La funcionalidad " +nombreFunc+ ", fue agregada a " +nombreRol+ "\n 1 fila afectada", "Aceptar").ShowDialog();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex.Message);
+                    (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
+                }
+
+                }
+            }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBox2.Text = "";
+            comboBox3.Text = "";
+            
+            comboBox2.Enabled = false;
+            comboBox3.Enabled = false;
+
+        }
+        }
 }
