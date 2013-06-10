@@ -110,3 +110,240 @@ values ('pablomarbian', 'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8d
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('Comprar pasaje');
 
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('Ver viajes disponibles');
+
+
+
+
+CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.MICRO
+(
+      Patente NVARCHAR(255) NOT NULL,
+  		NumeroDeMicro INT  IDENTITY (1,1)  NOT NULL,
+			Marca INT NOT NULL,
+			Modelo  NVARCHAR(255) NOT NULL,
+			FechaAlta  DATETIME  NOT NULL,
+			TipoServicio   NVARCHAR(255)  NOT NULL,
+			KG_Disponibles  NUMERIC(18, 0) NOT NULL,
+			Cantidad_Butacas INT NOT NULL,
+			BajaPorVidaUtil  BIT ,
+			BajaPorFueraDeServicio BIT ,
+			FechaPorFueraDeServicio DATETIME,
+			FechaReinicioServicio DATETIME ,
+			FechaBajaDefinitiva  DATETIME,
+			
+			
+PRIMARY KEY (Patente),
+
+FOREIGN KEY (Marca)  REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.MARCA(Id_Marca)
+);
+INSERT INTO
+              LOS_VIAJEROS_DEL_ANONIMATO.MICRO
+         (
+        Patente,Marca,Modelo,FechaAlta,
+		TipoServicio,KG_Disponibles,Cantidad_Butacas,BajaPorVidaUtil,
+		BajaPorFueraDeServicio
+		)
+
+
+SELECT 
+		M.Micro_Patente,
+		MC.Id_Marca,
+		M.Micro_Modelo,
+		GETDATE(),
+		M.Tipo_Servicio,
+		M.Micro_KG_Disponibles,
+		COUNT(DISTINCT (M.Butaca_Nro)) ,
+		0,
+		0
+         
+               
+  FROM gd_esquema.Maestra M JOIN LOS_VIAJEROS_DEL_ANONIMATO.MARCA MC
+  ON (M.Micro_Marca = MC.Marca)
+             
+               
+ GROUP BY 
+          M.Micro_Patente,
+          MC.Id_Marca,
+		      M.Micro_Modelo,
+		      M.Tipo_Servicio,
+		      M.Micro_KG_Disponibles 
+          
+          
+          
+          
+CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.MARCA
+(
+  Id_Marca INT  IDENTITY(1,1) UNIQUE,
+  Marca NVARCHAR(255) NOT NULL
+  
+  PRIMARY KEY (Id_Marca)
+
+)
+
+
+
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.MARCA(Marca)
+
+SELECT 
+    DISTINCT(gd_esquema.Maestra.Micro_Marca)
+  
+FROM gd_esquema.Maestra      
+
+
+
+
+
+CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.VIAJE
+     (
+  	  CodigoViaje INT IDENTITY(0,1),
+		  CodigoRecorrido NUMERIC(18,0),
+		  FechaSalida DATETIME,
+		  PatenteMicro  NVARCHAR(255),
+		  FechaLlegadaEstimada DATETIME,
+		  FechaLlegada DATETIME,
+      
+      
+      
+    PRIMARY KEY (FechaSalida,PatenteMicro,CodigoViaje),
+    FOREIGN KEY (PatenteMicro) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.MICRO (Patente),
+    FOREIGN KEY (CodigoRecorrido) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.RECORRIDO(CodigoRecorrido)
+
+
+);
+
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.VIAJE
+    (CodigoRecorrido,FechaSalida,PatenteMicro,FechaLlegadaEstimada,FechaLlegada)
+SELECT 
+      
+      gd_esquema.Maestra.Recorrido_Codigo,
+      gd_esquema.Maestra.FechaSalida,
+      gd_esquema.Maestra.Micro_Patente,
+      gd_esquema.Maestra.Fecha_LLegada_Estimada,
+      gd_esquema.Maestra.FechaLLegada
+     
+
+FROM gd_esquema.Maestra
+
+
+GROUP BY
+ 
+      gd_esquema.Maestra.Recorrido_Codigo,
+      gd_esquema.Maestra.FechaSalida,
+      gd_esquema.Maestra.Micro_Patente,
+      gd_esquema.Maestra.Fecha_LLegada_Estimada,
+      gd_esquema.Maestra.FechaLLegada
+      
+      
+      
+CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.BUTACA_MICRO
+          (
+            Patente  NVARCHAR(255) NOT NULL,
+            NumeroButaca NUMERIC(18, 0) NOT NULL,
+            CodigoButaca INT IDENTITY(1,1) NOT NULL,
+            Ubicacion NVARCHAR(255) NOL NULL,
+            Piso NUMERIC(18, 0) NOT NULL
+            
+            
+        PRIMARY KEY (CodigoButaca),
+        FOREIGN KEY (Patente) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.MICRO (Patente)
+);
+
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.BUTACA_MICRO(Patente,NumeroButaca,Ubicacion,Piso)
+
+SELECT 
+       DISTINCT (gd_esquema.Maestra.Micro_Patente),
+       gd_esquema.Maestra.Butaca_Nro,
+       gd_esquema.Maestra.Butaca_Tipo,
+       gd_esquema.Maestra.Butaca_Piso
+
+FROM gd_esquema.Maestra
+
+
+
+
+
+CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.PREMIO(
+CodigoProducto INT NOT NULL,
+DetalleProducto NVARCHAR(255),
+CantidadDisponible INT NOT NULL,
+PuntosNecesarios INT  NOT NULL,
+PRIMARY KEY (CodigoProducto))
+
+
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES (0023,'Televisor Full HD - SAMSUNG',555,6344);
+
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES (0052,'Consola Play Station 3',822,4112);
+
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES (0123,'Mesa Cosina-Roble',1000,4611);
+
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES (0166,'Microondas Koinor',823,2923);
+
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES (0274,'Pelota Mundial',2000,1000);
+
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES (0364,'Tablero de Ajedres',334,1156);
+
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES (0444,'Juego PC - Ultimate Soccer',495,944);
+
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES (0627,'Reloj De Hogar',1843,772);
+
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES (0699,'Sillas para jardin (X4)-Plastico',566,792);
+
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES (0733,'Tazas de Pokemon(X2)',736,645);
+
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES (0813,'Mazo de Cartas(POKER)',993,371);
+
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES (0479,'Cartuchera-Infantil',2166,267);
+          
+
+
+
+CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.CANJE(
+CodigoCanje INT IDENTITY (1,1) NOT NULL,
+DNI_Usuario  NUMERIC(18, 0) NOT NULL,
+CantidadElegida   INT  NOT NULL,
+Fecha  DATETIME NOT NULL,
+CodigoProducto  INT NOT NULL,
+PRIMARY KEY (CodigoCanje),
+FOREIGN KEY (CodigoProducto) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.PREMIO (CodigoProducto)
+);
+
+
+
+CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF(
+CodigoPuntuacion INT NOT NULL,
+DNI_Usuario NUMERIC(18, 0)NOT NULL ,
+Puntos  NUMERIC(18, 0) NOT NULL,
+Fecha  DATETIME ,
+CodigoPasaje NUMERIC(18, 0)NOT NULL ,
+CodigoCanje INT NOT NULL,
+
+PRIMARY KEY (CodigoPuntuacion),
+FOREIGN KEY (DNI_Usuario) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.USUARIO(DNI),
+FOREIGN KEY (CodigoPasaje) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.COMPRA_CLIENTE(CodigoPasaje),
+FOREIGN KEY (CodigoCanje)  REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.CANJE(CodigoCanje)
+
+);
+
+
+
+
+
+CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.Devolucion(
+CodigoDevolucion  INT IDENTITY (1,1),
+CodigoPasaje   INT,
+NumeroVoucher   INT,
+Motivo nvarchar(255) ,
+PRIMARY KEY (CodigoDevolucion),
+FOREIGN KEY (CodigoPasaje) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.COMPRA_CLIENTE
+);
