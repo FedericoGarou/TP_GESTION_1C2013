@@ -1,3 +1,20 @@
+CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.TIPOSERVICIO (
+NombreServicio	nvarchar(255) PRIMARY KEY, 
+PorcentajeAgregado	numeric(18,2) NOT NULL );
+
+CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.CIUDAD ( 
+NombreCiudad nvarchar(255) PRIMARY KEY );
+
+CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.RECORRIDO (	
+CodigoRecorrido numeric(18,0) IDENTITY ( 77774461 , 1 )PRIMARY KEY, 
+--Cambiar esto harcodeado por el resultado de un subselect
+CiudadOrigen nvarchar(255) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.CIUDAD(NombreCiudad),
+CiudadDestino nvarchar(255) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.CIUDAD(NombreCiudad),
+TipoServicio nvarchar(255) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.TIPOSERVICIO(NombreServicio),
+PrecioBase numeric(18,2) NOT NULL,
+PrecioBase_KG numeric(18,2) NOT NULL,
+Habilitado bit NOT NULL );
+
 CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.Usuario (
 DNI numeric(18,0), 
 Nombre nvarchar(255), 
@@ -9,7 +26,6 @@ Fecha_Nac datetime,
 Sexo varchar(9), 
 Discapacidad bit, 
 PRIMARY KEY(DNI) );
-
 
 CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.Rol (
 Codigo_Rol int IDENTITY(1,1),
@@ -42,6 +58,30 @@ DNI_Usuario numeric(18,0) FOREIGN KEY REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.Usua
 Intentos_Fallidos char(1), 
 PRIMARY KEY (Username) );
 
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.TIPOSERVICIO
+SELECT DISTINCT 
+M.Tipo_Servicio,
+( ( AVG(M.Pasaje_Precio) / AVG(M.Recorrido_Precio_BasePasaje) ) - 1 ) 
+-- PORCENTAJE AGREGADO POR TIPO DE SERVICIO
+FROM gd_esquema.Maestra M
+GROUP BY M.Tipo_Servicio;
+
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.CIUDAD
+SELECT DISTINCT gd_esquema.Maestra.Recorrido_Ciudad_Destino FROM gd_esquema.Maestra
+UNION
+SELECT DISTINCT gd_esquema.Maestra.Recorrido_Ciudad_Origen FROM gd_esquema.Maestra;
+
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.RECORRIDO
+SELECT
+		M.Recorrido_Ciudad_Origen, 
+		M.Recorrido_Ciudad_Destino, 
+		M.Tipo_Servicio,
+		MAX(M.Recorrido_Precio_BasePasaje) as precio_base,
+		MAX(M.Recorrido_Precio_BaseKG) as precio_base_kg,
+		1 as habilitacion		
+FROM gd_esquema.Maestra M
+GROUP BY M.Recorrido_Codigo,M.Recorrido_Ciudad_Origen,M.Recorrido_Ciudad_Destino,M.Tipo_Servicio
+ORDER BY M.Recorrido_Codigo;
 
 INSERT into LOS_VIAJEROS_DEL_ANONIMATO.Usuario (DNI, Nombre, Apellido, Direccion, Telefono, Mail, Fecha_Nac )
 SELECT distinct Cli_Dni, Cli_Nombre, Cli_Apellido, Cli_Dir, Cli_Telefono, Cli_Mail, Cli_Fecha_Nac
