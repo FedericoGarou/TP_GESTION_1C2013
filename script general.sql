@@ -116,9 +116,9 @@ INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('Ver viajes disponi
 
 CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.MICRO
 (
-      Patente NVARCHAR(255) NOT NULL,
-  		NumeroDeMicro INT  IDENTITY (1,1)  NOT NULL,
-			Marca INT NOT NULL,
+                        Patente NVARCHAR(255) NOT NULL,
+                        NumeroDeMicro INT  IDENTITY (1,1)  NOT NULL,
+                        Marca INT NOT NULL,
 			Modelo  NVARCHAR(255) NOT NULL,
 			FechaAlta  DATETIME  NOT NULL,
 			TipoServicio   NVARCHAR(255)  NOT NULL,
@@ -132,9 +132,10 @@ CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.MICRO
 			
 			
 PRIMARY KEY (Patente),
-
 FOREIGN KEY (Marca)  REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.MARCA(Id_Marca)
 );
+
+
 INSERT INTO
               LOS_VIAJEROS_DEL_ANONIMATO.MICRO
          (
@@ -156,11 +157,11 @@ SELECT
 		0
          
                
-  FROM gd_esquema.Maestra M JOIN LOS_VIAJEROS_DEL_ANONIMATO.MARCA MC
-  ON (M.Micro_Marca = MC.Marca)
+FROM gd_esquema.Maestra M JOIN LOS_VIAJEROS_DEL_ANONIMATO.MARCA MC
+    ON (M.Micro_Marca = MC.Marca)
              
                
- GROUP BY 
+GROUP BY 
           M.Micro_Patente,
           MC.Id_Marca,
 		      M.Micro_Modelo,
@@ -173,7 +174,7 @@ SELECT
 CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.MARCA
 (
   Id_Marca INT  IDENTITY(1,1) UNIQUE,
-  Marca NVARCHAR(255) NOT NULL
+  Marca NVARCHAR(255) NOT NULL,
   
   PRIMARY KEY (Id_Marca)
 
@@ -240,7 +241,7 @@ CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.BUTACA_MICRO
             NumeroButaca NUMERIC(18, 0) NOT NULL,
             CodigoButaca INT IDENTITY(1,1) NOT NULL,
             Ubicacion NVARCHAR(255) NOL NULL,
-            Piso NUMERIC(18, 0) NOT NULL
+            Piso NUMERIC(18, 0) NOT NULL,
             
             
         PRIMARY KEY (CodigoButaca),
@@ -266,7 +267,7 @@ CodigoProducto INT NOT NULL,
 DetalleProducto NVARCHAR(255),
 CantidadDisponible INT NOT NULL,
 PuntosNecesarios INT  NOT NULL,
-PRIMARY KEY (CodigoProducto))
+PRIMARY KEY (CodigoProducto)
 
 
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
@@ -314,6 +315,8 @@ DNI_Usuario  NUMERIC(18, 0) NOT NULL,
 CantidadElegida   INT  NOT NULL,
 Fecha  DATETIME NOT NULL,
 CodigoProducto  INT NOT NULL,
+
+
 PRIMARY KEY (CodigoCanje),
 FOREIGN KEY (CodigoProducto) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.PREMIO (CodigoProducto)
 );
@@ -344,6 +347,7 @@ CodigoDevolucion  INT IDENTITY (1,1),
 CodigoPasaje   INT,
 NumeroVoucher   INT,
 Motivo nvarchar(255) ,
+
 PRIMARY KEY (CodigoDevolucion),
 FOREIGN KEY (CodigoPasaje) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.COMPRA_CLIENTE
 );
