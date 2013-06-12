@@ -364,41 +364,41 @@ GROUP BY
       
       
       
-INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
-VALUES (0023,'Televisor Full HD - SAMSUNG',555,6344);
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES ('Televisor Full HD - SAMSUNG',555,6344);
 
-INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
-VALUES (0052,'Consola Play Station 3',822,4112);
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES ('Consola Play Station 3',822,4112);
 
-INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
-VALUES (0123,'Mesa Cosina-Roble',1000,4611);
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES ('Mesa Cosina-Roble',1000,4611);
 
-INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
-VALUES (0166,'Microondas Koinor',823,2923);
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES ('Microondas Koinor',823,2923);
 
-INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
-VALUES (0274,'Pelota Mundial',2000,1000);
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES ('Pelota Mundial',2000,1000);
 
-INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
-VALUES (0364,'Tablero de Ajedres',334,1156);
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES ('Tablero de Ajedres',334,1156);
 
-INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
-VALUES (0444,'Juego PC - Ultimate Soccer',495,944);
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES ('Juego PC - Ultimate Soccer',495,944);
 
-INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
-VALUES (0627,'Reloj De Hogar',1843,772);
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES ('Reloj De Hogar',1843,772);
 
-INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
-VALUES (0699,'Sillas para jardin (X4)-Plastico',566,792);
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES ('Sillas para jardin (X4)-Plastico',566,792);
 
-INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
-VALUES (0733,'Tazas de Pokemon(X2)',736,645);
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES ('Tazas de Pokemon(X2)',736,645);
 
-INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
-VALUES (0813,'Mazo de Cartas(POKER)',993,371);
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES ('Mazo de Cartas(POKER)',993,371);
 
-INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(CodigoProducto,DetalleProducto,CantidadDisponible,PuntosNecesarios)
-VALUES (0479,'Cartuchera-Infantil',2166,267);
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(DetalleProducto,CantidadDisponible,PuntosNecesarios)
+VALUES ('Cartuchera-Infantil',2166,267);
      
       
 
