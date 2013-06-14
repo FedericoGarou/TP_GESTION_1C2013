@@ -148,7 +148,32 @@ PRIMARY KEY (CodigoCanje),
 FOREIGN KEY (CodigoProducto) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.PREMIO (CodigoProducto)
 );
 
+CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.COMPRA
+(
+	NumeroVoucher int IDENTITY ( 1 , 1 ),
+	PasajesComprados int,
+	KG_por_encomienda numeric(18, 0),
+	DNI_Pago numeric(18, 0),
+	NumeroTarjetaPago int,
+	CodigoViaje INT NOT NULL,
+	CodigoPasaje numeric(18,0),-- Campo auxiliar despues será borrado
+							
+	PRIMARY KEY (NumeroVoucher),
+    FOREIGN KEY (DNI_Pago) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.Usuario (DNI),
+);
 
+CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE
+						(
+						CodigoPasaje numeric(18,0),
+						TipoCompra nvarchar(250),
+						DNI_Cliente numeric(18, 0),
+						Numero_Voucher int,
+						Butaca int,	
+	PRIMARY KEY (CodigoPasaje),
+	FOREIGN KEY (DNI_Cliente) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.Usuario (DNI),
+    FOREIGN KEY (Numero_Voucher) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.Compra (NumeroVoucher),
+    FOREIGN KEY (Butaca) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.BUTACA_MICRO (CodigoButaca), 
+);
 
 CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF
 (
@@ -161,21 +186,18 @@ CodigoCanje INT ,
 
 PRIMARY KEY (CodigoPuntuacion),
 FOREIGN KEY (DNI_Usuario) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.USUARIO(DNI),
-FOREIGN KEY (CodigoPasaje) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.COMPRA_CLIENTE(CodigoPasaje),
+FOREIGN KEY (CodigoPasaje) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE(CodigoPasaje),
 FOREIGN KEY (CodigoCanje)  REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.CANJE(CodigoCanje)
 );
 
-
-
-
 CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.Devolucion(
 CodigoDevolucion  INT IDENTITY (1,1),
-CodigoPasaje   INT,
+CodigoPasaje   Numeric(18,0),
 NumeroVoucher   INT,
 Motivo nvarchar(255) ,
 PRIMARY KEY (CodigoDevolucion),
-FOREIGN KEY (CodigoPasaje) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.COMPRA_CLIENTE(CodigoPasaje),
-FOREIGN KEY (NumeroVoucer) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.COMPRA
+FOREIGN KEY (CodigoPasaje) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE(CodigoPasaje),
+FOREIGN KEY (NumeroVoucher) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.COMPRA(NumeroVoucher)
 );
 
 
@@ -400,15 +422,81 @@ VALUES ('Mazo de Cartas(POKER)',993,371);
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(DetalleProducto,CantidadDisponible,PuntosNecesarios)
 VALUES ('Cartuchera-Infantil',2166,267);
      
-      
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.COMPRA 
+    (PasajesComprados, DNI_Pago, KG_por_encomienda,CodigoViaje, NumeroTarjetaPago, CodigoPasaje)
+SELECT  
+	  (	SELECT CASE M.Paquete_KG
+		WHEN 0 THEN 1 --Si no tiene paquete entonces es un pasaje
+		ELSE 0 -- Si tiene paquete entonces es una encomienda y el numero de pasajes es cero.
+		END ), -- Esto devuelve bien el valor de numeros de pasajes
+	  M.Cli_Dni,
+      M.Paquete_KG,
+      V.CodigoViaje,
+      NULL as NumeroTarjeta,
+      (SELECT CASE M.Paquete_KG
+	  WHEN 0 THEN M.Pasaje_Codigo
+	  ELSE M.Paquete_Codigo
+	  END) -- Codigo Pasaje
+FROM gd_esquema.Maestra M, LOS_VIAJEROS_DEL_ANONIMATO.VIAJE V
+where M.Recorrido_Codigo = V.CodigoRecorrido AND 
+	  M.Micro_Patente = V.PatenteMicro AND
+	  M.FechaSalida = V.FechaSalida;
+	  
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE
+    (CodigoPasaje, TipoCompra, DNI_Cliente,Numero_Voucher,Butaca) -- Cambio el nombre del atributo NombreButaca a Butaca
+SELECT  
+	 (SELECT CASE M.Paquete_KG
+	 WHEN 0 THEN M.Pasaje_Codigo
+	 ELSE M.Paquete_Codigo
+	 END),
+	 
+	 (SELECT CASE M.Paquete_KG
+	 WHEN 0 THEN 'P'
+	 ELSE 'E'
+	 END),
+	 -- Si vamos a representar encomienda como E y pasaje como P puede alcanzar que sea un tipo CHAR
+	 -- Cambie la forma de asignar para que distinga pasajes de encomiendas.
+	 
+	 M.Cli_Dni,
+	 
+	 (SELECT CASE M.Paquete_KG
+	 WHEN 0 THEN (	SELECT C.NumeroVoucher
+					FROM LOS_VIAJEROS_DEL_ANONIMATO.COMPRA C
+					WHERE C.CodigoPasaje = M.Pasaje_Codigo)
+	 ELSE (	SELECT C.NumeroVoucher
+			FROM LOS_VIAJEROS_DEL_ANONIMATO.COMPRA C
+			WHERE C.CodigoPasaje = M.Paquete_Codigo)
+	 END),
+	 
+	(SELECT B2.CodigoButaca
+	 FROM LOS_VIAJEROS_DEL_ANONIMATO.BUTACA_MICRO B2
+	 WHERE 
+		B2.NumeroButaca = M.Butaca_Nro AND 
+		B2.Patente = M.Micro_Patente AND
+		B2.Piso = M.Butaca_Piso AND
+		B2.Ubicacion = M.Butaca_Tipo
+	)
+	 
+	 
+FROM gd_esquema.Maestra M;
 
+ALTER TABLE LOS_VIAJEROS_DEL_ANONIMATO.COMPRA DROP COLUMN CodigoPasaje;
 
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF
+	(DNI_Usuario,Puntos,Fecha,CodigoPasaje)
+SELECT 
+	M.Cli_Dni,
 
+	(CASE M.Paquete_KG
+	WHEN 0 THEN CAST(M.Pasaje_Precio / 5 AS INTEGER)
+	ELSE CAST(M.Paquete_Precio / 5 AS INTEGER)
+	END),
+	
+	M.FechaLLegada,
 
+	(CASE M.Paquete_KG
+	WHEN 0 THEN M.Pasaje_Codigo
+	ELSE M.Paquete_Codigo 
+	END) as CodigoPasaje
 
-
-
-
-
-
-
+FROM gd_esquema.Maestra M;
