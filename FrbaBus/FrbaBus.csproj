@@ -130,6 +130,36 @@
     <Compile Include="Abm Recorrido\AltaRecorrido.Designer.cs">
       <DependentUpon>AltaRecorrido.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Rol\ABM_Rol_Pantalla_Inicial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\ABM_Rol_Pantalla_Inicial.designer.cs">
+      <DependentUpon>ABM_Rol_Pantalla_Inicial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Rol\AltaRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\AltaRol.designer.cs">
+      <DependentUpon>AltaRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Rol\BajaRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\BajaRol.designer.cs">
+      <DependentUpon>BajaRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Rol\Dialogo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\Dialogo.designer.cs">
+      <DependentUpon>Dialogo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Rol\ModifRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\ModifRol.designer.cs">
+      <DependentUpon>ModifRol.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -218,6 +248,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Recorrido\AltaRecorrido.resx">
       <DependentUpon>AltaRecorrido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\ABM_Rol_Pantalla_Inicial.resx">
+      <DependentUpon>ABM_Rol_Pantalla_Inicial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\AltaRol.resx">
+      <DependentUpon>AltaRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\BajaRol.resx">
+      <DependentUpon>BajaRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\Dialogo.resx">
+      <DependentUpon>Dialogo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\ModifRol.resx">
+      <DependentUpon>ModifRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogo.resx">
       <DependentUpon>Dialogo.cs</DependentUpon>

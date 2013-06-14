@@ -60,3 +60,5 @@ C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\T
 C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\Trabajos Prácticos\Aplicacion Desktop\trunk\FrbaBus\obj\Debug\FrbaBus.PruebaSQL.resources
 C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\Trabajos Prácticos\Aplicacion Desktop\trunk\FrbaBus\obj\Debug\FrbaBus.csproj.GenerateResource.Cache
 C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\Trabajos Prácticos\Aplicacion Desktop\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Recorrido.BajaRecorrido.resources
+C:\Users\pablo\Desktop\TP Gestion\trunk\FrbaBus\obj\Debug\FrbaBus.exe
+C:\Users\pablo\Desktop\TP Gestion\trunk\FrbaBus\obj\Debug\FrbaBus.pdb
