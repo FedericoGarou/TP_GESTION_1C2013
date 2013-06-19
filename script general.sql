@@ -118,7 +118,7 @@ FechaLlegada DATETIME,
       
       
       
-PRIMARY KEY (FechaSalida,PatenteMicro,CodigoViaje),
+PRIMARY KEY (FechaSalida,PatenteMicro,CodigoRecorrido),
 FOREIGN KEY (PatenteMicro) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.MICRO (Patente),
 FOREIGN KEY (CodigoRecorrido) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.RECORRIDO(CodigoRecorrido)
 );
@@ -208,20 +208,27 @@ FOREIGN KEY (NumeroVoucher) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.COMPRA(NumeroV
 
 
 
-
+/*
+*	Rellenar la tabla TIPOSERVICIO. 
+*/
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.TIPOSERVICIO
 SELECT DISTINCT 
 M.Tipo_Servicio,
-( ( AVG(M.Pasaje_Precio) / AVG(M.Recorrido_Precio_BasePasaje) ) - 1 ) 
--- PORCENTAJE AGREGADO POR TIPO DE SERVICIO
+( ( AVG(M.Pasaje_Precio) / AVG(M.Recorrido_Precio_BasePasaje) ) - 1 ) -- PORCENTAJE AGREGADO POR TIPO DE SERVICIO
 FROM gd_esquema.Maestra M
 GROUP BY M.Tipo_Servicio;
 
+/*
+*	Llenar la tabla CIUDAD 
+*/
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.CIUDAD
 SELECT DISTINCT gd_esquema.Maestra.Recorrido_Ciudad_Destino FROM gd_esquema.Maestra
 UNION
 SELECT DISTINCT gd_esquema.Maestra.Recorrido_Ciudad_Origen FROM gd_esquema.Maestra;
 
+/*
+*	Llenar la tabla RECORRIDO
+*/
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.RECORRIDO
 SELECT
 		M.Recorrido_Ciudad_Origen, 
@@ -229,6 +236,10 @@ SELECT
 		M.Tipo_Servicio,
 		MAX(M.Recorrido_Precio_BasePasaje) as precio_base,
 		MAX(M.Recorrido_Precio_BaseKG) as precio_base_kg,
+		/*	Se usa max porque cada código de recorrido puede tener encomiendas
+		*	y pasajes y para las encomiendas el precio_baseKG es 0 y lo mismo
+		*	en Precio_BasePasaje para encomiendas
+		*/
 		1 as habilitacion		
 FROM gd_esquema.Maestra M
 GROUP BY M.Recorrido_Codigo,M.Recorrido_Ciudad_Origen,M.Recorrido_Ciudad_Destino,M.Tipo_Servicio
@@ -422,6 +433,9 @@ VALUES ('Mazo de Cartas(POKER)',993,371);
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Premio(DetalleProducto,CantidadDisponible,PuntosNecesarios)
 VALUES ('Cartuchera-Infantil',2166,267);
      
+/*
+*	Insertar valores en la tabla COMPRA
+*/
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.COMPRA 
     (PasajesComprados, DNI_Pago, KG_por_encomienda,CodigoViaje, NumeroTarjetaPago, CodigoPasaje)
 SELECT  
@@ -442,20 +456,21 @@ where M.Recorrido_Codigo = V.CodigoRecorrido AND
 	  M.Micro_Patente = V.PatenteMicro AND
 	  M.FechaSalida = V.FechaSalida;
 	  
+/*
+*	Insertar valores en la tabla COMPRACLIENTE
+*/	  
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE
     (CodigoPasaje, TipoCompra, DNI_Cliente,Numero_Voucher,Butaca) -- Cambio el nombre del atributo NombreButaca a Butaca
 SELECT  
 	 (SELECT CASE M.Paquete_KG
 	 WHEN 0 THEN M.Pasaje_Codigo
 	 ELSE M.Paquete_Codigo
-	 END),
+	 END),--Codigo de pasaje
 	 
 	 (SELECT CASE M.Paquete_KG
 	 WHEN 0 THEN 'P'
 	 ELSE 'E'
-	 END),
-	 -- Si vamos a representar encomienda como E y pasaje como P puede alcanzar que sea un tipo CHAR
-	 -- Cambie la forma de asignar para que distinga pasajes de encomiendas.
+	 END),--Tipo de compra
 	 
 	 M.Cli_Dni,
 	 
@@ -466,7 +481,7 @@ SELECT
 	 ELSE (	SELECT C.NumeroVoucher
 			FROM LOS_VIAJEROS_DEL_ANONIMATO.COMPRA C
 			WHERE C.CodigoPasaje = M.Paquete_Codigo)
-	 END),
+	 END),--Numero de Voucher
 	 
 	(SELECT B2.CodigoButaca
 	 FROM LOS_VIAJEROS_DEL_ANONIMATO.BUTACA_MICRO B2
@@ -475,11 +490,13 @@ SELECT
 		B2.Patente = M.Micro_Patente AND
 		B2.Piso = M.Butaca_Piso AND
 		B2.Ubicacion = M.Butaca_Tipo
-	)
+	)--Butaca
 	 
 	 
 FROM gd_esquema.Maestra M;
 
+-- Se borra la columna CodigoPasaje de la tabla COMPRA ya que solo se usaba
+-- de forma auxiliar
 ALTER TABLE LOS_VIAJEROS_DEL_ANONIMATO.COMPRA DROP COLUMN CodigoPasaje;
 
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF
@@ -490,13 +507,13 @@ SELECT
 	(CASE M.Paquete_KG
 	WHEN 0 THEN CAST(M.Pasaje_Precio / 5 AS INTEGER)
 	ELSE CAST(M.Paquete_Precio / 5 AS INTEGER)
-	END),
+	END),--Puntos ganados por el pasaje/encomienda
 	
 	M.FechaLLegada,
 
 	(CASE M.Paquete_KG
 	WHEN 0 THEN M.Pasaje_Codigo
 	ELSE M.Paquete_Codigo 
-	END) as CodigoPasaje
+	END) --Codigo pasaje
 
 FROM gd_esquema.Maestra M;
