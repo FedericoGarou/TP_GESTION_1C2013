@@ -245,74 +245,110 @@ FROM gd_esquema.Maestra M
 GROUP BY M.Recorrido_Codigo,M.Recorrido_Ciudad_Origen,M.Recorrido_Ciudad_Destino,M.Tipo_Servicio
 ORDER BY M.Recorrido_Codigo;
 
+
+-- Llenar tabla Usuario
 INSERT into LOS_VIAJEROS_DEL_ANONIMATO.Usuario (DNI, Nombre, Apellido, Direccion, Telefono, Mail, Fecha_Nac )
-SELECT distinct Cli_Dni, Cli_Nombre, Cli_Apellido, Cli_Dir, Cli_Telefono, Cli_Mail, Cli_Fecha_Nac
+SELECT DISTINCT Cli_Dni, Cli_Nombre, Cli_Apellido, Cli_Dir, Cli_Telefono, Cli_Mail, Cli_Fecha_Nac
 FROM gd_esquema.Maestra
 ;
 
+--Crear los roles que se pide por enunciado
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Rol values('Administrador', 1)
 ;
-
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Rol values('Cliente', 1)
 ;
 
+--Creamos las variables con los codigos de cliente y admin, que luego seran utilizadas
+declare @cod_cliente int
+set @cod_cliente=(SELECT codigo_rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE nombre_rol='Cliente')
+
+declare @cod_admin int
+set @cod_admin=(SELECT codigo_rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE nombre_rol='Administrador')
+
+--Asignamos a todos los clientes, el rol Cliente
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Usuario_Rol
-SELECT DISTINCT Cli_DNI, 2
+SELECT DISTINCT Cli_DNI, @cod_cliente
 FROM gd_esquema.Maestra
 ;
 
+/*
+Se crea el set de usuarios pedido por enunciado, 
+decidimos que sean los nombres de los integrantes del grupo y el usuario admin 
+*/
 insert into LOS_VIAJEROS_DEL_ANONIMATO.Usuario
 values (35990001, 'ELOY', 'Kramar', 'CalleFalsa123', 47094444, 'elokramar@hotmail.com', '09-07-91', 'Masculino', 0)
 ;
-
 insert into LOS_VIAJEROS_DEL_ANONIMATO.Usuario
 values (30991234, 'LUCAS', 'Costas', 'Avenida Mitre1234', 48345469, 'lucascostasutn@gmail.com', '15-04-90', 'Masculino', 0)
 ;
-
 insert into LOS_VIAJEROS_DEL_ANONIMATO.Usuario
 values (31205999, 'MATIAS', 'Lorenzo', 'Roca4444', 47614860, 'mlorenzo@gmail.com', '30-10-90', 'Masculino', 0)
 ;
-
 insert into LOS_VIAJEROS_DEL_ANONIMATO.Usuario
 values (34604812, 'PABLO', 'Marbian', 'Avenida San Marin648', 47195488, 'pablo.marbian@hotmail.com', '24-01-89', 'Masculino', 0)
 ;
-
-INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Usuario_Rol 
-values (35990001, 1)
+insert into LOS_VIAJEROS_DEL_ANONIMATO.Usuario
+values (0, 'ADMIN', 'FRBABUS', 'Mozart2300', 0, 'admin@frbabus.com', '01-01-01', 'Masculino', 0)
 ;
 
+--Se les asigna al set de usuarios creados el rol Administrador
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Usuario_Rol 
-values (30991234, 1)
+values (35990001, @cod_admin)
+;
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Usuario_Rol 
+values (30991234, @cod_admin)
+;
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Usuario_Rol 
+values (31205999, @cod_admin)
+;
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Usuario_Rol 
+values (34604812, @cod_admin)
+;
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Usuario_Rol 
+values (0, @cod_admin)
 ;
 
-INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Usuario_Rol 
-values (31205999, 1)
-;
-
-INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Usuario_Rol 
-values (34604812, 1)
-;
-
+--Se crean los usuarios en el sistema
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Login_Usuario 
 values ('eloykramar', 'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7', 35990001, 0)
 ;
-
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Login_Usuario 
 values ('lucascostas', 'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7', 30991234, 0)
 ;
-
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Login_Usuario 
 values ('matiaslorenzo', 'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7', 31205999, 0)
 ;
-
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Login_Usuario 
 values ('pablomarbian', 'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7', 34604812, 0)
 ;
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Login_Usuario 
+values ('admin', 'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7', 0, 0)
+;
 
-INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('Comprar pasaje');
+--LLenar tabla de funcionalidades
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('ABM Rol');
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('Login y seguridad');
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('ABM Recorrido');
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('ABM Micro');
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('Generacion de viaje');
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('Registro de llegada a destino');
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('Compra de pasaje/encomienda');
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('Devolucion/cancelacion de pasaje y/o encomienda');
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('Consulta de puntos de pasajero frecuente');
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('Canje de puntos de pasajero frecuente');
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('Listado estadistico');
 
-INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('Ver viajes disponibles');
+--Asignar funcionalidades a Cliente
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Rol_Funcionalidad
+SELECT @cod_cliente, codigo_funcionalidad FROM LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad WHERE
+Nombre_Funcionalidad='Compra de pasaje/encomienda' or
+Nombre_Funcionalidad='Consulta de puntos de pasajero frecuente' or
+Nombre_Funcionalidad='Canje de puntos de pasajero frecuente'
 
+--Asignar funcionalidades a Administrador
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Rol_Funcionalidad
+SELECT @cod_admin, codigo_funcionalidad FROM LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad
+;
 
 
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.MARCA(Marca)
