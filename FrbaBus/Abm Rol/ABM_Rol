@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace FrbaBus.Abm_Rol
 {
-    public partial class ABM_Rol_Pantalla_Inicial : Form
+    public partial class ABM_Rol : Form1
     {
         public ABM_Rol_Pantalla_Inicial()
         {
