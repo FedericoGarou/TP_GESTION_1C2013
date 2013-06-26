@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 
 namespace FrbaBus.Abm_Rol
 {
-    public partial class AltaRol : Form
+    public partial class AltaRol : Form1
     {
         string nombreRol;
         string funcionalidad;
@@ -19,7 +19,7 @@ namespace FrbaBus.Abm_Rol
         {
             
                 InitializeComponent();
-                using (SqlConnection conexion = new SqlConnection("Server=localhost\\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;"))
+                using (SqlConnection conexion = this.obtenerConexion())
                 {
                     try
                     {
@@ -50,7 +50,7 @@ namespace FrbaBus.Abm_Rol
         //agregar rol
         protected virtual void button1_Click(object sender, EventArgs e)
         {
-            using (SqlConnection conexion = new SqlConnection("Server=localhost\\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;"))
+            using (SqlConnection conexion = this.obtenerConexion())
             {
                 try
                 {
@@ -134,6 +134,13 @@ namespace FrbaBus.Abm_Rol
             {
                 (new Dialogo("No existe la funcionalidad", "Aceptar")).ShowDialog();
             }     
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = "";
+            comboBox1.Text = "";
+            listBox1.Items.Clear();
         }
     
     

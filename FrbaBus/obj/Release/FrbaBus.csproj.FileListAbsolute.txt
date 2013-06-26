@@ -18,3 +18,24 @@ C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\T
 C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\Trabajos Prácticos\Aplicacion Desktop\FrbaBus\obj\Release\FrbaBus.Abm_Ciudades.VisualizarRecorrido.resources
 C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\Trabajos Prácticos\Aplicacion Desktop\FrbaBus\obj\Release\FrbaBus.Abm_Recorrido.ABM_Recorrido.resources
 C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\Trabajos Prácticos\Aplicacion Desktop\FrbaBus\obj\Release\FrbaBus.Abm_Recorrido.AltaRecorrido.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\ResolveAssemblyReference.cache
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Ciudades.ABM_Ciudad_Pantalla_Inicial.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Ciudades.AltaCiudad.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Ciudades.BajaCiudad.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Ciudades.ListadoCiudades.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Ciudades.ModifCiudad.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Recorrido.BajaRecorrido.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Recorrido.VisualizarRecorrido.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Recorrido.ABM_Recorrido.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Recorrido.AltaRecorrido.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Rol.ABM_Rol.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Rol.AltaRol.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Rol.BajaRol.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Rol.ModifRol.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Dialogo.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Alta_Rol.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Form1.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.MostrarRol.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Properties.Resources.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.PruebaSQL.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.csproj.GenerateResource.Cache

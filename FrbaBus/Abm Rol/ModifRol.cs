@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 
 namespace FrbaBus.Abm_Rol
 {
-    public partial class ModifRol : Form
+    public partial class ModifRol : Form1
     {
         string nombreRol;
         string nombreFunc;
@@ -20,7 +20,7 @@ namespace FrbaBus.Abm_Rol
             InitializeComponent();
             comboBox2.Enabled = false;
             comboBox3.Enabled = false;
-            using (SqlConnection conexion = new SqlConnection("Server=localhost\\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;"))
+            using (SqlConnection conexion = this.obtenerConexion())
             {
                 //cargar comboBox rol
                 try
@@ -53,7 +53,7 @@ namespace FrbaBus.Abm_Rol
             comboBox2.Enabled = true;
             comboBox3.Enabled = true;
             nombreRol = comboBox1.Text;
-            using (SqlConnection conexion = new SqlConnection("Server=localhost\\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;"))
+            using (SqlConnection conexion = this.obtenerConexion())
             {
 
                 try
@@ -104,7 +104,7 @@ namespace FrbaBus.Abm_Rol
         {
             nombreRol = comboBox1.Text;
             string nuevoNombreRol = textBox1.Text;
-            using (SqlConnection conexion = new SqlConnection("Server=localhost\\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;"))
+            using (SqlConnection conexion = this.obtenerConexion())
             {
                 try
                 {
@@ -129,7 +129,7 @@ namespace FrbaBus.Abm_Rol
         {
             nombreFunc = comboBox2.Text;
             string nuevoNombreFunc = textBox2.Text;
-            using (SqlConnection conexion = new SqlConnection("Server=localhost\\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;"))
+            using (SqlConnection conexion = this.obtenerConexion())
             {
                 try
                 {
@@ -154,9 +154,9 @@ namespace FrbaBus.Abm_Rol
         private void button3_Click(object sender, EventArgs e)
         {
             nombreRol = comboBox1.Text;
-            nombreFunc = comboBox2.Text;            
+            nombreFunc = comboBox2.Text;
 
-            using (SqlConnection conexion = new SqlConnection("Server=localhost\\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;"))
+            using (SqlConnection conexion = this.obtenerConexion())
             {
                 try
                 {
@@ -193,7 +193,7 @@ namespace FrbaBus.Abm_Rol
             nombreRol = comboBox1.Text;
             nombreFunc = comboBox3.Text;
 
-            using (SqlConnection conexion = new SqlConnection("Server=localhost\\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;"))
+            using (SqlConnection conexion = this.obtenerConexion())
             {
                 try
                 {

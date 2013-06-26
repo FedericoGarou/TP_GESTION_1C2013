@@ -130,11 +130,11 @@
     <Compile Include="Abm Recorrido\AltaRecorrido.Designer.cs">
       <DependentUpon>AltaRecorrido.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Rol\ABM_Rol_Pantalla_Inicial.cs">
+    <Compile Include="Abm Rol\ABM_Rol.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Rol\ABM_Rol_Pantalla_Inicial.designer.cs">
-      <DependentUpon>ABM_Rol_Pantalla_Inicial.cs</DependentUpon>
+    <Compile Include="Abm Rol\ABM_Rol.Designer.cs">
+      <DependentUpon>ABM_Rol.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Rol\AltaRol.cs">
       <SubType>Form</SubType>
@@ -147,12 +147,6 @@
     </Compile>
     <Compile Include="Abm Rol\BajaRol.designer.cs">
       <DependentUpon>BajaRol.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Abm Rol\Dialogo.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Abm Rol\Dialogo.designer.cs">
-      <DependentUpon>Dialogo.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Rol\ModifRol.cs">
       <SubType>Form</SubType>
@@ -249,17 +243,14 @@
     <EmbeddedResource Include="Abm Recorrido\AltaRecorrido.resx">
       <DependentUpon>AltaRecorrido.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Abm Rol\ABM_Rol_Pantalla_Inicial.resx">
-      <DependentUpon>ABM_Rol_Pantalla_Inicial.cs</DependentUpon>
+    <EmbeddedResource Include="Abm Rol\ABM_Rol.resx">
+      <DependentUpon>ABM_Rol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rol\AltaRol.resx">
       <DependentUpon>AltaRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rol\BajaRol.resx">
       <DependentUpon>BajaRol.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Abm Rol\Dialogo.resx">
-      <DependentUpon>Dialogo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rol\ModifRol.resx">
       <DependentUpon>ModifRol.cs</DependentUpon>

@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 
 namespace FrbaBus.Abm_Rol
 {
-    public partial class BajaRol : Form
+    public partial class BajaRol : Form1
     {
         string nombreRol;
 
@@ -19,7 +19,7 @@ namespace FrbaBus.Abm_Rol
             {
                 
                 InitializeComponent();
-                using (SqlConnection conexion = new SqlConnection("Server=localhost\\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;"))
+                using (SqlConnection conexion = this.obtenerConexion())
                 {
                     try
                     {
@@ -48,7 +48,7 @@ namespace FrbaBus.Abm_Rol
 
         private void button1_Click(object sender, EventArgs e)
         {
-            using (SqlConnection conexion = new SqlConnection("Server=localhost\\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;"))
+            using (SqlConnection conexion = this.obtenerConexion())
             {
                 try
                 {
