@@ -48,7 +48,7 @@ namespace FrbaBus.Abm_Recorrido
 
             label1.Text = Leyenda;
 
-            listBox1.Height = listBox1.ItemHeight * 6;
+            listBox1.Height = listBox1.ItemHeight * 4;
 
             listBox1.Items.Add("Origen\t");
             listBox1.Items.Add("Destino\t");

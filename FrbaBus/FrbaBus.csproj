@@ -99,6 +99,18 @@
     <Compile Include="Abm Recorrido\BajaRecorrido.Designer.cs">
       <DependentUpon>BajaRecorrido.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Recorrido\ModifFormularioRecorrido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Recorrido\ModifFormularioRecorrido.Designer.cs">
+      <DependentUpon>ModifFormularioRecorrido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Recorrido\ModifRecorrido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Recorrido\ModifRecorrido.Designer.cs">
+      <DependentUpon>ModifRecorrido.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Recorrido\ParametrosIncorrectosException.cs" />
     <Compile Include="Abm Recorrido\VisualizarRecorrido.cs">
       <SubType>Form</SubType>
@@ -234,6 +246,12 @@
     <EmbeddedResource Include="Abm Recorrido\BajaRecorrido.resx">
       <DependentUpon>BajaRecorrido.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Abm Recorrido\ModifFormularioRecorrido.resx">
+      <DependentUpon>ModifFormularioRecorrido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Recorrido\ModifRecorrido.resx">
+      <DependentUpon>ModifRecorrido.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Abm Recorrido\VisualizarRecorrido.resx">
       <DependentUpon>VisualizarRecorrido.cs</DependentUpon>
     </EmbeddedResource>
@@ -275,6 +293,9 @@
     <EmbeddedResource Include="Herramientas Generales\PruebaSQL.resx">
       <DependentUpon>PruebaSQL.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Prueba\Basico.resx">
+      <DependentUpon>Basico.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -293,6 +314,12 @@
     </Compile>
     <Compile Include="Herramientas Generales\PruebaSQL.Designer.cs">
       <DependentUpon>PruebaSQL.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Prueba\Basico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Prueba\Basico.Designer.cs">
+      <DependentUpon>Basico.cs</DependentUpon>
     </Compile>
     <Compile Include="Registrar LLegada Micro\Form1.cs">
       <SubType>Form</SubType>

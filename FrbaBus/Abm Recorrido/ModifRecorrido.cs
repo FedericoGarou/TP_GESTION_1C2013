@@ -10,9 +10,9 @@ using System.Data.SqlClient;
 
 namespace FrbaBus.Abm_Recorrido
 {
-    public partial class BajaRecorrido : Form1
+    public partial class ModifRecorrido : Form1
     {
-        public BajaRecorrido()
+        public ModifRecorrido()
         {
             InitializeComponent();
 
@@ -50,7 +50,7 @@ namespace FrbaBus.Abm_Recorrido
         }
 
         // Validaciones
-        private void sePuedeEliminarUnRecorrido()
+        private void sePuedeModificarUnRecorrido()
         {
             String errorMensaje = "";
             bool hayError = false;
@@ -85,23 +85,6 @@ namespace FrbaBus.Abm_Recorrido
                         hayError = true;
                         errorMensaje += "No existe el recorrido;";
                     }
-                    else
-                    {
-                        cmd.CommandText = "LOS_VIAJEROS_DEL_ANONIMATO.PElRecorridoEstaHabilitado";
-                        bool estaHabilitado;
-                        cmd.Parameters.RemoveAt("@retorno");
-                        cmd.Parameters.Add("@Retorno", SqlDbType.Bit).Direction = ParameterDirection.Output;
-
-                        cmd.ExecuteNonQuery();
-
-                        estaHabilitado = Convert.ToBoolean(cmd.Parameters["@Retorno"].Value);
-
-                        if (!estaHabilitado)
-                        {
-                            hayError = true;
-                            errorMensaje += "El recorrido ya esta dado de baja;";
-                        }
-                    }
                     
                 }
             }
@@ -123,29 +106,13 @@ namespace FrbaBus.Abm_Recorrido
         {
             try
             {
-                this.sePuedeEliminarUnRecorrido();
+                this.sePuedeModificarUnRecorrido();
 
-                using (SqlConnection conexion = this.obtenerConexion())
-                {
-                    using (SqlCommand cmd = new SqlCommand("LOS_VIAJEROS_DEL_ANONIMATO.eliminarRecorrido", conexion))
-                    {
-                        conexion.Open();
-                        cmd.CommandType = CommandType.StoredProcedure;
+                (new ModifFormularioRecorrido(
+                        comboBox1.Text,
+                        comboBox2.Text,
+                        comboBox3.Text)).Show();
 
-                        cmd.Parameters.Add("@origen", SqlDbType.NVarChar).Value = comboBox1.Text;
-                        cmd.Parameters.Add("@destino", SqlDbType.NVarChar).Value = comboBox2.Text;
-                        cmd.Parameters.Add("@servicio", SqlDbType.NVarChar).Value = comboBox3.Text;
-                        
-                        cmd.ExecuteNonQuery();
-
-                        new VisualizarRecorrido("Recorrido eliminado",
-                                        comboBox1.Text.ToString(),
-                                        comboBox2.Text.ToString(),
-                                        comboBox3.Text.ToString()
-                                        ).Show();
-                    }
-                }
-                                
             }
             catch (ParametrosIncorrectosException ex)
             {

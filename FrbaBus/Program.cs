@@ -20,8 +20,8 @@ namespace FrbaBus
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ABM_Rol());
-          // Application.Run(new ABM_Recorrido());
+            //Application.Run(new ABM_Rol());
+            Application.Run(new ABM_Recorrido());
         }
 
         
