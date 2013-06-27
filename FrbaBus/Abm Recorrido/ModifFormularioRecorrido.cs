@@ -13,6 +13,7 @@ namespace FrbaBus.Abm_Recorrido
     public partial class ModifFormularioRecorrido : Form1
     {
         private Boolean Habilitacion;
+        private Boolean HabilitacionOriginal;
 
         public ModifFormularioRecorrido(String origen,String destino,String Servicio)
         {
@@ -45,6 +46,7 @@ namespace FrbaBus.Abm_Recorrido
                     numericUpDown1.Value = Convert.ToDecimal(comando.Parameters["@PrecioBase"].Value);
                     numericUpDown2.Value = Convert.ToDecimal(comando.Parameters["@PrecioBase_KG"].Value);
                     Habilitacion = Convert.ToBoolean(comando.Parameters["@Habilitacion"].Value);
+                    HabilitacionOriginal = Habilitacion;
 
                     if (Habilitacion)
                         Habilitado.Checked = true;
@@ -59,132 +61,105 @@ namespace FrbaBus.Abm_Recorrido
         // Previsualizar recorrido
         private void button2_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    this.sePuedeCrearUnRecorrido();
+            try
+            {
+                this.sePuedeModificarUnRecorrido();
 
-            //    new VisualizarRecorrido("Previsualizar",
-            //                            comboBox1.Text.ToString(),
-            //                            comboBox2.Text.ToString(),
-            //                            comboBox3.Text.ToString(),
-            //                            numericUpDown1.Value,
-            //                            numericUpDown2.Value).Show();
-            //}
-            //catch(ParametrosIncorrectosException ex)
-            //{
-            //    (new Dialogo(ex.Message,"Aceptar")).Show();
-            //}
+                new VisualizarRecorrido("Previsualizar",
+                                        comboBox1.Text.ToString(),
+                                        comboBox2.Text.ToString(),
+                                        comboBox3.Text.ToString(),
+                                        numericUpDown1.Value,
+                                        numericUpDown2.Value,
+                                        Habilitacion).Show();
+            }
+            catch (ParametrosIncorrectosException ex)
+            {
+                (new Dialogo(ex.Message, "Aceptar")).Show();
+            }
             
             
         }
 
         // Validaciones
-        //private void sePuedeCrearUnRecorrido()
-        //{
-        //    String errorMensaje = "";
-        //    bool hayError = false;
+        private void sePuedeModificarUnRecorrido()
+        {
+            String errorMensaje = "";
+            bool hayError = false;
 
-        //    // Los campos origen y destino son distintos.
-        //    if (comboBox1.Text.Equals(comboBox2.Text))
-        //    {
-        //        hayError = true;
-        //        errorMensaje += "El origen y el destino son el mismo;";
-        //        //throw new ParametrosIncorrectosException("El origen y el destino son el mismo");
-        //    }
+            // Los precios no son cero
+            if (numericUpDown1.Value <= 0)
+            {
+                hayError = true;
+                errorMensaje += "Error en el precio base para pasaje;";
+                //throw new ParametrosIncorrectosException("Error en el precio base para pasaje");
+            }
 
-        //    // Los precios no son cero
-        //    if (numericUpDown1.Value <= 0)
-        //    {
-        //        hayError = true;
-        //        errorMensaje += "Error en el precio base para pasaje;";
-        //        //throw new ParametrosIncorrectosException("Error en el precio base para pasaje");
-        //    }
+            if (numericUpDown2.Value <= 0)
+            {
+                hayError = true;
+                errorMensaje += "Error en el precio base por Kg.;";
+                //throw new ParametrosIncorrectosException("Error en el precio base por Kg.");
+            }
 
-        //    if (numericUpDown2.Value <= 0)
-        //    {
-        //        hayError = true;
-        //        errorMensaje += "Error en el precio base por Kg.;";
-        //        //throw new ParametrosIncorrectosException("Error en el precio base por Kg.");
-        //    }
-
-        //    // Que el recorrido no exista en la base de datos
-
-        //    using (SqlConnection conexion = this.obtenerConexion())
-        //    {
-        //        using (SqlCommand cmd = new SqlCommand("LOS_VIAJEROS_DEL_ANONIMATO.SPexisteElRecorrido", conexion))
-        //        {
-        //            conexion.Open();
-
-        //            bool existeRecorrido;
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            cmd.Parameters.Add("@Origen",SqlDbType.NVarChar).Value = comboBox1.Text;
-        //            cmd.Parameters.Add("@Destino", SqlDbType.NVarChar).Value = comboBox2.Text;
-        //            cmd.Parameters.Add("@Servicio", SqlDbType.NVarChar).Value = comboBox3.Text;
-        //            cmd.Parameters.Add("@retorno", SqlDbType.Bit).Direction = ParameterDirection.Output;
-
-        //            cmd.ExecuteNonQuery();
-
-        //            existeRecorrido = Convert.ToBoolean(cmd.Parameters["@retorno"].Value);
-        //            if (existeRecorrido)
-        //            {
-        //                hayError = true;
-        //                errorMensaje += "Ya existe el recorrido;";
-        //                //throw new ParametrosIncorrectosException("Ya existe el recorrido");
-        //            }
-                    
-        //        }
-        //    }
-
-        //    if (hayError)
-        //        throw new ParametrosIncorrectosException(errorMensaje);
-        //} 
+            if (hayError)
+                throw new ParametrosIncorrectosException(errorMensaje);
+        } 
 
         // Limpiar campos
         private void button1_Click(object sender, EventArgs e)
         {
-            //comboBox1.SelectedIndex = 0;
-            //comboBox2.SelectedIndex = 0;
-            //comboBox2.SelectedIndex = 0;
-            //numericUpDown1.Value = 0;
-            //numericUpDown2.Value = 0;
+            if (HabilitacionOriginal)
+                Habilitado.Checked = true;
+            else
+                Deshabilitado.Checked = true;
+
+            numericUpDown1.Value = 0;
+            numericUpDown2.Value = 0;
         }
 
-        // Dar de alta en la base de datos un recorrido
+        // Modificar en la base de datos un recorrido
         private void button3_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    this.sePuedeCrearUnRecorrido();
+            try
+            {
+                this.sePuedeModificarUnRecorrido();
 
-            //    using (SqlConnection conexion = this.obtenerConexion())
-            //    {
-            //        using (SqlCommand cmd = new SqlCommand("LOS_VIAJEROS_DEL_ANONIMATO.insertarRecorrido", conexion))
-            //        {
-            //            conexion.Open();
-            //            cmd.CommandType = CommandType.StoredProcedure;
+                using (SqlConnection conexion = this.obtenerConexion())
+                {
+                    using (SqlCommand cmd = new SqlCommand("LOS_VIAJEROS_DEL_ANONIMATO.SP_ModificarRecorrido", conexion))
+                    {
+                        conexion.Open();
+                        cmd.CommandType = CommandType.StoredProcedure;
 
-            //            cmd.Parameters.Add("@origen", SqlDbType.NVarChar).Value = comboBox1.Text;
-            //            cmd.Parameters.Add("@destino", SqlDbType.NVarChar).Value = comboBox2.Text;
-            //            cmd.Parameters.Add("@servicio", SqlDbType.NVarChar).Value = comboBox3.Text;
-            //            cmd.Parameters.Add("@basePasaje", SqlDbType.Decimal).Value = numericUpDown1.Value;
-            //            cmd.Parameters.Add("@baseKG", SqlDbType.Decimal).Value = numericUpDown2.Value;
+                        cmd.Parameters.Add("@origen", SqlDbType.NVarChar).Value = comboBox1.Text;
+                        cmd.Parameters.Add("@destino", SqlDbType.NVarChar).Value = comboBox2.Text;
+                        cmd.Parameters.Add("@servicio", SqlDbType.NVarChar).Value = comboBox3.Text;
+                        cmd.Parameters.Add("@basePasaje", SqlDbType.Decimal).Value = numericUpDown1.Value;
+                        cmd.Parameters.Add("@baseKG", SqlDbType.Decimal).Value = numericUpDown2.Value;
 
-            //            cmd.ExecuteNonQuery();
+                        if (Habilitacion)
+                            cmd.Parameters.Add("@habilitacion", SqlDbType.Bit).Value = 1;
+                        else
+                            cmd.Parameters.Add("@habilitacion", SqlDbType.Bit).Value = 0;
 
-            //            new VisualizarRecorrido("Recorrido agregado",
-            //                            comboBox1.Text.ToString(),
-            //                            comboBox2.Text.ToString(),
-            //                            comboBox3.Text.ToString(),
-            //                            numericUpDown1.Value,
-            //                            numericUpDown2.Value).Show();
-            //        }
-            //    }
-                                
-            //}
-            //catch (ParametrosIncorrectosException ex)
-            //{
-            //    (new Dialogo(ex.Message, "Aceptar")).Show();
-            //}
+                        cmd.ExecuteNonQuery();
+
+                        new VisualizarRecorrido("Recorrido Modificado",
+                                        comboBox1.Text.ToString(),
+                                        comboBox2.Text.ToString(),
+                                        comboBox3.Text.ToString(),
+                                        numericUpDown1.Value,
+                                        numericUpDown2.Value,
+                                        Habilitacion).Show();
+                    }
+                }
+
+            }
+            catch (ParametrosIncorrectosException ex)
+            {
+                (new Dialogo(ex.Message, "Aceptar")).Show();
+            }
         }
 
         private void Habilitado_CheckedChanged(object sender, EventArgs e)

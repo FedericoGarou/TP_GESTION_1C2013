@@ -70,7 +70,7 @@
             this.groupBox1.Size = new System.Drawing.Size(604, 432);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Establesca los parametros del nuevo recorrido";
+            this.groupBox1.Text = "Establesca los nuevos parametros del recorrido";
             // 
             // groupBox2
             // 
@@ -241,7 +241,7 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(135, 35);
             this.button3.TabIndex = 3;
-            this.button3.Text = "Guardar";
+            this.button3.Text = "Modificar";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -255,7 +255,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
             this.Name = "ModifFormularioRecorrido";
-            this.Text = "AltaRecorrido";
+            this.Text = "Formulario de modificacion";
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();

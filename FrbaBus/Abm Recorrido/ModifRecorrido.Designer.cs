@@ -54,7 +54,7 @@
             this.groupBox1.Size = new System.Drawing.Size(604, 199);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Establesca los parametros del nuevo recorrido";
+            this.groupBox1.Text = "Elija el recorrido a modificar";
             // 
             // comboBox3
             // 

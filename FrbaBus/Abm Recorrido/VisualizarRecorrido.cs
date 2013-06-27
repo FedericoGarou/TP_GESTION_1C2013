@@ -42,6 +42,42 @@ namespace FrbaBus.Abm_Recorrido
         public VisualizarRecorrido(String Leyenda,
                                     String Origen,
                                     String Destino,
+                                    String Servicio,
+                                    decimal basePasaje,
+                                    decimal baseXKg,
+                                    Boolean habilitado
+                                    )
+        {
+            InitializeComponent();
+
+            label1.Text = Leyenda;
+
+            listBox1.Height = listBox1.ItemHeight * 7;
+
+            listBox1.Items.Add("Origen\t");
+            listBox1.Items.Add("Destino\t");
+            listBox1.Items.Add("Servicio\t");
+            listBox1.Items.Add("Base pasaje\t");
+            listBox1.Items.Add("Base por kilo\t");
+            listBox1.Items.Add("Habilitación\t");
+            listBox1.Items.Add(Origen);
+            listBox1.Items.Add(Destino);
+            listBox1.Items.Add(Servicio);
+            listBox1.Items.Add(basePasaje);
+            listBox1.Items.Add(baseXKg);
+
+            if(habilitado)
+                listBox1.Items.Add("Habilitado");
+            else
+                listBox1.Items.Add("Deshabilitado");
+
+            listBox1.MultiColumn = true;
+
+        }
+
+        public VisualizarRecorrido(String Leyenda,
+                                    String Origen,
+                                    String Destino,
                                     String Servicio) // Para bajas
         {
             InitializeComponent();
