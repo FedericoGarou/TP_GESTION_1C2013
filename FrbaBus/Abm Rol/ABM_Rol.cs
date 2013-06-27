@@ -29,7 +29,7 @@ namespace FrbaBus.Abm_Rol
 
         private void button3_Click(object sender, EventArgs e)
         {
-            (new ModifRol()).Show();
+            (new ListadoModificarRol()).Show();
         }
 
         private void button4_Click(object sender, EventArgs e)

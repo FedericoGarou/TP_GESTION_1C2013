@@ -45,8 +45,62 @@ namespace FrbaBus.Abm_Rol
                     (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
                 }
             }
+        }       
+
+        public ModifRol(String nombreRolAModificar)
+        {
+            InitializeComponent();
+            
+            comboBox1.Text = nombreRolAModificar;
+            
+            comboBox1.Enabled = false;
+            comboBox2.Enabled = false;
+            comboBox3.Enabled = false;
+            textBox2.Enabled = false;
+            button2.Enabled = false;
+            button3.Enabled = false;
+            button4.Enabled = false;
         }
 
+        public ModifRol(String nombreRolAModificar, String nombreFuncionalidadAModificar)
+        {
+            InitializeComponent();
+
+            comboBox1.Text = nombreRolAModificar;
+
+            comboBox1.Enabled = false;
+            textBox1.Enabled = false;
+            button1.Enabled = false;
+
+            comboBox2.Text = nombreFuncionalidadAModificar;
+
+            comboBox2.Enabled = false;
+
+            using (SqlConnection conexion = this.obtenerConexion())
+            {
+                //cargar comboBox3 todas las funcionalidades
+                try
+                {
+
+                    conexion.Open();
+
+                    SqlCommand funcs = new SqlCommand("USE GD1C2013 SELECT * FROM LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad", conexion);
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(funcs);
+                    DataTable tablaDeFuncionalidades = new DataTable();
+
+                    adapter.Fill(tablaDeFuncionalidades);
+
+                    comboBox3.DisplayMember = "Nombre_Funcionalidad";
+                    comboBox3.DataSource = tablaDeFuncionalidades;
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex.Message);
+                    (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
+                }
+            }
+        }
 
         private void button5_Click(object sender, EventArgs e)
         {
@@ -99,7 +153,7 @@ namespace FrbaBus.Abm_Rol
         }
 
 
-        //boton modificar rol
+        //boton modificar nombre rol
         private void button1_Click(object sender, EventArgs e)
         {
             nombreRol = comboBox1.Text;

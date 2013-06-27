@@ -10,9 +10,9 @@ using System.Data.SqlClient;
 
 namespace FrbaBus.Abm_Rol
 {
-    public partial class ListadoInhablitarRol : Form1
+    public partial class ListadoModificarRol : Form1
     {
-        public ListadoInhablitarRol()
+        public ListadoModificarRol()
         {
             InitializeComponent();
             using (SqlConnection conexion = this.obtenerConexion())
@@ -32,7 +32,7 @@ namespace FrbaBus.Abm_Rol
                     comboBox1.DisplayMember = "Nombre_Rol";
                     comboBox1.DataSource = tablaDeNombres;
 
-                    
+
 
                 }
                 catch (Exception ex)
@@ -72,14 +72,14 @@ namespace FrbaBus.Abm_Rol
                         }
 
                         cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro3 + "' and Nombre_Rol NOT LIKE '%" + varFiltro1 + "%' and Habilitacion=1", ref tabla, conexion);
-                        
+
                         dataGridView1.Columns.Clear();
                         dataGridView1.DataSource = tabla;
 
                         DataGridViewButtonColumn botonFuncionalidades = this.crearBoton("Funcionalidades", "Mostrar Funciondalidades");
                         dataGridView1.Columns.Add(botonFuncionalidades);
-                        DataGridViewButtonColumn botonInhabilitar = this.crearBoton("Inhabilitacion Logica", "Inhabilitar Rol");
-                        dataGridView1.Columns.Add(botonInhabilitar);
+                        DataGridViewButtonColumn botonModificar = this.crearBoton("", "Modificar Rol");
+                        dataGridView1.Columns.Add(botonModificar);
                     }
                     else
                     {
@@ -90,14 +90,14 @@ namespace FrbaBus.Abm_Rol
                         }
 
                         cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro3 + "' and Habilitacion=1", ref tabla, conexion);
-                        
+
                         dataGridView1.Columns.Clear();
                         dataGridView1.DataSource = tabla;
 
                         DataGridViewButtonColumn botonFuncionalidades = this.crearBoton("Funcionalidades", "Mostrar Funciondalidades");
                         dataGridView1.Columns.Add(botonFuncionalidades);
-                        DataGridViewButtonColumn botonInhabilitar = this.crearBoton("Inhabilitacion Logica", "Inhabilitar Rol");
-                        dataGridView1.Columns.Add(botonInhabilitar);
+                        DataGridViewButtonColumn botonModificar = this.crearBoton("", "Modificar Rol");
+                        dataGridView1.Columns.Add(botonModificar);
                     }
                 }
 
@@ -133,56 +133,72 @@ namespace FrbaBus.Abm_Rol
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridView1.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex != -1)
+            try
             {
-                String nombreRol = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
-
-                using (SqlConnection conexion = this.obtenerConexion())
+                if (dataGridView1.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex != -1)
                 {
-                    conexion.Open();
+                    String nombreRol = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
-                    if (e.ColumnIndex == 1)
+                    using (SqlConnection conexion = this.obtenerConexion())
                     {
+                        conexion.Open();
 
+                        String nombreRolActual = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
-                        DataTable tabla = new DataTable();
-
-                        cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_funcionalidad FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol r join LOS_VIAJEROS_DEL_ANONIMATO.Rol_Funcionalidad rf on (r.Codigo_Rol = rf.Codigo_Rol) join LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad f on (rf.Codigo_Funcionalidad = f.Codigo_Funcionalidad) where Nombre_Rol = '" + nombreRol + "'", ref tabla, conexion);
-                        
-                        dataGridView2.DataSource = tabla;
-
-                    }
-
-                    if (e.ColumnIndex == 2)
-                    {
-                        try
+                        if (e.ColumnIndex == 1) //boton mostrar funcionalidades
                         {
-                            SqlCommand inhabilitar = new SqlCommand("USE GD1C2013 UPDATE LOS_VIAJEROS_DEL_ANONIMATO.Rol SET Habilitacion=0 WHERE Rol.Nombre_Rol = '" + nombreRol + "'", conexion);
-                            int filasAfectadas = (int)inhabilitar.ExecuteNonQuery();
 
-                            SqlCommand codRol = new SqlCommand("USE GD1C2013 SELECT * FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Rol.Nombre_Rol = '" + nombreRol + "'", conexion);
-                            int codigoRol = (int)codRol.ExecuteScalar();
 
-                            codRol.CommandText = "USE GD1C2013 DELETE FROM LOS_VIAJEROS_DEL_ANONIMATO.Usuario_Rol WHERE Codigo_Rol='" + codigoRol + "'";
-                            codRol.ExecuteNonQuery();
+                            DataTable tabla = new DataTable();
 
-                            new Dialogo(nombreRol + " inhabilitado \n", "Aceptar").ShowDialog();
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.Write(ex.Message);
-                            (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
+                            cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_funcionalidad AS Funcionalidades FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol r join LOS_VIAJEROS_DEL_ANONIMATO.Rol_Funcionalidad rf on (r.Codigo_Rol = rf.Codigo_Rol) join LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad f on (rf.Codigo_Funcionalidad = f.Codigo_Funcionalidad) where Nombre_Rol = '" + nombreRol + "'", ref tabla, conexion);
+                            dataGridView2.Columns.Clear();
+                            dataGridView2.DataSource = tabla;
+
+                            DataGridViewButtonColumn botonModificar = this.crearBoton("", "Modificar / Eliminar / Agregar Funcionalidad");
+                            dataGridView2.Columns.Add(botonModificar);
+
                         }
 
+                        if (e.ColumnIndex == 2)//boton modificar rol
+                        {
 
+                            (new ModifRol(nombreRolActual)).Show();
 
+                        }
                     }
+                }
 
+
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
+                (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
+            }
+        }
+
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (dataGridView2.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex != -1)
+                {
+                    String nombreRolActual = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    String nombreFuncionalidadActual = dataGridView2.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    if (e.ColumnIndex == 1) //boton modificar/agregar/elimar func
+                    {
+                        (new ModifRol(nombreRolActual, nombreFuncionalidadActual)).Show();
+                    }
 
                 }
             }
-
-
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
+                (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
+            }
         }
 
     }
