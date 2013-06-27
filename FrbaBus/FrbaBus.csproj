@@ -160,6 +160,12 @@
     <Compile Include="Abm Rol\BajaRol.designer.cs">
       <DependentUpon>BajaRol.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Rol\ListadoInhabilitarRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\ListadoInhabilitarRol.Designer.cs">
+      <DependentUpon>ListadoInhabilitarRol.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Rol\ListadoRol.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -275,6 +281,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rol\BajaRol.resx">
       <DependentUpon>BajaRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\ListadoInhabilitarRol.resx">
+      <DependentUpon>ListadoInhabilitarRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rol\ListadoRol.resx">
       <DependentUpon>ListadoRol.cs</DependentUpon>

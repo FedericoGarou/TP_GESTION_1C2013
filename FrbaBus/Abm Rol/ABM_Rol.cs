@@ -24,7 +24,7 @@ namespace FrbaBus.Abm_Rol
 
         private void button2_Click(object sender, EventArgs e)
         {
-            (new BajaRol()).Show();
+            (new ListadoInhablitarRol()).Show();
         }       
 
         private void button3_Click(object sender, EventArgs e)
