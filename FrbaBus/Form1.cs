@@ -29,5 +29,12 @@ namespace FrbaBus
             return new SqlConnection(this.stringDeConexion);
         }
 
+        public void cargarATablaParaDataGripView(string unaConsulta, ref DataTable unaTabla, SqlConnection unaConexion)
+        {
+            SqlCommand cmd = new SqlCommand(unaConsulta, unaConexion);
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+
+            adapter.Fill(unaTabla);
+        }
     }
 }

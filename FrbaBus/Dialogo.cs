@@ -15,7 +15,7 @@ namespace FrbaBus
         {
             InitializeComponent();
             String[] mensajes = mensaje.Split(';');
-            listBox1.Items.AddRange(mensajes);
+            listBox1.Items.AddRange(mensajes);            
             listBox1.Enabled = false;
             button1.Text = botonLeyenda;
         }
