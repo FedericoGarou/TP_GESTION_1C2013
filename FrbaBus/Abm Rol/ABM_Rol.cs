@@ -34,7 +34,7 @@ namespace FrbaBus.Abm_Rol
 
         private void button4_Click(object sender, EventArgs e)
         {
-
+            (new ListadoRol()).Show();
         }
 
        
