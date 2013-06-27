@@ -10,9 +10,9 @@ using System.Data.SqlClient;
 
 namespace FrbaBus.Abm_Rol
 {
-    public partial class ListadoRol : Form1
+    public partial class ListadoInhablitarRol : Form1
     {
-        public ListadoRol()
+        public ListadoInhablitarRol()
         {
             InitializeComponent();
             using (SqlConnection conexion = this.obtenerConexion())
@@ -65,7 +65,7 @@ namespace FrbaBus.Abm_Rol
 
                     if (textBox1.Text.Length > 0)
                     {
-                        cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol LIKE '%" + varFiltro1 + "%'  and Habilitacion=1", ref tabla, conexion);
+                        cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol LIKE '%" + varFiltro1 + "%' and Habilitacion=1", ref tabla, conexion);
 
                         if ((textBox2.Text.Length) > 0 && (varFiltro2 != varFiltro3))
                         {
@@ -78,7 +78,8 @@ namespace FrbaBus.Abm_Rol
 
                         DataGridViewButtonColumn botonFuncionalidades = this.crearBoton("Funcionalidades", "Mostrar Funciondalidades");
                         dataGridView1.Columns.Add(botonFuncionalidades);
-
+                        DataGridViewButtonColumn botonInhabilitar = this.crearBoton("Inhabilitacion Logica", "Inhabilitar Rol");
+                        dataGridView1.Columns.Add(botonInhabilitar);
                     }
                     else
                     {
@@ -88,12 +89,13 @@ namespace FrbaBus.Abm_Rol
                             cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro2 + "' and Habilitacion=1", ref tabla, conexion);
                         }
 
-                        cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro3 + "' and Habilitacion=1", ref tabla, conexion);
+                        cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_RolFROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro3 + "' and Habilitacion=1", ref tabla, conexion);
                         dataGridView1.Columns.Clear();
                         dataGridView1.DataSource = tabla;
                         DataGridViewButtonColumn botonFuncionalidades = this.crearBoton("Funcionalidades", "Mostrar Funciondalidades");
                         dataGridView1.Columns.Add(botonFuncionalidades);
-
+                        DataGridViewButtonColumn botonInhabilitar = this.crearBoton("Inhabilitacion Logica", "Inhabilitar Rol");
+                        dataGridView1.Columns.Add(botonInhabilitar);
                     }
                 }
 
@@ -133,18 +135,46 @@ namespace FrbaBus.Abm_Rol
             {
                 String nombreRol = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
-                if (e.ColumnIndex == 1)
+                using (SqlConnection conexion = this.obtenerConexion())
                 {
+                    conexion.Open();
 
-                    using (SqlConnection conexion = this.obtenerConexion())
+                    if (e.ColumnIndex == 1)
                     {
-                        conexion.Open();
+
+                    
                         DataTable tabla = new DataTable();
 
                         cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_funcionalidad FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol r join LOS_VIAJEROS_DEL_ANONIMATO.Rol_Funcionalidad rf on (r.Codigo_Rol = rf.Codigo_Rol) join LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad f on (rf.Codigo_Funcionalidad = f.Codigo_Funcionalidad) where Nombre_Rol = '" + nombreRol + "'", ref tabla, conexion);
                         dataGridView2.DataSource = tabla;
 
                     }
+
+                    if (e.ColumnIndex == 2)
+                    {
+                        try
+                        {                           
+                            SqlCommand inhabilitar = new SqlCommand("USE GD1C2013 UPDATE LOS_VIAJEROS_DEL_ANONIMATO.Rol SET Habilitacion=0 WHERE Rol.Nombre_Rol = '" + nombreRol + "'", conexion);
+                            int filasAfectadas = (int)inhabilitar.ExecuteNonQuery();
+
+                            SqlCommand codRol = new SqlCommand("USE GD1C2013 SELECT * FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Rol.Nombre_Rol = '" + nombreRol + "'", conexion);
+                            int codigoRol = (int)codRol.ExecuteScalar();
+
+                            codRol.CommandText = "USE GD1C2013 DELETE FROM LOS_VIAJEROS_DEL_ANONIMATO.Usuario_Rol WHERE Codigo_Rol='" + codigoRol + "'";
+                            codRol.ExecuteNonQuery();
+
+                            new Dialogo(nombreRol + " inhabilitado \n", "Aceptar").ShowDialog();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.Write(ex.Message);
+                            (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
+                        }
+                        
+
+
+                    }
+
 
                 }
             }
