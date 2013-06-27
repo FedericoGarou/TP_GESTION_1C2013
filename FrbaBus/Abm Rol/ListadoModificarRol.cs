@@ -178,7 +178,7 @@ namespace FrbaBus.Abm_Rol
             }
         }
 
-
+        //TODO ERROR AL MODIFICAR DE LA SEGUNDA EN ADELANTE (CONTADOR NEGATIVO) PARECIERA SOLO PASAR CON ADMIN
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             try
