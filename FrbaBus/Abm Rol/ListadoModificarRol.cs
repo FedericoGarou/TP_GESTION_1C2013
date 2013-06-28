@@ -12,8 +12,11 @@ namespace FrbaBus.Abm_Rol
 {
     public partial class ListadoModificarRol : Form1
     {
+        int indexRowRol;
+
         public ListadoModificarRol()
-        {
+        {           
+
             InitializeComponent();
             using (SqlConnection conexion = this.obtenerConexion())
             {
@@ -148,6 +151,7 @@ namespace FrbaBus.Abm_Rol
                         conexion.Open();
 
                         String nombreRolActual = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+                        indexRowRol = e.RowIndex;
 
                         if (e.ColumnIndex == 2) //boton mostrar funcionalidades
                         {
@@ -183,14 +187,14 @@ namespace FrbaBus.Abm_Rol
             }
         }
 
-        //TODO ERROR AL MODIFICAR DE LA SEGUNDA EN ADELANTE (CONTADOR NEGATIVO) PARECIERA SOLO PASAR CON ADMIN
+        
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
                 if (dataGridView2.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex != -1)
                 {
-                    String nombreRolActual = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    String nombreRolActual = dataGridView1.Rows[indexRowRol].Cells[0].Value.ToString();
                     String nombreFuncionalidadActual = dataGridView2.Rows[e.RowIndex].Cells[0].Value.ToString();
                     if (e.ColumnIndex == 1) //boton modificar/agregar/elimar func
                     {

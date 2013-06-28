@@ -191,7 +191,7 @@ namespace FrbaBus.Abm_Rol
                     conexion.Open();
                     SqlCommand modFunc = new SqlCommand("USE GD1C2013 UPDATE LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad SET Nombre_Funcionalidad='" + nuevoNombreFunc + "' where Nombre_Funcionalidad='" + nombreFunc + "'", conexion);
                     modFunc.ExecuteNonQuery();
-                    comboBox1.Text = nuevoNombreFunc;
+                    comboBox2.Text = nuevoNombreFunc;
                     new Dialogo("Funcionalidad " + nombreFunc + " modificada a " + nuevoNombreFunc + "\n 1 fila afectada", "Aceptar").ShowDialog();
 
                 }
@@ -296,7 +296,6 @@ namespace FrbaBus.Abm_Rol
 
         private void button5_Click_1(object sender, EventArgs e)
         {
-            string nombreRol;
             nombreRol = comboBox1.Text;
 
             using (SqlConnection conexion = this.obtenerConexion())
@@ -307,22 +306,22 @@ namespace FrbaBus.Abm_Rol
                     SqlCommand validacion = new SqlCommand("USE GD1C2013 SELECT * FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol where Nombre_Rol = '" + nombreRol + "' and Habilitacion=0", conexion);
                     int cantidadDeFilas = (int)validacion.ExecuteScalar();
 
-                    if (cantidadDeFilas == 0)
-                    {
-                        (new Dialogo("El rol esta habilitado", "Aceptar")).ShowDialog();
-                    }
-
-                    else
+                    if (cantidadDeFilas != 0)
                     {
                         SqlCommand habilitarRol = new SqlCommand("USE GD1C2013 UPDATE LOS_VIAJEROS_DEL_ANONIMATO.Rol SET Habilitacion=1 where Nombre_Rol = '" + nombreRol + "'", conexion);
                         habilitarRol.ExecuteNonQuery();
-                        (new Dialogo("El rol se ha habilitado", "Aceptar")).ShowDialog();
+                        (new Dialogo("El rol se ha habilitado", "Aceptar")).ShowDialog();                                                             
+                    }
+
+                    else
+                    {                        
+                        (new Dialogo("El rol ya esta habilitado", "Aceptar")).ShowDialog(); 
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.Write(ex.Message);
-                    (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
+                    (new Dialogo("El rol ya esta habilitado", "Aceptar")).ShowDialog();
                 }
 
             }
