@@ -49,6 +49,20 @@ namespace FrbaBus.Abm_Recorrido
             }
         }
 
+        public BajaRecorrido(String origen,String destino,String servicio)
+        {
+            InitializeComponent();
+
+            comboBox1.Text = origen;
+            comboBox1.Enabled = false;
+            comboBox2.Text = destino;
+            comboBox2.Enabled = false;
+            comboBox3.Text = servicio;
+            comboBox3.Enabled = false;
+            button1.Enabled = false;
+            
+        }
+        
         // Validaciones
         private void sePuedeEliminarUnRecorrido()
         {

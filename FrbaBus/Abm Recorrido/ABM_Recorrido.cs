@@ -31,5 +31,10 @@ namespace FrbaBus.Abm_Recorrido
         {
             (new ModifRecorrido()).Show();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            (new ListadoRol()).Show();
+        }
     }
 }
