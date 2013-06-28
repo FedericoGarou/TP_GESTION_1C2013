@@ -47,14 +47,16 @@ namespace FrbaBus.Abm_Rol
         //boton buscar
         private void button2_Click(object sender, EventArgs e)
         {
-            string varFiltro1;
-            string varFiltro2;
-            string varFiltro3;
-            string textoFilto1;
+            string varFiltro1 = "";
+            string varFiltro2 = "";
+            string varFiltro3 = "";
+            string textoFiltro1;
+            string textoFiltro2;
+            string textoFiltro3;
 
-            textoFilto1 = textBox1.Text;
-            varFiltro2 = textBox2.Text;
-            varFiltro3 = comboBox1.Text;
+            textoFiltro1 = textBox1.Text;
+            textoFiltro2 = textBox2.Text;
+            textoFiltro3 = comboBox1.Text;
 
             using (SqlConnection conexion = this.obtenerConexion())
             {
@@ -63,29 +65,52 @@ namespace FrbaBus.Abm_Rol
                     conexion.Open();
                     DataTable tabla = new DataTable();
                     
-                    if (textBox1.Text.Length > 0)
+                    if (textoFiltro1.Length > 0)
                     {
-                        varFiltro1 = "or Nombre_Rol LIKE '%" + textoFilto1 + "%'";
+                        varFiltro1 = "WHERE Nombre_Rol LIKE '%" + textoFiltro1 + "%'";
+                        
+                        if (textoFiltro2.Length > 0)
+                        {
+                            varFiltro2 = "or Nombre_Rol = '" + textoFiltro2 + "'";
+                        }
+                        if (textoFiltro3.Length > 0)
+                        {
+                            varFiltro3 = "or Nombre_Rol = '" + textoFiltro3 + "'";
+                        }
                     }
                     else
                     {
-                        varFiltro1 = "";
-                    }
-                    
-                     cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol, Habilitacion FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro2 + "' or Nombre_Rol = '" + varFiltro3 + "'" + varFiltro1, ref tabla, conexion);
-                    
-                        dataGridView1.Columns.Clear();
-                        dataGridView1.DataSource = tabla;
+                        if (textoFiltro2.Length > 0)
+                        {
+                            varFiltro2 = "WHERE Nombre_Rol = '" + textoFiltro2 + "'";
 
-                        dataGridView1.Columns[0].ReadOnly = true;
-                        dataGridView1.Columns[1].ReadOnly = true;
-                        DataGridViewButtonColumn botonFuncionalidades = this.crearBoton("Funcionalidades", "Mostrar Funciondalidades");
-                        dataGridView1.Columns.Add(botonFuncionalidades);
-                        DataGridViewButtonColumn botonInhabilitar = this.crearBoton("Inhabilitacion Logica", "Inhabilitar Rol");
-                        dataGridView1.Columns.Add(botonInhabilitar);
-                }
-                
-        
+                            if (textoFiltro3.Length > 0)
+                            {
+                                varFiltro3 = "or Nombre_Rol = '" + textoFiltro3 + "'";
+                            }
+                        }
+                        else
+                        {
+                            if (textoFiltro3.Length > 0)
+                            {
+                                varFiltro3 = "WHERE Nombre_Rol = '" + textoFiltro3 + "'";
+                            }
+                        }
+                    }
+
+                    
+                    cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol, Habilitacion FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol " + varFiltro1 + varFiltro2 + varFiltro3, ref tabla, conexion);
+                    
+                    dataGridView1.Columns.Clear();
+                    dataGridView1.DataSource = tabla;
+
+                    dataGridView1.Columns[0].ReadOnly = true;
+                    dataGridView1.Columns[1].ReadOnly = true;
+                    DataGridViewButtonColumn botonFuncionalidades = this.crearBoton("Funcionalidades", "Mostrar Funciondalidades");
+                    dataGridView1.Columns.Add(botonFuncionalidades);
+                    DataGridViewButtonColumn botonInhabilitar = this.crearBoton("Inhabilitacion Logica", "Inhabilitar Rol");
+                    dataGridView1.Columns.Add(botonInhabilitar);
+                }                       
 
                 catch (Exception ex)
                 {
@@ -104,6 +129,8 @@ namespace FrbaBus.Abm_Rol
             comboBox1.Text = "";
             dataGridView1.DataSource = "";
             dataGridView1.Columns.Clear();
+            dataGridView2.DataSource = "";
+            dataGridView2.Columns.Clear();
         }
 
         public DataGridViewButtonColumn crearBoton(String nombreColumna, String leyendaBoton)
