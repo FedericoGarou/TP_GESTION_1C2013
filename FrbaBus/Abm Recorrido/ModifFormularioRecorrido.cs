@@ -65,17 +65,21 @@ namespace FrbaBus.Abm_Recorrido
             {
                 this.sePuedeModificarUnRecorrido();
 
+                this.Hide();
                 new VisualizarRecorrido("Previsualizar",
                                         comboBox1.Text.ToString(),
                                         comboBox2.Text.ToString(),
                                         comboBox3.Text.ToString(),
                                         numericUpDown1.Value,
                                         numericUpDown2.Value,
-                                        Habilitacion).Show();
+                                        Habilitacion).ShowDialog();
+                this.Show();
             }
             catch (ParametrosIncorrectosException ex)
             {
-                (new Dialogo(ex.Message, "Aceptar")).Show();
+                this.Hide();
+                (new Dialogo(ex.Message, "Aceptar")).ShowDialog();
+                this.Show();
             }
             
             
@@ -92,31 +96,17 @@ namespace FrbaBus.Abm_Recorrido
             {
                 hayError = true;
                 errorMensaje += "Error en el precio base para pasaje;";
-                //throw new ParametrosIncorrectosException("Error en el precio base para pasaje");
             }
 
             if (numericUpDown2.Value <= 0)
             {
                 hayError = true;
                 errorMensaje += "Error en el precio base por Kg.;";
-                //throw new ParametrosIncorrectosException("Error en el precio base por Kg.");
             }
 
             if (hayError)
                 throw new ParametrosIncorrectosException(errorMensaje);
         } 
-
-        // Limpiar campos
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (HabilitacionOriginal)
-                Habilitado.Checked = true;
-            else
-                Deshabilitado.Checked = true;
-
-            numericUpDown1.Value = 0;
-            numericUpDown2.Value = 0;
-        }
 
         // Modificar en la base de datos un recorrido
         private void button3_Click(object sender, EventArgs e)
@@ -145,20 +135,24 @@ namespace FrbaBus.Abm_Recorrido
 
                         cmd.ExecuteNonQuery();
 
+                        this.Hide();
                         new VisualizarRecorrido("Recorrido Modificado",
                                         comboBox1.Text.ToString(),
                                         comboBox2.Text.ToString(),
                                         comboBox3.Text.ToString(),
                                         numericUpDown1.Value,
                                         numericUpDown2.Value,
-                                        Habilitacion).Show();
+                                        Habilitacion).ShowDialog();
+                        this.Show();
                     }
                 }
 
             }
             catch (ParametrosIncorrectosException ex)
             {
-                (new Dialogo(ex.Message, "Aceptar")).Show();
+                this.Hide();
+                (new Dialogo(ex.Message, "Aceptar")).ShowDialog();
+                this.Show();
             }
         }
 

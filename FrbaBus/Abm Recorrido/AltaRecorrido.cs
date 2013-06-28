@@ -27,7 +27,7 @@ namespace FrbaBus.Abm_Recorrido
 
                 // Llenar los combo box 'origen' y 'destino'
 
-                cmdParaLlenarComboBox.CommandText = "USE GD1C2013 SELECT * FROM LOS_VIAJEROS_DEL_ANONIMATO.CIUDAD";
+                cmdParaLlenarComboBox.CommandText = "USE GD1C2013 SELECT NombreCiudad FROM LOS_VIAJEROS_DEL_ANONIMATO.F_Ciudades () ORDER BY RN";
                 
                 DataTable ciudadesOrigen = new DataTable();
                 adapter.Fill(ciudadesOrigen);
@@ -41,7 +41,7 @@ namespace FrbaBus.Abm_Recorrido
 
                 // Llenar el combo box 'tipo de servicio'
 
-                cmdParaLlenarComboBox.CommandText = "USE GD1C2013 SELECT T.NombreServicio FROM LOS_VIAJEROS_DEL_ANONIMATO.TIPOSERVICIO T";
+                cmdParaLlenarComboBox.CommandText = "USE GD1C2013 SELECT NombreServicio FROM LOS_VIAJEROS_DEL_ANONIMATO.F_Servicios () ORDER BY RN";
                 DataTable tiposDeServicio = new DataTable();
                 adapter.Fill(tiposDeServicio);
                 comboBox3.DisplayMember = "NombreServicio";
@@ -56,16 +56,20 @@ namespace FrbaBus.Abm_Recorrido
             {
                 this.sePuedeCrearUnRecorrido();
 
+                this.Hide();
                 new VisualizarRecorrido("Previsualizar",
                                         comboBox1.Text.ToString(),
                                         comboBox2.Text.ToString(),
                                         comboBox3.Text.ToString(),
                                         numericUpDown1.Value,
-                                        numericUpDown2.Value).Show();
+                                        numericUpDown2.Value).ShowDialog();
+                this.Show();
             }
             catch(ParametrosIncorrectosException ex)
             {
-                (new Dialogo(ex.Message,"Aceptar")).Show();
+                this.Hide();
+                (new Dialogo(ex.Message,"Aceptar")).ShowDialog();
+                this.Show();
             }
             
             
@@ -82,7 +86,14 @@ namespace FrbaBus.Abm_Recorrido
             {
                 hayError = true;
                 errorMensaje += "El origen y el destino son el mismo;";
-                //throw new ParametrosIncorrectosException("El origen y el destino son el mismo");
+            }
+
+            if ( comboBox1.Text.Equals("No seleccionado") ||
+                 comboBox2.Text.Equals("No seleccionado") ||
+                 comboBox3.Text.Equals("No seleccionado") )
+            {
+                hayError = true;
+                errorMensaje += "Alguno de los campos necesarios no fue seleccionado;";
             }
 
             // Los precios no son cero
@@ -90,14 +101,12 @@ namespace FrbaBus.Abm_Recorrido
             {
                 hayError = true;
                 errorMensaje += "Error en el precio base para pasaje;";
-                //throw new ParametrosIncorrectosException("Error en el precio base para pasaje");
             }
 
             if (numericUpDown2.Value <= 0)
             {
                 hayError = true;
                 errorMensaje += "Error en el precio base por Kg.;";
-                //throw new ParametrosIncorrectosException("Error en el precio base por Kg.");
             }
 
             // Que el recorrido no exista en la base de datos
@@ -122,7 +131,6 @@ namespace FrbaBus.Abm_Recorrido
                     {
                         hayError = true;
                         errorMensaje += "Ya existe el recorrido;";
-                        //throw new ParametrosIncorrectosException("Ya existe el recorrido");
                     }
                     
                 }
@@ -137,7 +145,7 @@ namespace FrbaBus.Abm_Recorrido
         {
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
-            comboBox2.SelectedIndex = 0;
+            comboBox3.SelectedIndex = 0;
             numericUpDown1.Value = 0;
             numericUpDown2.Value = 0;
         }
@@ -164,19 +172,23 @@ namespace FrbaBus.Abm_Recorrido
 
                         cmd.ExecuteNonQuery();
 
+                        this.Hide();
                         new VisualizarRecorrido("Recorrido agregado",
                                         comboBox1.Text.ToString(),
                                         comboBox2.Text.ToString(),
                                         comboBox3.Text.ToString(),
                                         numericUpDown1.Value,
-                                        numericUpDown2.Value).Show();
+                                        numericUpDown2.Value).ShowDialog();
+                        this.Show();
                     }
                 }
                                 
             }
             catch (ParametrosIncorrectosException ex)
             {
-                (new Dialogo(ex.Message, "Aceptar")).Show();
+                this.Hide();
+                (new Dialogo(ex.Message, "Aceptar")).ShowDialog();
+                this.Show();
             }
         }
     }

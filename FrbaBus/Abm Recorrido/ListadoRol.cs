@@ -93,13 +93,15 @@ namespace FrbaBus.Abm_Recorrido
                 errorMensaje += "El precio no debe ser menor a 0;";
             }
 
-            if (numericPrecioDesde.Value > numericPrecioHasta.Value)
+            if (numericPrecioDesde.Value > numericPrecioHasta.Value &&
+                numericPrecioDesde.Value != 0 && numericPrecioHasta.Value != 0)
             {
                 hayError = true;
                 errorMensaje += "Pasaje: El precio mínimo debe ser menor a precio máximo;";
             }
 
-            if (numericPrecioPaqueteDesde.Value > numericPrecioPaqueteHasta.Value)
+            if (numericPrecioPaqueteDesde.Value > numericPrecioPaqueteHasta.Value &&
+                numericPrecioPaqueteDesde.Value != 0 && numericPrecioPaqueteHasta.Value != 0)
             {
                 hayError = true;
                 errorMensaje += "Paquete: El precio mínimo debe ser menor a precio máximo;";
@@ -107,17 +109,6 @@ namespace FrbaBus.Abm_Recorrido
 
             if (hayError)
                 throw new ParametrosIncorrectosException(errorMensaje);
-        }
-
-        public DataGridViewButtonColumn crearBotones(String nombreColumna, String leyendaBoton)
-        {
-            DataGridViewButtonColumn botones = new DataGridViewButtonColumn();
-            botones.HeaderText = nombreColumna;
-            botones.Text = leyendaBoton;
-            botones.UseColumnTextForButtonValue = true;
-            botones.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-
-            return botones;
         }
 
         private void buttonBuscar_Click(object sender, EventArgs e)
@@ -169,7 +160,9 @@ namespace FrbaBus.Abm_Recorrido
             }
             catch(ParametrosIncorrectosException ex)
             {
-                (new Dialogo(ex.Message, "Aceptar")).Show();
+                this.Hide();
+                (new Dialogo(ex.Message, "Aceptar")).ShowDialog();
+                this.Show();
             }
         }
 
@@ -183,11 +176,15 @@ namespace FrbaBus.Abm_Recorrido
 
                 if(e.ColumnIndex == 0)
                 {
-                    (new BajaRecorrido(origen,destino,servicio)).Show();
+                    this.Hide();
+                    (new BajaRecorrido(origen,destino,servicio)).ShowDialog();
+                    this.Show();
                 }
                 if (e.ColumnIndex == 1)
                 {
-                    (new ModifFormularioRecorrido(origen,destino,servicio)).Show();
+                    this.Hide();
+                    (new ModifFormularioRecorrido(origen,destino,servicio)).ShowDialog();
+                    this.Show();
                 }
 
             }

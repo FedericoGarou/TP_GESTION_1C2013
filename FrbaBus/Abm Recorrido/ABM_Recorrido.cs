@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrbaBus;
+using FrbaBus.Abm_Rol;
 
 namespace FrbaBus.Abm_Recorrido
 {
@@ -19,22 +20,30 @@ namespace FrbaBus.Abm_Recorrido
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ( new AltaRecorrido() ).Show();
+            this.Hide();
+            ( new AltaRecorrido() ).ShowDialog();
+            this.Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            ( new BajaRecorrido() ).Show();
+            this.Hide();
+            ( new BajaRecorrido() ).ShowDialog();
+            this.Show();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            (new ModifRecorrido()).Show();
+            this.Hide();
+            (new ModifRecorrido()).ShowDialog();
+            this.Show();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            (new ListadoRol()).Show();
+            this.Hide();
+            (new ListadoRol()).ShowDialog();
+            this.Show();
         }
     }
 }
