@@ -13,15 +13,26 @@ namespace FrbaBus
     public partial class Form1 : Form
     {
         private String stringDeConexion = "Server=localhost\\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;";
+        private DateTime fechaActual = new DateTime(2012,2,1); // Ajustar estos dos parametros por archivo de configuración
 
         public Form1()
         {
             InitializeComponent();
         }
-
+        
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        public DateTime getFechaActual()
+        {
+            return this.fechaActual;
+        }
+
+        public void setFechaActual(String fecha)
+        {
+            this.fechaActual = Convert.ToDateTime(fecha);
         }
 
         public SqlConnection obtenerConexion()
