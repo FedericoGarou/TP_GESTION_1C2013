@@ -36,5 +36,16 @@ namespace FrbaBus
 
             adapter.Fill(unaTabla);
         }
+
+        public DataGridViewButtonColumn crearBotones(String nombreColumna, String leyendaBoton)
+        {
+            DataGridViewButtonColumn botones = new DataGridViewButtonColumn();
+            botones.HeaderText = nombreColumna;
+            botones.Text = leyendaBoton;
+            botones.UseColumnTextForButtonValue = true;
+            botones.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+
+            return botones;
+        }
     }
 }
