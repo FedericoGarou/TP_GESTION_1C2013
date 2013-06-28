@@ -63,44 +63,7 @@ namespace FrbaBus.Abm_Rol
                 {
                     conexion.Open();
                     DataTable tabla = new DataTable();
-                    /*
-                    if (textBox1.Text.Length > 0)
-                    {
-                        cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol LIKE '%" + varFiltro1 + "%'  and Habilitacion=1", ref tabla, conexion);
-
-                        if ((textBox2.Text.Length) > 0 && (varFiltro2 != varFiltro3))
-                        {
-                            cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro2 + "' and Nombre_Rol NOT LIKE '%" + varFiltro1 + "%' and Habilitacion=1", ref tabla, conexion);
-                        }
-
-                        cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro3 + "' and Nombre_Rol NOT LIKE '%" + varFiltro1 + "%' and Habilitacion=1", ref tabla, conexion);
-                        dataGridView1.Columns.Clear();
-                        dataGridView1.DataSource = tabla;
-
-                        dataGridView1.Columns[0].ReadOnly = true;
-                        DataGridViewButtonColumn botonFuncionalidades = this.crearBoton("Funcionalidades", "Mostrar Funciondalidades");
-                        dataGridView1.Columns.Add(botonFuncionalidades);
-
-                    }
-                    else
-                    {
-
-                        if ((textBox2.Text.Length) > 0 && (varFiltro2 != varFiltro3))
-                        {
-                            cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro2 + "' and Habilitacion=1", ref tabla, conexion);
-                        }
-
-                        cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro3 + "' and Habilitacion=1", ref tabla, conexion);
-                        dataGridView1.Columns.Clear();
-                        dataGridView1.DataSource = tabla;
-
-                        dataGridView1.Columns[0].ReadOnly = true;
-                        DataGridViewButtonColumn botonFuncionalidades = this.crearBoton("Funcionalidades", "Mostrar Funciondalidades");
-                        dataGridView1.Columns.Add(botonFuncionalidades);
-
-                    }
-                }
-                     */
+                    
                     if (textBox1.Text.Length > 0)
                     {
                         varFiltro1 = "or Nombre_Rol LIKE '%" + textoFilto1 + "%'";

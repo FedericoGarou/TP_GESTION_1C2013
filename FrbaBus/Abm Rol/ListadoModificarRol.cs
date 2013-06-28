@@ -65,51 +65,7 @@ namespace FrbaBus.Abm_Rol
                 {
                     conexion.Open();
                     DataTable tabla = new DataTable();
-                    /*
-                    if (textBox1.Text.Length > 0)
-                    {
-                        cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol, Habilitacion FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol LIKE '%" + varFiltro1 + "%'", ref tabla, conexion);
-
-                        if ((textBox2.Text.Length) > 0 && (varFiltro2 != varFiltro3))
-                        {
-                            cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol, Habilitacion FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro2 + "' and Nombre_Rol NOT LIKE '%" + varFiltro1 + "%'", ref tabla, conexion);
-                        }
-
-                        cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol, Habilitacion FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro3 + "' and Nombre_Rol NOT LIKE '%" + varFiltro1 + "%'", ref tabla, conexion);
-
-                        dataGridView1.Columns.Clear();
-                        dataGridView1.DataSource = tabla;
-
-                        dataGridView1.Columns[0].ReadOnly = true;
-                        dataGridView1.Columns[1].ReadOnly = true;
-                        DataGridViewButtonColumn botonFuncionalidades = this.crearBoton("Funcionalidades", "Mostrar Funciondalidades");
-                        dataGridView1.Columns.Add(botonFuncionalidades);
-                        DataGridViewButtonColumn botonModificar = this.crearBoton("", "Modificar Rol");
-                        dataGridView1.Columns.Add(botonModificar);
-                    }
-                    else
-                    {
-
-                        if ((textBox2.Text.Length) > 0 && (varFiltro2 != varFiltro3))
-                        {
-                            cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol, Habilitacion FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro2 + "'", ref tabla, conexion);
-                        }
-
-                        cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol, Habilitacion FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro3 + "'", ref tabla, conexion);
-
-                        dataGridView1.Columns.Clear();
-                        dataGridView1.DataSource = tabla;
-
-                        dataGridView1.Columns[0].ReadOnly = true;
-                        dataGridView1.Columns[1].ReadOnly = true;
-                        DataGridViewButtonColumn botonFuncionalidades = this.crearBoton("Funcionalidades", "Mostrar Funciondalidades");
-                        dataGridView1.Columns.Add(botonFuncionalidades);
-                        DataGridViewButtonColumn botonModificar = this.crearBoton("", "Modificar Rol");
-                        dataGridView1.Columns.Add(botonModificar);
-                     
-                    }
-                     */
-
+                    
                     if (textBox1.Text.Length > 0)
                     {
                         varFiltro1 = "or Nombre_Rol LIKE '%" + textoFilto1 + "%'";
