@@ -50,8 +50,9 @@ namespace FrbaBus.Abm_Rol
             string varFiltro1;
             string varFiltro2;
             string varFiltro3;
+            string textoFilto1;
 
-            varFiltro1 = textBox1.Text;
+            textoFilto1 = textBox1.Text;
             varFiltro2 = textBox2.Text;
             varFiltro3 = comboBox1.Text;
 
@@ -61,7 +62,7 @@ namespace FrbaBus.Abm_Rol
                 {
                     conexion.Open();
                     DataTable tabla = new DataTable();
-
+                    /*
                     if (textBox1.Text.Length > 0)
                     {
                         cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol LIKE '%" + varFiltro1 + "%' and Habilitacion=1", ref tabla, conexion);
@@ -101,6 +102,30 @@ namespace FrbaBus.Abm_Rol
                         dataGridView1.Columns.Add(botonInhabilitar);
                     }
                 }
+                     */
+                    if (textBox1.Text.Length > 0)
+                    {
+                        varFiltro1 = "or Nombre_Rol LIKE '%" + textoFilto1 + "%'";
+                    }
+                    else
+                    {
+                        varFiltro1 = "";
+                    }
+                    
+                     cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol, Habilitacion FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro2 + "' or Nombre_Rol = '" + varFiltro3 + "'" + varFiltro1, ref tabla, conexion);
+                    
+                        dataGridView1.Columns.Clear();
+                        dataGridView1.DataSource = tabla;
+
+                        dataGridView1.Columns[0].ReadOnly = true;
+                        dataGridView1.Columns[1].ReadOnly = true;
+                        DataGridViewButtonColumn botonFuncionalidades = this.crearBoton("Funcionalidades", "Mostrar Funciondalidades");
+                        dataGridView1.Columns.Add(botonFuncionalidades);
+                        DataGridViewButtonColumn botonInhabilitar = this.crearBoton("Inhabilitacion Logica", "Inhabilitar Rol");
+                        dataGridView1.Columns.Add(botonInhabilitar);
+                }
+                
+        
 
                 catch (Exception ex)
                 {
@@ -142,7 +167,7 @@ namespace FrbaBus.Abm_Rol
                 {
                     conexion.Open();
 
-                    if (e.ColumnIndex == 1)
+                    if (e.ColumnIndex == 2)
                     {
 
 
@@ -155,7 +180,7 @@ namespace FrbaBus.Abm_Rol
 
                     }
 
-                    if (e.ColumnIndex == 2)
+                    if (e.ColumnIndex == 3)
                     {
                         try
                         {
