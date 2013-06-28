@@ -45,14 +45,14 @@ namespace FrbaBus.Abm_Rol
                     (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
                 }
             }
-        }       
+        }
 
         public ModifRol(String nombreRolAModificar)
         {
             InitializeComponent();
-            
+
             comboBox1.Text = nombreRolAModificar;
-            
+
             comboBox1.Enabled = false;
             comboBox2.Enabled = false;
             comboBox3.Enabled = false;
@@ -228,7 +228,7 @@ namespace FrbaBus.Abm_Rol
 
                     comboBox2.Update();
 
-                    new Dialogo("La funcionalidad " +nombreFunc+ ", fue eliminada de " +nombreRol+ "\n 1 fila afectada", "Aceptar").ShowDialog();
+                    new Dialogo("La funcionalidad " + nombreFunc + ", fue eliminada de " + nombreRol + "\n 1 fila afectada", "Aceptar").ShowDialog();
 
                 }
                 catch (Exception ex)
@@ -259,19 +259,19 @@ namespace FrbaBus.Abm_Rol
                     SqlCommand codFunc = new SqlCommand("USE GD1C2013 SELECT * FROM LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad WHERE Nombre_Funcionalidad = '" + nombreFunc + "'", conexion);
                     int codigoFunc = (int)codFunc.ExecuteScalar();
 
-                    SqlCommand cmd = new SqlCommand("USE GD1C2013 SELECT COUNT(*) FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol_Funcionalidad WHERE Codigo_Rol =" + codigoRol + "and Codigo_Funcionalidad=" +codigoFunc, conexion);
+                    SqlCommand cmd = new SqlCommand("USE GD1C2013 SELECT COUNT(*) FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol_Funcionalidad WHERE Codigo_Rol =" + codigoRol + "and Codigo_Funcionalidad=" + codigoFunc, conexion);
 
                     int cantidadDeFilas = (int)cmd.ExecuteScalar();
 
                     if (cantidadDeFilas != 0)
                     {
-                        (new Dialogo("El rol " +nombreRol+ " ya posee la funcionalidad " +nombreFunc, "Aceptar")).ShowDialog();                        
+                        (new Dialogo("El rol " + nombreRol + " ya posee la funcionalidad " + nombreFunc, "Aceptar")).ShowDialog();
                     }
                     else
                     {
-                        SqlCommand addRolFunc = new SqlCommand("USE GD1C2013 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Rol_Funcionalidad VALUES ("+codigoRol+","+codigoFunc+")", conexion);
+                        SqlCommand addRolFunc = new SqlCommand("USE GD1C2013 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Rol_Funcionalidad VALUES (" + codigoRol + "," + codigoFunc + ")", conexion);
                         addRolFunc.ExecuteNonQuery();
-                        new Dialogo("La funcionalidad " +nombreFunc+ ", fue agregada a " +nombreRol+ "\n 1 fila afectada", "Aceptar").ShowDialog();
+                        new Dialogo("La funcionalidad " + nombreFunc + ", fue agregada a " + nombreRol + "\n 1 fila afectada", "Aceptar").ShowDialog();
                     }
 
                 }
@@ -281,17 +281,54 @@ namespace FrbaBus.Abm_Rol
                     (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
                 }
 
-                }
             }
+        }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             comboBox2.Text = "";
             comboBox3.Text = "";
-            
+
             comboBox2.Enabled = false;
             comboBox3.Enabled = false;
 
         }
+
+        private void button5_Click_1(object sender, EventArgs e)
+        {
+            string nombreRol;
+            nombreRol = comboBox1.Text;
+
+            using (SqlConnection conexion = this.obtenerConexion())
+            {
+                try
+                {
+                    conexion.Open();
+                    SqlCommand validacion = new SqlCommand("USE GD1C2013 SELECT * FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol where Nombre_Rol = '" + nombreRol + "' and Habilitacion=0", conexion);
+                    int cantidadDeFilas = (int)validacion.ExecuteScalar();
+
+                    if (cantidadDeFilas == 0)
+                    {
+                        (new Dialogo("El rol esta habilitado", "Aceptar")).ShowDialog();
+                    }
+
+                    else
+                    {
+                        SqlCommand habilitarRol = new SqlCommand("USE GD1C2013 UPDATE LOS_VIAJEROS_DEL_ANONIMATO.Rol SET Habilitacion=1 where Nombre_Rol = '" + nombreRol + "'", conexion);
+                        habilitarRol.ExecuteNonQuery();
+                        (new Dialogo("El rol se ha habilitado", "Aceptar")).ShowDialog();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex.Message);
+                    (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
+                }
+
+            }
+
+
+
         }
+    }
 }

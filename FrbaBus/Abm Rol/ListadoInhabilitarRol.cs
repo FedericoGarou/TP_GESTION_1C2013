@@ -94,6 +94,7 @@ namespace FrbaBus.Abm_Rol
                         dataGridView1.Columns.Clear();
                         dataGridView1.DataSource = tabla;
 
+                        dataGridView1.Columns[0].ReadOnly = true;
                         DataGridViewButtonColumn botonFuncionalidades = this.crearBoton("Funcionalidades", "Mostrar Funciondalidades");
                         dataGridView1.Columns.Add(botonFuncionalidades);
                         DataGridViewButtonColumn botonInhabilitar = this.crearBoton("Inhabilitacion Logica", "Inhabilitar Rol");
@@ -150,6 +151,7 @@ namespace FrbaBus.Abm_Rol
                         cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_funcionalidad FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol r join LOS_VIAJEROS_DEL_ANONIMATO.Rol_Funcionalidad rf on (r.Codigo_Rol = rf.Codigo_Rol) join LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad f on (rf.Codigo_Funcionalidad = f.Codigo_Funcionalidad) where Nombre_Rol = '" + nombreRol + "'", ref tabla, conexion);
                         
                         dataGridView2.DataSource = tabla;
+                        dataGridView2.Columns[0].ReadOnly = true;
 
                     }
 

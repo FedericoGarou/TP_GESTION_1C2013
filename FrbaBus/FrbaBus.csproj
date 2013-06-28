@@ -99,6 +99,12 @@
     <Compile Include="Abm Recorrido\BajaRecorrido.Designer.cs">
       <DependentUpon>BajaRecorrido.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Recorrido\ListadoRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Recorrido\ListadoRol.Designer.cs">
+      <DependentUpon>ListadoRol.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Recorrido\ModifFormularioRecorrido.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -263,6 +269,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Recorrido\BajaRecorrido.resx">
       <DependentUpon>BajaRecorrido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Recorrido\ListadoRol.resx">
+      <DependentUpon>ListadoRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Recorrido\ModifFormularioRecorrido.resx">
       <DependentUpon>ModifFormularioRecorrido.cs</DependentUpon>

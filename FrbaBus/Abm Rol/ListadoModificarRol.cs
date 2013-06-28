@@ -64,18 +64,20 @@ namespace FrbaBus.Abm_Rol
 
                     if (textBox1.Text.Length > 0)
                     {
-                        cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol LIKE '%" + varFiltro1 + "%' and Habilitacion=1", ref tabla, conexion);
+                        cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol, Habilitacion FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol LIKE '%" + varFiltro1 + "%'", ref tabla, conexion);
 
                         if ((textBox2.Text.Length) > 0 && (varFiltro2 != varFiltro3))
                         {
-                            cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro2 + "' and Nombre_Rol NOT LIKE '%" + varFiltro1 + "%' and Habilitacion=1", ref tabla, conexion);
+                            cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol, Habilitacion FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro2 + "' and Nombre_Rol NOT LIKE '%" + varFiltro1 + "%'", ref tabla, conexion);
                         }
 
-                        cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro3 + "' and Nombre_Rol NOT LIKE '%" + varFiltro1 + "%' and Habilitacion=1", ref tabla, conexion);
+                        cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol, Habilitacion FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro3 + "' and Nombre_Rol NOT LIKE '%" + varFiltro1 + "%'", ref tabla, conexion);
 
                         dataGridView1.Columns.Clear();
                         dataGridView1.DataSource = tabla;
 
+                        dataGridView1.Columns[0].ReadOnly = true;
+                        dataGridView1.Columns[1].ReadOnly = true;
                         DataGridViewButtonColumn botonFuncionalidades = this.crearBoton("Funcionalidades", "Mostrar Funciondalidades");
                         dataGridView1.Columns.Add(botonFuncionalidades);
                         DataGridViewButtonColumn botonModificar = this.crearBoton("", "Modificar Rol");
@@ -86,14 +88,16 @@ namespace FrbaBus.Abm_Rol
 
                         if ((textBox2.Text.Length) > 0 && (varFiltro2 != varFiltro3))
                         {
-                            cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro2 + "' and Habilitacion=1", ref tabla, conexion);
+                            cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol, Habilitacion FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro2 + "'", ref tabla, conexion);
                         }
 
-                        cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro3 + "' and Habilitacion=1", ref tabla, conexion);
+                        cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol, Habilitacion FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE Nombre_Rol = '" + varFiltro3 + "'", ref tabla, conexion);
 
                         dataGridView1.Columns.Clear();
                         dataGridView1.DataSource = tabla;
 
+                        dataGridView1.Columns[0].ReadOnly = true;
+                        dataGridView1.Columns[1].ReadOnly = true;
                         DataGridViewButtonColumn botonFuncionalidades = this.crearBoton("Funcionalidades", "Mostrar Funciondalidades");
                         dataGridView1.Columns.Add(botonFuncionalidades);
                         DataGridViewButtonColumn botonModificar = this.crearBoton("", "Modificar Rol");
@@ -145,7 +149,7 @@ namespace FrbaBus.Abm_Rol
 
                         String nombreRolActual = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
-                        if (e.ColumnIndex == 1) //boton mostrar funcionalidades
+                        if (e.ColumnIndex == 2) //boton mostrar funcionalidades
                         {
 
 
@@ -155,12 +159,13 @@ namespace FrbaBus.Abm_Rol
                             dataGridView2.Columns.Clear();
                             dataGridView2.DataSource = tabla;
 
+                            dataGridView2.Columns[0].ReadOnly = true;
                             DataGridViewButtonColumn botonModificar = this.crearBoton("", "Modificar / Eliminar / Agregar Funcionalidad");
                             dataGridView2.Columns.Add(botonModificar);
 
                         }
 
-                        if (e.ColumnIndex == 2)//boton modificar rol
+                        if (e.ColumnIndex == 3)//boton modificar rol
                         {
 
                             (new ModifRol(nombreRolActual)).Show();

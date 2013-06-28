@@ -40,6 +40,7 @@
             this.button4 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.button5 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -57,9 +58,9 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(314, 69);
+            this.button1.Location = new System.Drawing.Point(312, 53);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(126, 31);
+            this.button1.Size = new System.Drawing.Size(126, 27);
             this.button1.TabIndex = 3;
             this.button1.Text = "Modificar Nombre";
             this.button1.UseVisualStyleBackColor = true;
@@ -162,12 +163,24 @@
             this.label3.TabIndex = 14;
             this.label3.Text = "Rol";
             // 
+            // button5
+            // 
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.Location = new System.Drawing.Point(312, 86);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(126, 26);
+            this.button5.TabIndex = 15;
+            this.button5.Text = "Habilitar Rol";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click_1);
+            // 
             // ModifRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(450, 233);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button4);
@@ -201,5 +214,6 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button5;
     }
 }
