@@ -71,6 +71,7 @@ namespace FrbaBus.Abm_Rol
             comboBox1.Enabled = false;
             textBox1.Enabled = false;
             button1.Enabled = false;
+            button5.Enabled = false;
 
             comboBox2.Text = nombreFuncionalidadAModificar;
 

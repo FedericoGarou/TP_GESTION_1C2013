@@ -120,7 +120,7 @@ namespace FrbaBus.Abm_Rol
         private void button3_Click(object sender, EventArgs e) 
         {
 
-            funcionalidad = comboBox1.Text;
+            funcionalidad = listBox1.Text;
 
            
             if (listBox1.Items.Contains(funcionalidad))
