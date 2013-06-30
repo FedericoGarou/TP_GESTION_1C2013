@@ -327,7 +327,6 @@ values ('admin', 'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9b
 
 --LLenar tabla de funcionalidades
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('ABM Rol');
-INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('Login y seguridad');
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('ABM Recorrido');
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('ABM Micro');
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad values ('Generacion de viaje');
