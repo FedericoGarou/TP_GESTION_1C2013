@@ -55,7 +55,7 @@ CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.Login_Usuario (
 Username nvarchar(255),
 Passwd nvarchar(255), 
 DNI_Usuario numeric(18,0) FOREIGN KEY REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.Usuario(DNI), 
-Intentos_Fallidos char(1), 
+Intentos_Fallidos int, 
 PRIMARY KEY (Username) );
 
 
