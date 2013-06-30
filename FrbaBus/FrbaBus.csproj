@@ -238,17 +238,23 @@
     <Compile Include="GenerarViaje\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Login\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Login\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Herramientas Generales\MostrarRol.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Herramientas Generales\MostrarRol.Designer.cs">
       <DependentUpon>MostrarRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login\Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login\Pantalla_Inicial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\Pantalla_Inicial.Designer.cs">
+      <DependentUpon>Pantalla_Inicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -320,6 +326,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Herramientas Generales\MostrarRol.resx">
       <DependentUpon>MostrarRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\Pantalla_Inicial.resx">
+      <DependentUpon>Pantalla_Inicial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -106,9 +106,9 @@ namespace FrbaBus.Abm_Rol
 
                     dataGridView1.Columns[0].ReadOnly = true;
                     dataGridView1.Columns[1].ReadOnly = true;
-                    DataGridViewButtonColumn botonFuncionalidades = this.crearBoton("Funcionalidades", "Mostrar Funciondalidades");
+                    DataGridViewButtonColumn botonFuncionalidades = this.crearBotones("Funcionalidades", "Mostrar Funciondalidades");
                     dataGridView1.Columns.Add(botonFuncionalidades);
-                    DataGridViewButtonColumn botonInhabilitar = this.crearBoton("Inhabilitacion Logica", "Inhabilitar Rol");
+                    DataGridViewButtonColumn botonInhabilitar = this.crearBotones("Inhabilitacion Logica", "Inhabilitar Rol");
                     dataGridView1.Columns.Add(botonInhabilitar);
                 }                       
 
@@ -132,18 +132,7 @@ namespace FrbaBus.Abm_Rol
             dataGridView2.DataSource = "";
             dataGridView2.Columns.Clear();
         }
-
-        public DataGridViewButtonColumn crearBoton(String nombreColumna, String leyendaBoton)
-        {
-            DataGridViewButtonColumn botones = new DataGridViewButtonColumn();
-            botones.HeaderText = nombreColumna;
-            botones.Text = leyendaBoton;
-            botones.UseColumnTextForButtonValue = true;
-            botones.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-
-            return botones;
-        }
-
+       
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dataGridView1.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex != -1)

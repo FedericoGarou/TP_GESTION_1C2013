@@ -50,7 +50,7 @@
             this.listBox1.Location = new System.Drawing.Point(27, 12);
             this.listBox1.Name = "listBox1";
             this.listBox1.ScrollAlwaysVisible = true;
-            this.listBox1.Size = new System.Drawing.Size(516, 160);
+            this.listBox1.Size = new System.Drawing.Size(516, 147);
             this.listBox1.TabIndex = 2;
             // 
             // Dialogo

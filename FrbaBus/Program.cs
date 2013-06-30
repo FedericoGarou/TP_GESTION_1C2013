@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using FrbaBus.Abm_Recorrido;
 using FrbaBus.Abm_Rol;
 using FrbaBus.Abm_Ciudades;
+using FrbaBus.Login;
 
 namespace FrbaBus
 {
@@ -21,9 +22,11 @@ namespace FrbaBus
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ABM_Rol());
+           // Application.Run(new ABM_Rol());
             //Application.Run(new ABM_Recorrido());
             //Application.Run(new ABM_Ciudad_Pantalla_Inicial());
+
+            Application.Run(new Pantalla_Inicial());
         }
 
         

@@ -147,3 +147,5 @@ C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus
 C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Debug\FrbaBus.Abm_Rol.ListadoInhablitarRol.resources
 C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Debug\FrbaBus.Abm_Rol.ListadoModificarRol.resources
 C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Debug\FrbaBus.Abm_Recorrido.ListadoRol.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Debug\FrbaBus.Login.Pantalla_Inicial.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Debug\FrbaBus.Login.Login.resources

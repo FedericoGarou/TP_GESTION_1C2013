@@ -109,9 +109,9 @@ namespace FrbaBus.Abm_Rol
 
                     dataGridView1.Columns[0].ReadOnly = true;
                     dataGridView1.Columns[1].ReadOnly = true;
-                    DataGridViewButtonColumn botonFuncionalidades = this.crearBoton("Funcionalidades", "Mostrar Funciondalidades");
+                    DataGridViewButtonColumn botonFuncionalidades = this.crearBotones("Funcionalidades", "Mostrar Funciondalidades");
                     dataGridView1.Columns.Add(botonFuncionalidades);
-                    DataGridViewButtonColumn botonModificar = this.crearBoton("", "Modificar Rol");
+                    DataGridViewButtonColumn botonModificar = this.crearBotones("", "Modificar Rol");
                     dataGridView1.Columns.Add(botonModificar);
                 }
 
@@ -134,18 +134,7 @@ namespace FrbaBus.Abm_Rol
             dataGridView1.Columns.Clear();
             dataGridView2.DataSource = "";
             dataGridView2.Columns.Clear();
-        }
-
-        public DataGridViewButtonColumn crearBoton(String nombreColumna, String leyendaBoton)
-        {
-            DataGridViewButtonColumn botones = new DataGridViewButtonColumn();
-            botones.HeaderText = nombreColumna;
-            botones.Text = leyendaBoton;
-            botones.UseColumnTextForButtonValue = true;
-            botones.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-
-            return botones;
-        }
+        }               
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -173,7 +162,7 @@ namespace FrbaBus.Abm_Rol
                             dataGridView2.DataSource = tabla;
 
                             dataGridView2.Columns[0].ReadOnly = true;
-                            DataGridViewButtonColumn botonModificar = this.crearBoton("", "Modificar / Eliminar / Agregar Funcionalidad");
+                            DataGridViewButtonColumn botonModificar = this.crearBotones("", "Modificar / Eliminar / Agregar Funcionalidad");
                             dataGridView2.Columns.Add(botonModificar);
 
                         }
