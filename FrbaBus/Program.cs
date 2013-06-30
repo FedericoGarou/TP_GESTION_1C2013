@@ -4,9 +4,6 @@ using System.Linq;
 using System.Windows.Forms;
 using FrbaBus.Abm_Recorrido;
 using System.Data.SqlClient;
-using FrbaBus.Abm_Recorrido;
-using FrbaBus.Abm_Rol;
-using FrbaBus.Abm_Ciudades;
 using FrbaBus.Login;
 
 namespace FrbaBus
@@ -21,10 +18,7 @@ namespace FrbaBus
         static void Main()
         {
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-           // Application.Run(new ABM_Rol());
-            //Application.Run(new ABM_Recorrido());
-            //Application.Run(new ABM_Ciudad_Pantalla_Inicial());
+            Application.SetCompatibleTextRenderingDefault(false);       
 
             Application.Run(new Pantalla_Inicial());
         }

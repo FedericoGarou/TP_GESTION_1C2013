@@ -50,6 +50,7 @@ namespace FrbaBus.Login
 
                         if (cantidadDeFilas == 1)
                         {
+                            Close();
                             new Pantalla_Inicial(usuario).Show();
                         }
                         else

@@ -33,7 +33,8 @@ namespace FrbaBus.Login
                     comboBox1.DisplayMember = "Nombre_Funcionalidad";
                     comboBox1.DataSource = tablaDeNombres;
 
-
+                    button3.Hide();
+                    label3.Hide();
 
                 }
                 catch (Exception ex)
@@ -46,11 +47,12 @@ namespace FrbaBus.Login
         }
 
         private void button2_Click(object sender, EventArgs e)
-        {
+        {            
             (new Login()).Show();
+            
         }
 
-        
+
         public Pantalla_Inicial(string unUsuario)
         {
             InitializeComponent();
@@ -69,8 +71,11 @@ namespace FrbaBus.Login
                     adapter.Fill(tablaDeNombres);
                     comboBox1.DisplayMember = "Nombre_Funcionalidad";
                     comboBox1.DataSource = tablaDeNombres;
-
-
+                    button2.Hide();
+                    button3.Show();
+                    label3.Show();
+                    label3.Text = "Hola, " + unUsuario;                    
+                    
 
                 }
                 catch (Exception ex)
@@ -81,6 +86,10 @@ namespace FrbaBus.Login
 
             }
         }
+           
+        
+    
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -95,6 +104,12 @@ namespace FrbaBus.Login
             {
                 (new ABM_Recorrido()).Show();
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Close();
+            (new Pantalla_Inicial()).Show();
         }
     }
 }
