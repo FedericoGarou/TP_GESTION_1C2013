@@ -145,7 +145,7 @@ namespace FrbaBus.Compra_de_Pasajes
             {
                 this.Hide();
                 (new Dialogo("Vas a comprar un pasaje","Aceptar")).ShowDialog();
-                // (new EspecificarPasajes_Encomiendas()).ShowDialog();
+                // (new EspecificarCompra()).ShowDialog();
                 this.Show();
 
             }
