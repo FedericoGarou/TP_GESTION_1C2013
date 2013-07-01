@@ -63,7 +63,7 @@ namespace FrbaBus.Login
                     //cargar comboBox de un usuario determinado
                     conexion.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT * FROM LOS_VIAJEROS_DEL_ANONIMATO.Login_Usuario l join LOS_VIAJEROS_DEL_ANONIMATO.Usuario_Rol ur on (l.DNI_Usuario = ur.DNI) join LOS_VIAJEROS_DEL_ANONIMATO.Rol r on (ur.Codigo_Rol = r.Codigo_Rol) join LOS_VIAJEROS_DEL_ANONIMATO.Rol_Funcionalidad rf on (r.Codigo_Rol = rf.Codigo_Rol) join LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad f on ( rf.Codigo_Funcionalidad = f.Codigo_Funcionalidad) WHERE Username='" + unUsuario + "'", conexion);
+                    SqlCommand cmd = new SqlCommand("SELECT DISTINCT(Nombre_Funcionalidad) FROM LOS_VIAJEROS_DEL_ANONIMATO.Login_Usuario l join LOS_VIAJEROS_DEL_ANONIMATO.Usuario_Rol ur on (l.DNI_Usuario = ur.DNI) join LOS_VIAJEROS_DEL_ANONIMATO.Rol r on (ur.Codigo_Rol = r.Codigo_Rol) join LOS_VIAJEROS_DEL_ANONIMATO.Rol_Funcionalidad rf on (r.Codigo_Rol = rf.Codigo_Rol) join LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad f on ( rf.Codigo_Funcionalidad = f.Codigo_Funcionalidad) WHERE Username='" + unUsuario + "'", conexion);
 
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     DataTable tablaDeNombres = new DataTable();

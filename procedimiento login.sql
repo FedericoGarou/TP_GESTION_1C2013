@@ -15,7 +15,16 @@ begin
 		if (@existeUsuarioyContraseña = 1)
 		begin
 			UPDATE LOS_VIAJEROS_DEL_ANONIMATO.Login_Usuario SET Intentos_Fallidos=0 WHERE Username = @usuario;
-			set @respuesta='abrir sesion'
+			declare @existeRol INT = (SELECT COUNT(*) FROM LOS_VIAJEROS_DEL_ANONIMATO.Login_Usuario l join LOS_VIAJEROS_DEL_ANONIMATO.Usuario_Rol ur on (l.DNI_Usuario = ur.DNI) WHERE Username = @usuario)
+			
+			if (@existeRol = 0)
+			begin
+				set @respuesta='El usuario no tiene asignado un rol, o el rol ha sido inhabilitado'
+			end
+			else
+			begin			
+				set @respuesta='abrir sesion'
+			end
 			
 		--	Close();
 		--	new Pantalla_Inicial(usuario).Show();
