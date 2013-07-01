@@ -27,53 +27,33 @@ namespace FrbaBus.Login
             using (SqlConnection conexion = this.obtenerConexion())
             {
                 try
-                {
-                    conexion.Open();
-
+                {                
                     string usuario = textBox1.Text;
                     string pass = SHA256Encrypt(textBox2.Text);
+                    string respuesta = "";
                     
-                    SqlCommand us = new SqlCommand("USE GD1C2013 SELECT COUNT(*) FROM LOS_VIAJEROS_DEL_ANONIMATO.Login_Usuario WHERE Username = '" + usuario + "'", conexion);
-                    int existeUsuario = (int)us.ExecuteScalar();
+                    using (SqlCommand cmd = new SqlCommand("LOS_VIAJEROS_DEL_ANONIMATO.login", conexion))
+                    {
+                        conexion.Open();
+                                                
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@usuario", SqlDbType.NVarChar).Value = usuario;
+                        cmd.Parameters.Add("@pass", SqlDbType.NVarChar).Value = pass;                        
+                        cmd.Parameters.Add("@respuesta", SqlDbType.NVarChar , 100).Direction = ParameterDirection.Output;
 
-                    if (existeUsuario == 1)
-                    {                                          
-                        SqlCommand IntentosFallidos = new SqlCommand("USE GD1C2013 SELECT Intentos_Fallidos FROM LOS_VIAJEROS_DEL_ANONIMATO.Login_Usuario WHERE Username = '" + usuario + "'", conexion);
-                        int cantidadIntentosFallidos = (int) IntentosFallidos.ExecuteScalar();                        
+                        cmd.ExecuteNonQuery();
 
-                            if (cantidadIntentosFallidos < 3)
-                            {
-                                SqlCommand usyps = new SqlCommand("USE GD1C2013 SELECT COUNT(*) FROM LOS_VIAJEROS_DEL_ANONIMATO.Login_Usuario WHERE Username = '" + usuario + "' and Passwd = '" + pass + "'", conexion);
-                                int existeUsuarioyContraseña = (int)usyps.ExecuteScalar();
+                        respuesta = (cmd.Parameters["@respuesta"].Value.ToString());
+                        if (String.Equals(respuesta, "abrir sesion"))
+                        {
+                            Close();
+		                    new Pantalla_Inicial(usuario).Show();
+                        }else
+                        {
+                            new Dialogo(""+respuesta, "Aceptar").ShowDialog();
+                        }
 
-                                if (existeUsuarioyContraseña == 1)
-                                {
-                                    SqlCommand reiniciarIntentosFallidos = new SqlCommand("USE GD1C2013 UPDATE LOS_VIAJEROS_DEL_ANONIMATO.Login_Usuario SET Intentos_Fallidos=0 WHERE Username='" + usuario + "'", conexion);
-                                    reiniciarIntentosFallidos.ExecuteNonQuery();
-
-                                    Close();
-                                    new Pantalla_Inicial(usuario).Show();
-                                }
-                                else
-                                {
-                                    SqlCommand aumentarIntentoFallido = new SqlCommand("USE GD1C2013 UPDATE LOS_VIAJEROS_DEL_ANONIMATO.Login_Usuario SET Intentos_Fallidos=(Intentos_Fallidos+1) WHERE Username='" + usuario + "'", conexion);
-                                    aumentarIntentoFallido.ExecuteNonQuery();
-                                    new Dialogo("Contraseña incorrecta, vuelva a intentarlo;Cantidad de intentos fallidos: " + (cantidadIntentosFallidos + 1), "Aceptar").ShowDialog();
-                                }
-
-                            }
-                            else
-                            {
-                                new Dialogo("Su usuario esta bloqueado, por sobrepasar la cantidad de logueos incorrectos", "Aceptar").ShowDialog();
-                            }  
-                  
                     }
-                    else
-                    {                    
-                        new Dialogo("No existe el usuario, vuelva a intentarlo", "Aceptar").ShowDialog();                        
-                    }
-
-
                 }
                 catch (Exception ex)
                 {
