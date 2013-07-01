@@ -108,8 +108,7 @@ namespace FrbaBus.Login
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Close();
-            (new Pantalla_Inicial()).Show();
+            Close();            
         }
     }
 }
