@@ -28,6 +28,7 @@ namespace FrbaBus.Compra_de_Pasajes
         private void AgregarPasaje_Load(object sender, EventArgs e)
         {}
 
+        // Insertar pasajero
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -119,6 +120,7 @@ namespace FrbaBus.Compra_de_Pasajes
             }
         }
 
+        // Cancelar
         private void button3_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;

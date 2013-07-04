@@ -139,14 +139,67 @@ namespace FrbaBus.Compra_de_Pasajes
             }
         }
 
+        //CANCELAR
         private void button5_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
+        private void buttonAddEncomienda_Click(object sender, EventArgs e)
+        {
+            decimal monto = 0;
+            this.Hide();
+            AgregarEncomienda addEncomienda = new AgregarEncomienda(this.codigoViaje);
+            DialogResult dr = addEncomienda.ShowDialog();
+            
+            if (dr == DialogResult.OK)
+            {
+                monto = this.obtenerMontoEncomienda(addEncomienda.kilogramosPaquete);
 
+               dataGVEncomienda.Rows.Add(
+                    addEncomienda.DNI_Pasajero,
+                    addEncomienda.ApellidoPasajero,
+                    addEncomienda.NombrePasajero,
+                    addEncomienda.kilogramosPaquete,
+                    monto);
 
+                    textBoxTotal.Text = (Convert.ToDecimal(textBoxTotal.Text) + monto).ToString();
+                
+            }
+
+            this.Show();
+        }
+
+        private decimal obtenerMontoEncomienda(decimal kilos)
+        {
+            using (SqlConnection conexion = this.obtenerConexion())
+            {
+                using (SqlCommand comando = new SqlCommand("LOS_VIAJEROS_DEL_ANONIMATO.SP_ObtenerMontoEncomienda", conexion))
+                {
+                    conexion.Open();
+
+                    comando.CommandType = CommandType.StoredProcedure;
+                    comando.Parameters.Add("@codigoViaje", SqlDbType.Int).Value = this.codigoViaje;
+                    comando.Parameters.Add("@monto", SqlDbType.Float).Direction = ParameterDirection.Output;
+
+                    comando.ExecuteNonQuery();
+
+                    return Convert.ToDecimal(comando.Parameters["@monto"].Value) * kilos;
+
+                }
+            }
+        }
+
+        private void buttonRemEncomienda_Click(object sender, EventArgs e)
+        {
+            DataGridViewSelectedRowCollection filasEliminadas = dataGVEncomienda.SelectedRows;
+            foreach (DataGridViewRow filaEliminada in filasEliminadas)
+            {
+                textBoxTotal.Text = (Convert.ToDecimal(textBoxTotal.Text) - Convert.ToDecimal(filaEliminada.Cells["Monto"].Value)).ToString();
+                dataGVEncomienda.Rows.RemoveAt(filaEliminada.Index);
+            }
+        }
 
     }
 }

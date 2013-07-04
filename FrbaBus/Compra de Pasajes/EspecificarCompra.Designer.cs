@@ -29,13 +29,14 @@
         private void InitializeComponent()
         {
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGVEncomienda = new System.Windows.Forms.DataGridView();
+            this.DNI_Enc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ApeDueño = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NombreDueño = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.KGPaquete = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Monto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonRemEncomienda = new System.Windows.Forms.Button();
+            this.buttonAddEncomienda = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dataGVPasajes = new System.Windows.Forms.DataGridView();
             this.DNI = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,20 +49,20 @@
             this.button3 = new System.Windows.Forms.Button();
             this.buttonAddPasaje = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
+            this.buttonContinuar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxTotal = new System.Windows.Forms.TextBox();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGVEncomienda)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGVPasajes)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.dataGridView1);
-            this.groupBox3.Controls.Add(this.button2);
-            this.groupBox3.Controls.Add(this.button1);
+            this.groupBox3.Controls.Add(this.dataGVEncomienda);
+            this.groupBox3.Controls.Add(this.buttonRemEncomienda);
+            this.groupBox3.Controls.Add(this.buttonAddEncomienda);
             this.groupBox3.Location = new System.Drawing.Point(12, 12);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(795, 240);
@@ -69,83 +70,96 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Pasajes";
             // 
-            // dataGridView1
+            // dataGVEncomienda
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToResizeColumns = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGVEncomienda.AllowUserToAddRows = false;
+            this.dataGVEncomienda.AllowUserToDeleteRows = false;
+            this.dataGVEncomienda.AllowUserToResizeColumns = false;
+            this.dataGVEncomienda.AllowUserToResizeRows = false;
+            this.dataGVEncomienda.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.dataGVEncomienda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGVEncomienda.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DNI_Enc,
             this.ApeDueño,
             this.NombreDueño,
             this.KGPaquete,
             this.Monto});
-            this.dataGridView1.Location = new System.Drawing.Point(7, 19);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(641, 207);
-            this.dataGridView1.TabIndex = 0;
+            this.dataGVEncomienda.Location = new System.Drawing.Point(7, 19);
+            this.dataGVEncomienda.Name = "dataGVEncomienda";
+            this.dataGVEncomienda.Size = new System.Drawing.Size(641, 207);
+            this.dataGVEncomienda.TabIndex = 0;
+            // 
+            // DNI_Enc
+            // 
+            this.DNI_Enc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.DNI_Enc.FillWeight = 115F;
+            this.DNI_Enc.Frozen = true;
+            this.DNI_Enc.HeaderText = "DNI";
+            this.DNI_Enc.Name = "DNI_Enc";
+            this.DNI_Enc.ReadOnly = true;
+            this.DNI_Enc.Width = 115;
             // 
             // ApeDueño
             // 
             this.ApeDueño.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ApeDueño.FillWeight = 150F;
+            this.ApeDueño.FillWeight = 115F;
             this.ApeDueño.Frozen = true;
             this.ApeDueño.HeaderText = "Apellido dueño";
             this.ApeDueño.Name = "ApeDueño";
             this.ApeDueño.ReadOnly = true;
-            this.ApeDueño.Width = 150;
+            this.ApeDueño.Width = 115;
             // 
             // NombreDueño
             // 
             this.NombreDueño.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.NombreDueño.FillWeight = 150F;
+            this.NombreDueño.FillWeight = 115F;
             this.NombreDueño.Frozen = true;
             this.NombreDueño.HeaderText = "Nombre dueño";
             this.NombreDueño.Name = "NombreDueño";
             this.NombreDueño.ReadOnly = true;
-            this.NombreDueño.Width = 150;
+            this.NombreDueño.Width = 115;
             // 
             // KGPaquete
             // 
             this.KGPaquete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.KGPaquete.FillWeight = 150F;
+            this.KGPaquete.FillWeight = 115F;
             this.KGPaquete.Frozen = true;
             this.KGPaquete.HeaderText = "Kilos paquete";
             this.KGPaquete.Name = "KGPaquete";
             this.KGPaquete.ReadOnly = true;
-            this.KGPaquete.Width = 150;
+            this.KGPaquete.Width = 115;
             // 
             // Monto
             // 
             this.Monto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Monto.FillWeight = 150F;
+            this.Monto.FillWeight = 135F;
             this.Monto.Frozen = true;
             this.Monto.HeaderText = "Monto";
             this.Monto.Name = "Monto";
             this.Monto.ReadOnly = true;
-            this.Monto.Width = 150;
+            this.Monto.Width = 135;
             // 
-            // button2
+            // buttonRemEncomienda
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(654, 90);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(137, 65);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Eliminar encomienda";
-            this.button2.UseVisualStyleBackColor = true;
+            this.buttonRemEncomienda.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonRemEncomienda.Location = new System.Drawing.Point(654, 90);
+            this.buttonRemEncomienda.Name = "buttonRemEncomienda";
+            this.buttonRemEncomienda.Size = new System.Drawing.Size(137, 65);
+            this.buttonRemEncomienda.TabIndex = 1;
+            this.buttonRemEncomienda.Text = "Eliminar encomienda";
+            this.buttonRemEncomienda.UseVisualStyleBackColor = true;
+            this.buttonRemEncomienda.Click += new System.EventHandler(this.buttonRemEncomienda_Click);
             // 
-            // button1
+            // buttonAddEncomienda
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(654, 19);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(137, 65);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Agregar encomienda";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonAddEncomienda.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonAddEncomienda.Location = new System.Drawing.Point(654, 19);
+            this.buttonAddEncomienda.Name = "buttonAddEncomienda";
+            this.buttonAddEncomienda.Size = new System.Drawing.Size(137, 65);
+            this.buttonAddEncomienda.TabIndex = 1;
+            this.buttonAddEncomienda.Text = "Agregar encomienda";
+            this.buttonAddEncomienda.UseVisualStyleBackColor = true;
+            this.buttonAddEncomienda.Click += new System.EventHandler(this.buttonAddEncomienda_Click);
             // 
             // groupBox1
             // 
@@ -275,15 +289,15 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
-            // button8
+            // buttonContinuar
             // 
-            this.button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button8.Location = new System.Drawing.Point(590, 514);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(217, 45);
-            this.button8.TabIndex = 1;
-            this.button8.Text = "Continuar";
-            this.button8.UseVisualStyleBackColor = true;
+            this.buttonContinuar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonContinuar.Location = new System.Drawing.Point(590, 514);
+            this.buttonContinuar.Name = "buttonContinuar";
+            this.buttonContinuar.Size = new System.Drawing.Size(217, 45);
+            this.buttonContinuar.TabIndex = 1;
+            this.buttonContinuar.Text = "Continuar";
+            this.buttonContinuar.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -315,12 +329,12 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.button8);
+            this.Controls.Add(this.buttonContinuar);
             this.Controls.Add(this.button5);
             this.Name = "EspecificarCompra";
             this.Text = "EspecificarCompra";
             this.groupBox3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGVEncomienda)).EndInit();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGVPasajes)).EndInit();
             this.ResumeLayout(false);
@@ -331,19 +345,15 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataGridView dataGVEncomienda;
+        private System.Windows.Forms.Button buttonAddEncomienda;
+        private System.Windows.Forms.Button buttonRemEncomienda;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dataGVPasajes;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button buttonAddPasaje;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ApeDueño;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NombreDueño;
-        private System.Windows.Forms.DataGridViewTextBoxColumn KGPaquete;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Monto;
+        private System.Windows.Forms.Button buttonContinuar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxTotal;
         private System.Windows.Forms.DataGridViewTextBoxColumn DNI;
@@ -353,5 +363,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn PisoButaca;
         private System.Windows.Forms.DataGridViewTextBoxColumn UbiButaca;
         private System.Windows.Forms.DataGridViewTextBoxColumn MontoPasaje;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DNI_Enc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ApeDueño;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NombreDueño;
+        private System.Windows.Forms.DataGridViewTextBoxColumn KGPaquete;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Monto;
     }
 }
