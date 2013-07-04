@@ -30,29 +30,31 @@
         {
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.ApePasajero = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NombrePasajero = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MontoPasaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Butaca = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PisoButaca = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UbiButaca = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
             this.ApeDueño = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NombreDueño = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.KGPaquete = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Monto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.dataGVPasajes = new System.Windows.Forms.DataGridView();
+            this.DNI = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ApePasajero = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NombrePasajero = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Butaca = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PisoButaca = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UbiButaca = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MontoPasaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button3 = new System.Windows.Forms.Button();
+            this.buttonAddPasaje = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxTotal = new System.Windows.Forms.TextBox();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGVPasajes)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox3
@@ -84,155 +86,6 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(641, 207);
             this.dataGridView1.TabIndex = 0;
-            // 
-            // button2
-            // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(654, 90);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(137, 65);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Eliminar encomienda";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(654, 19);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(137, 65);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Agregar encomienda";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.dataGridView2);
-            this.groupBox1.Controls.Add(this.button3);
-            this.groupBox1.Controls.Add(this.button4);
-            this.groupBox1.Location = new System.Drawing.Point(12, 258);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(795, 240);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Pasajes";
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.AllowUserToResizeColumns = false;
-            this.dataGridView2.AllowUserToResizeRows = false;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ApePasajero,
-            this.NombrePasajero,
-            this.MontoPasaje,
-            this.Butaca,
-            this.PisoButaca,
-            this.UbiButaca});
-            this.dataGridView2.Location = new System.Drawing.Point(7, 19);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(641, 207);
-            this.dataGridView2.TabIndex = 0;
-            // 
-            // ApePasajero
-            // 
-            this.ApePasajero.Frozen = true;
-            this.ApePasajero.HeaderText = "Apellido pasajero";
-            this.ApePasajero.Name = "ApePasajero";
-            this.ApePasajero.ReadOnly = true;
-            // 
-            // NombrePasajero
-            // 
-            this.NombrePasajero.Frozen = true;
-            this.NombrePasajero.HeaderText = "Nombre pasajero";
-            this.NombrePasajero.Name = "NombrePasajero";
-            this.NombrePasajero.ReadOnly = true;
-            // 
-            // MontoPasaje
-            // 
-            this.MontoPasaje.Frozen = true;
-            this.MontoPasaje.HeaderText = "Monto";
-            this.MontoPasaje.Name = "MontoPasaje";
-            this.MontoPasaje.ReadOnly = true;
-            // 
-            // Butaca
-            // 
-            this.Butaca.Frozen = true;
-            this.Butaca.HeaderText = "Numero butaca";
-            this.Butaca.Name = "Butaca";
-            this.Butaca.ReadOnly = true;
-            // 
-            // PisoButaca
-            // 
-            this.PisoButaca.Frozen = true;
-            this.PisoButaca.HeaderText = "Piso butaca";
-            this.PisoButaca.Name = "PisoButaca";
-            this.PisoButaca.ReadOnly = true;
-            // 
-            // UbiButaca
-            // 
-            this.UbiButaca.Frozen = true;
-            this.UbiButaca.HeaderText = "Ubicación butaca";
-            this.UbiButaca.Name = "UbiButaca";
-            this.UbiButaca.ReadOnly = true;
-            // 
-            // button3
-            // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(654, 90);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(137, 65);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "Eliminar Pasaje";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button4
-            // 
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(654, 19);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(137, 65);
-            this.button4.TabIndex = 1;
-            this.button4.Text = "Agregar Pasaje";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button5
-            // 
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Location = new System.Drawing.Point(12, 514);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(217, 45);
-            this.button5.TabIndex = 1;
-            this.button5.Text = "Cancelar";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(586, 514);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(217, 45);
-            this.button7.TabIndex = 1;
-            this.button7.Text = "button1";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button8
-            // 
-            this.button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button8.Location = new System.Drawing.Point(590, 514);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(217, 45);
-            this.button8.TabIndex = 1;
-            this.button8.Text = "Continuar";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button1_Click);
             // 
             // ApeDueño
             // 
@@ -274,23 +127,204 @@
             this.Monto.ReadOnly = true;
             this.Monto.Width = 150;
             // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(654, 90);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(137, 65);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Eliminar encomienda";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(654, 19);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(137, 65);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Agregar encomienda";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.dataGVPasajes);
+            this.groupBox1.Controls.Add(this.button3);
+            this.groupBox1.Controls.Add(this.buttonAddPasaje);
+            this.groupBox1.Location = new System.Drawing.Point(12, 258);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(795, 240);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Pasajes";
+            // 
+            // dataGVPasajes
+            // 
+            this.dataGVPasajes.AllowUserToAddRows = false;
+            this.dataGVPasajes.AllowUserToDeleteRows = false;
+            this.dataGVPasajes.AllowUserToResizeColumns = false;
+            this.dataGVPasajes.AllowUserToResizeRows = false;
+            this.dataGVPasajes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGVPasajes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DNI,
+            this.ApePasajero,
+            this.NombrePasajero,
+            this.Butaca,
+            this.PisoButaca,
+            this.UbiButaca,
+            this.MontoPasaje});
+            this.dataGVPasajes.Location = new System.Drawing.Point(7, 19);
+            this.dataGVPasajes.Name = "dataGVPasajes";
+            this.dataGVPasajes.Size = new System.Drawing.Size(641, 207);
+            this.dataGVPasajes.TabIndex = 0;
+            // 
+            // DNI
+            // 
+            this.DNI.FillWeight = 85F;
+            this.DNI.Frozen = true;
+            this.DNI.HeaderText = "DNI";
+            this.DNI.Name = "DNI";
+            this.DNI.ReadOnly = true;
+            this.DNI.Width = 85;
+            // 
+            // ApePasajero
+            // 
+            this.ApePasajero.FillWeight = 85F;
+            this.ApePasajero.Frozen = true;
+            this.ApePasajero.HeaderText = "Apellido pasajero";
+            this.ApePasajero.Name = "ApePasajero";
+            this.ApePasajero.ReadOnly = true;
+            this.ApePasajero.Width = 85;
+            // 
+            // NombrePasajero
+            // 
+            this.NombrePasajero.FillWeight = 85F;
+            this.NombrePasajero.Frozen = true;
+            this.NombrePasajero.HeaderText = "Nombre pasajero";
+            this.NombrePasajero.Name = "NombrePasajero";
+            this.NombrePasajero.ReadOnly = true;
+            this.NombrePasajero.Width = 85;
+            // 
+            // Butaca
+            // 
+            this.Butaca.FillWeight = 85F;
+            this.Butaca.Frozen = true;
+            this.Butaca.HeaderText = "Numero butaca";
+            this.Butaca.Name = "Butaca";
+            this.Butaca.ReadOnly = true;
+            this.Butaca.Width = 85;
+            // 
+            // PisoButaca
+            // 
+            this.PisoButaca.FillWeight = 85F;
+            this.PisoButaca.Frozen = true;
+            this.PisoButaca.HeaderText = "Piso butaca";
+            this.PisoButaca.Name = "PisoButaca";
+            this.PisoButaca.ReadOnly = true;
+            this.PisoButaca.Width = 85;
+            // 
+            // UbiButaca
+            // 
+            this.UbiButaca.FillWeight = 85F;
+            this.UbiButaca.Frozen = true;
+            this.UbiButaca.HeaderText = "Ubicación butaca";
+            this.UbiButaca.Name = "UbiButaca";
+            this.UbiButaca.ReadOnly = true;
+            this.UbiButaca.Width = 85;
+            // 
+            // MontoPasaje
+            // 
+            this.MontoPasaje.FillWeight = 85F;
+            this.MontoPasaje.Frozen = true;
+            this.MontoPasaje.HeaderText = "Monto";
+            this.MontoPasaje.Name = "MontoPasaje";
+            this.MontoPasaje.ReadOnly = true;
+            this.MontoPasaje.Width = 85;
+            // 
+            // button3
+            // 
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.Location = new System.Drawing.Point(654, 90);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(137, 65);
+            this.button3.TabIndex = 1;
+            this.button3.Text = "Eliminar Pasaje";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // buttonAddPasaje
+            // 
+            this.buttonAddPasaje.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonAddPasaje.Location = new System.Drawing.Point(654, 19);
+            this.buttonAddPasaje.Name = "buttonAddPasaje";
+            this.buttonAddPasaje.Size = new System.Drawing.Size(137, 65);
+            this.buttonAddPasaje.TabIndex = 1;
+            this.buttonAddPasaje.Text = "Agregar Pasaje";
+            this.buttonAddPasaje.UseVisualStyleBackColor = true;
+            this.buttonAddPasaje.Click += new System.EventHandler(this.buttonAddPasaje_Click);
+            // 
+            // button5
+            // 
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.Location = new System.Drawing.Point(328, 514);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(217, 45);
+            this.button5.TabIndex = 1;
+            this.button5.Text = "Cancelar";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button8
+            // 
+            this.button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button8.Location = new System.Drawing.Point(590, 514);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(217, 45);
+            this.button8.TabIndex = 1;
+            this.button8.Text = "Continuar";
+            this.button8.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(15, 526);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(105, 20);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Precio total:";
+            // 
+            // textBoxTotal
+            // 
+            this.textBoxTotal.Enabled = false;
+            this.textBoxTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxTotal.Location = new System.Drawing.Point(126, 523);
+            this.textBoxTotal.Name = "textBoxTotal";
+            this.textBoxTotal.Size = new System.Drawing.Size(180, 26);
+            this.textBoxTotal.TabIndex = 3;
+            this.textBoxTotal.Text = "0";
+            this.textBoxTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // EspecificarCompra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(823, 567);
+            this.Controls.Add(this.textBoxTotal);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.button8);
-            this.Controls.Add(this.button7);
             this.Controls.Add(this.button5);
             this.Name = "EspecificarCompra";
             this.Text = "EspecificarCompra";
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGVPasajes)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -301,21 +335,23 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView dataGVPasajes;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button buttonAddPasaje;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ApePasajero;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NombrePasajero;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MontoPasaje;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Butaca;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PisoButaca;
-        private System.Windows.Forms.DataGridViewTextBoxColumn UbiButaca;
         private System.Windows.Forms.DataGridViewTextBoxColumn ApeDueño;
         private System.Windows.Forms.DataGridViewTextBoxColumn NombreDueño;
         private System.Windows.Forms.DataGridViewTextBoxColumn KGPaquete;
         private System.Windows.Forms.DataGridViewTextBoxColumn Monto;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBoxTotal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DNI;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ApePasajero;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NombrePasajero;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Butaca;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PisoButaca;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UbiButaca;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MontoPasaje;
     }
 }
