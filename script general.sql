@@ -1,3 +1,5 @@
+--CREATE SCHEMA LOS_VIAJEROS_DEL_ANONIMATO;
+
 CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.TIPOSERVICIO (
 NombreServicio	nvarchar(255) PRIMARY KEY, 
 PorcentajeAgregado	numeric(18,2) NOT NULL );
@@ -163,13 +165,14 @@ CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.COMPRA
 );
 
 CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE
-						(
-						CodigoPasaje numeric(18,0),
-						TipoCompra nvarchar(250),
-						DNI_Cliente numeric(18, 0),
-						Numero_Voucher int,
-						Butaca int,	
-	PRIMARY KEY (CodigoPasaje),
+(
+	CodigoCompra numeric(18,0),
+	TipoCompra nvarchar(250),
+	DNI_Cliente numeric(18, 0),
+	Numero_Voucher int,
+	Butaca int,	
+	KilosPaquete numeric(18,2),
+	PRIMARY KEY (CodigoCompra),
 	FOREIGN KEY (DNI_Cliente) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.Usuario (DNI),
     FOREIGN KEY (Numero_Voucher) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.Compra (NumeroVoucher),
     FOREIGN KEY (Butaca) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.BUTACA_MICRO (CodigoButaca), 
@@ -181,22 +184,22 @@ CodigoPuntuacion INT IDENTITY (1,1)NOT NULL,
 DNI_Usuario NUMERIC(18, 0)NOT NULL ,
 Puntos  NUMERIC(18, 0) NOT NULL,
 Fecha  DATETIME ,
-CodigoPasaje NUMERIC(18, 0)NOT NULL ,
+CodigoCompra NUMERIC(18, 0)NOT NULL ,
 CodigoCanje INT ,
 
 PRIMARY KEY (CodigoPuntuacion),
 FOREIGN KEY (DNI_Usuario) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.USUARIO(DNI),
-FOREIGN KEY (CodigoPasaje) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE(CodigoPasaje),
+FOREIGN KEY (CodigoCompra) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE(CodigoCompra),
 FOREIGN KEY (CodigoCanje)  REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.CANJE(CodigoCanje)
 );
 
 CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.Devolucion(
 CodigoDevolucion  INT IDENTITY (1,1),
-CodigoPasaje   Numeric(18,0),
+CodigoCompra   Numeric(18,0),
 NumeroVoucher   INT,
 Motivo nvarchar(255) ,
 PRIMARY KEY (CodigoDevolucion),
-FOREIGN KEY (CodigoPasaje) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE(CodigoPasaje),
+FOREIGN KEY (CodigoCompra) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE(CodigoCompra),
 FOREIGN KEY (NumeroVoucher) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.COMPRA(NumeroVoucher)
 );
 
@@ -495,12 +498,14 @@ where M.Recorrido_Codigo = V.CodigoRecorrido AND
 *	Insertar valores en la tabla COMPRACLIENTE
 */	  
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE
-    (CodigoPasaje, TipoCompra, DNI_Cliente,Numero_Voucher,Butaca) -- Cambio el nombre del atributo NombreButaca a Butaca
+    (CodigoCompra,KilosPaquete, TipoCompra, DNI_Cliente,Numero_Voucher,Butaca) -- Cambio el nombre del atributo NombreButaca a Butaca
 SELECT  
 	 (SELECT CASE M.Paquete_KG
 	 WHEN 0 THEN M.Pasaje_Codigo
 	 ELSE M.Paquete_Codigo
-	 END),--Codigo de pasaje
+	 END),--Codigo de pasaje/encomienda (Compra)
+	 
+	 M.Paquete_KG,--Peso del paquete
 	 
 	 (SELECT CASE M.Paquete_KG
 	 WHEN 0 THEN 'P'
@@ -535,7 +540,7 @@ FROM gd_esquema.Maestra M;
 ALTER TABLE LOS_VIAJEROS_DEL_ANONIMATO.COMPRA DROP COLUMN CodigoPasaje;
 
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF
-	(DNI_Usuario,Puntos,Fecha,CodigoPasaje)
+	(DNI_Usuario,Puntos,Fecha,CodigoCompra)
 SELECT 
 	M.Cli_Dni,
 
