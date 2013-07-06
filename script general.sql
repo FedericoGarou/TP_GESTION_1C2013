@@ -82,14 +82,23 @@ TipoServicio   NVARCHAR(255)  NOT NULL,
 KG_Disponibles  NUMERIC(18, 0) NOT NULL,
 Cantidad_Butacas INT NOT NULL,
 BajaPorVidaUtil  BIT ,
-BajaPorFueraDeServicio BIT ,
-FechaPorFueraDeServicio DATETIME,
-FechaReinicioServicio DATETIME ,
 FechaBajaDefinitiva  DATETIME,
 			
 			
 PRIMARY KEY (Patente),
 FOREIGN KEY (Marca)  REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.MARCA(Id_Marca)
+);
+
+
+CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.PeridoFueraDeServicio
+(
+Patente NVARCHAR(255) NOT NULL,
+FechaInicio DATETIME,
+FechaFin DATETIME ,
+			
+			
+PRIMARY KEY (Patente, FechaInicio, FechaFin),
+FOREIGN KEY (Patente)  REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.Micro(Patente)
 );
 
 
