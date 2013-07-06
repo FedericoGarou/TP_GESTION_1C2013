@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using FrbaBus.Abm_Recorrido;
 using System.Data.SqlClient;
 using FrbaBus.Login;
+
 
 namespace FrbaBus
 {
@@ -21,6 +21,12 @@ namespace FrbaBus
             Application.SetCompatibleTextRenderingDefault(false);       
 
             Application.Run(new Pantalla_Inicial());
+           
+
+            //Application.Run(new Generar_Viaje());
+           
+
+
         }
 
         

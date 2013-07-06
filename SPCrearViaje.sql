@@ -5,8 +5,8 @@ Create PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.SPCrearViaje
  @Destino nvarchar(255), 
  @TipoServicio nvarchar(255) )
 AS
-BEGIN
-    
+BEGIN   
+
     declare @codigoRecorrido numeric(18,0) = (select CodigoRecorrido 
 											from LOS_VIAJEROS_DEL_ANONIMATO.RECORRIDO 
 											where CiudadOrigen=@Origen and CiudadDestino=@Destino and

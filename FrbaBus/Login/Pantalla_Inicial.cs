@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using FrbaBus.Abm_Rol;
 using FrbaBus.Abm_Recorrido;
 using FrbaBus.GenerarViaje;
+using FrbaBus.Registrar_LLegada_Micro;
 
 namespace FrbaBus.Login
 {
@@ -110,6 +111,13 @@ namespace FrbaBus.Login
             {
                 (new Generar_Viaje()).Show();
             }
+
+            if (String.Equals(funcionalidad, "Registro de llegada a destino"))
+            {
+                (new BuscarViajeSinRegistrar()).Show();
+            }
+
+
 
 
         }
