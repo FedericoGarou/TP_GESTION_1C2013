@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using FrbaBus.Abm_Rol;
 using FrbaBus.Abm_Recorrido;
+using FrbaBus.GenerarViaje;
 
 namespace FrbaBus.Login
 {
@@ -104,6 +105,13 @@ namespace FrbaBus.Login
             {
                 (new ABM_Recorrido()).Show();
             }
+
+            if (String.Equals(funcionalidad, "Generacion de viaje"))
+            {
+                (new Generar_Viaje()).Show();
+            }
+
+
         }
 
         private void button3_Click(object sender, EventArgs e)
