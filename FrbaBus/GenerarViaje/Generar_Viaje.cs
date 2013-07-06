@@ -116,19 +116,25 @@ namespace FrbaBus.GenerarViaje
                 {
                     conexion.Open();
 
-                    bool microOcupado;
+                   // bool microOcupado;
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@PatenteMicro", SqlDbType.NVarChar).Value = comboBox4.Text;
                     cmd.Parameters.Add("@Fecha", SqlDbType.DateTime).Value = dateTimePicker1.Value;                   
-                    cmd.Parameters.Add("@retorno", SqlDbType.Bit).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@retorno", SqlDbType.Int).Direction = ParameterDirection.Output;
 
                     cmd.ExecuteNonQuery();
 
-                    microOcupado = Convert.ToBoolean(cmd.Parameters["@retorno"].Value);
-                    if (microOcupado)
+                    int microOcupado = Convert.ToInt32(cmd.Parameters["@retorno"].Value);
+                    if (microOcupado == 1)
                     {
                         hayError = true;
-                        errorMensaje += "Micro no disponible para la fecha " + dateTimePicker1.Value;
+                        errorMensaje += "Micro no disponible para la fecha " + dateTimePicker1.Value + ";Motivo: ya hay un viaje ingresado en esa fecha";
+                    }
+
+                    if (microOcupado == 2)
+                    {
+                        hayError = true;
+                        errorMensaje += "Micro no disponible para la fecha " + dateTimePicker1.Value + ";Motivo: el micro esta fuera de servicio en esa fecha";
                     }
                 }
             }
@@ -146,7 +152,7 @@ namespace FrbaBus.GenerarViaje
                 string tipoServicio = comboBox3.Text;
                 conexion.Open();
 
-                SqlCommand cmd = new SqlCommand("USE GD1C2013 select DISTINCT(m.Patente) from LOS_VIAJEROS_DEL_ANONIMATO.MICRO m join LOS_VIAJEROS_DEL_ANONIMATO.VIAJE v on (m.Patente=v.PatenteMicro) where TipoServicio='" + tipoServicio + "' and BajaPorFueraDeServicio=0 and BajaPorVidaUtil=0", conexion);
+                SqlCommand cmd = new SqlCommand("USE GD1C2013 select DISTINCT(m.Patente) from LOS_VIAJEROS_DEL_ANONIMATO.MICRO m join LOS_VIAJEROS_DEL_ANONIMATO.VIAJE v on (m.Patente=v.PatenteMicro) where TipoServicio='" + tipoServicio + "' and BajaPorVidaUtil=0", conexion);
 
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 DataTable tablaDeNombres = new DataTable();
@@ -179,8 +185,7 @@ namespace FrbaBus.GenerarViaje
                 string destino = comboBox2.Text;
                 string tipoServicio = comboBox3.Text;
 
-                this.sePuedeCrearUnViaje();
-                (new Dialogo("Se puede crear viaje", "Aceptar")).ShowDialog();
+                this.sePuedeCrearUnViaje();                
 
                 using (SqlConnection conexion = this.obtenerConexion())
                 {
@@ -208,8 +213,7 @@ namespace FrbaBus.GenerarViaje
                 (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
             }
 
-        }
-
+        }      
        
     }
 }
