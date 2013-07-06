@@ -184,7 +184,14 @@ namespace FrbaBus.GenerarViaje
                 string origen = comboBox1.Text;
                 string destino = comboBox2.Text;
                 string tipoServicio = comboBox3.Text;
+                double horas = Convert.ToDouble(numericUpDown1.Value.ToString());
+                double minutos = Convert.ToDouble(numericUpDown2.Value.ToString());
 
+
+                DateTime fecha = dateTimePicker1.Value;                
+                DateTime fechaSinTiempo = fecha.AddSeconds(-fecha.Second).AddMinutes(-fecha.Minute).AddHours(-fecha.Hour);
+                DateTime fechaCompleta = fechaSinTiempo.AddHours(horas).AddMinutes(minutos);
+                 
                 this.sePuedeCrearUnViaje();                
 
                 using (SqlConnection conexion = this.obtenerConexion())
@@ -195,14 +202,14 @@ namespace FrbaBus.GenerarViaje
 
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@PatenteMicro", SqlDbType.NVarChar).Value = patenteMicro;
-                        cmd.Parameters.Add("@Fecha", SqlDbType.DateTime).Value = dateTimePicker1.Value;
+                        cmd.Parameters.Add("@Fecha", SqlDbType.DateTime).Value = fechaCompleta;
                         cmd.Parameters.Add("@Origen", SqlDbType.NVarChar).Value = origen;
                         cmd.Parameters.Add("@Destino", SqlDbType.NVarChar).Value = destino;
                         cmd.Parameters.Add("@TipoServicio", SqlDbType.NVarChar).Value = tipoServicio;
 
                         cmd.ExecuteNonQuery();
 
-                        (new Dialogo("Nuevo viaje creado;Micro: " +patenteMicro+ ";Fecha: " +dateTimePicker1.Value+ ";Origen: " +origen+ ";Destino: " +destino+ ";Tipo Servicio: " +tipoServicio, "Aceptar")).ShowDialog();
+                        (new Dialogo("Nuevo viaje creado;Micro: " +patenteMicro+ ";Fecha: " +fechaCompleta+ ";Origen: " +origen+ ";Destino: " +destino+ ";Tipo Servicio: " +tipoServicio, "Aceptar")).ShowDialog();
                     }
                 }
             }
@@ -213,7 +220,7 @@ namespace FrbaBus.GenerarViaje
                 (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
             }
 
-        }      
+        }     
        
     }
 }
