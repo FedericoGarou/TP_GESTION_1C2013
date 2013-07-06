@@ -140,5 +140,7 @@ namespace FrbaBus.Registrar_LLegada_Micro
             }
         }
 
+        
+
     }
 }
