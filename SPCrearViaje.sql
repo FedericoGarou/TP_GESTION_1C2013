@@ -16,7 +16,6 @@ BEGIN
     @codigoRecorrido, 
     @Fecha, 
     @PatenteMicro, 
-    (@Fecha+0.5),
-    (@Fecha+0.5))
+    (@Fecha+0.5), NULL)
     
 END;
