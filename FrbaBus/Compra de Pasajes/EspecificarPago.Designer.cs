@@ -38,9 +38,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBoxPagoTarjeta = new System.Windows.Forms.GroupBox();
+            this.buttonFechaVto = new System.Windows.Forms.Button();
             this.numericNumTarjeta = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.checkBoxCuotas = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.textBoxClave = new System.Windows.Forms.TextBox();
+            this.textBoxFechaVto = new System.Windows.Forms.TextBox();
             this.textBoxCompania = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.comboBoxTipoPago = new System.Windows.Forms.ComboBox();
@@ -58,7 +63,7 @@
             this.buttonEspecificarPagante.Name = "buttonEspecificarPagante";
             this.buttonEspecificarPagante.Size = new System.Drawing.Size(199, 80);
             this.buttonEspecificarPagante.TabIndex = 2;
-            this.buttonEspecificarPagante.Text = "Especificar datos de la persona que paga";
+            this.buttonEspecificarPagante.Text = "Especificar datos del abonante";
             this.buttonEspecificarPagante.UseVisualStyleBackColor = true;
             this.buttonEspecificarPagante.Click += new System.EventHandler(this.buttonEspecificarPagante_Click);
             // 
@@ -145,24 +150,41 @@
             // 
             // groupBoxPagoTarjeta
             // 
+            this.groupBoxPagoTarjeta.Controls.Add(this.buttonFechaVto);
             this.groupBoxPagoTarjeta.Controls.Add(this.numericNumTarjeta);
+            this.groupBoxPagoTarjeta.Controls.Add(this.label8);
+            this.groupBoxPagoTarjeta.Controls.Add(this.label6);
             this.groupBoxPagoTarjeta.Controls.Add(this.checkBoxCuotas);
             this.groupBoxPagoTarjeta.Controls.Add(this.label5);
+            this.groupBoxPagoTarjeta.Controls.Add(this.textBoxClave);
+            this.groupBoxPagoTarjeta.Controls.Add(this.textBoxFechaVto);
             this.groupBoxPagoTarjeta.Controls.Add(this.textBoxCompania);
             this.groupBoxPagoTarjeta.Controls.Add(this.label7);
             this.groupBoxPagoTarjeta.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBoxPagoTarjeta.Location = new System.Drawing.Point(12, 185);
             this.groupBoxPagoTarjeta.Name = "groupBoxPagoTarjeta";
-            this.groupBoxPagoTarjeta.Size = new System.Drawing.Size(528, 133);
+            this.groupBoxPagoTarjeta.Size = new System.Drawing.Size(528, 245);
             this.groupBoxPagoTarjeta.TabIndex = 1;
             this.groupBoxPagoTarjeta.TabStop = false;
             this.groupBoxPagoTarjeta.Text = "Datos del cliente";
+            // 
+            // buttonFechaVto
+            // 
+            this.buttonFechaVto.Enabled = false;
+            this.buttonFechaVto.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonFechaVto.Location = new System.Drawing.Point(67, 134);
+            this.buttonFechaVto.Name = "buttonFechaVto";
+            this.buttonFechaVto.Size = new System.Drawing.Size(151, 27);
+            this.buttonFechaVto.TabIndex = 4;
+            this.buttonFechaVto.Text = "Seleccionar";
+            this.buttonFechaVto.UseVisualStyleBackColor = true;
+            this.buttonFechaVto.Click += new System.EventHandler(this.buttonFechaVto_Click);
             // 
             // numericNumTarjeta
             // 
             this.numericNumTarjeta.Enabled = false;
             this.numericNumTarjeta.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericNumTarjeta.Location = new System.Drawing.Point(208, 37);
+            this.numericNumTarjeta.Location = new System.Drawing.Point(230, 37);
             this.numericNumTarjeta.Maximum = new decimal(new int[] {
             1410065408,
             2,
@@ -173,11 +195,29 @@
             this.numericNumTarjeta.TabIndex = 3;
             this.numericNumTarjeta.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(64, 106);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(154, 18);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Fecha vencimiento:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(64, 72);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(156, 18);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Clave de seguridad:";
+            // 
             // checkBoxCuotas
             // 
             this.checkBoxCuotas.AutoSize = true;
             this.checkBoxCuotas.Enabled = false;
-            this.checkBoxCuotas.Location = new System.Drawing.Point(153, 97);
+            this.checkBoxCuotas.Location = new System.Drawing.Point(170, 207);
             this.checkBoxCuotas.Name = "checkBoxCuotas";
             this.checkBoxCuotas.Size = new System.Drawing.Size(199, 22);
             this.checkBoxCuotas.TabIndex = 2;
@@ -193,10 +233,31 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "Numero tarjeta:";
             // 
+            // textBoxClave
+            // 
+            this.textBoxClave.Enabled = false;
+            this.textBoxClave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxClave.Location = new System.Drawing.Point(230, 69);
+            this.textBoxClave.Name = "textBoxClave";
+            this.textBoxClave.PasswordChar = '*';
+            this.textBoxClave.Size = new System.Drawing.Size(209, 26);
+            this.textBoxClave.TabIndex = 1;
+            this.textBoxClave.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxFechaVto
+            // 
+            this.textBoxFechaVto.Enabled = false;
+            this.textBoxFechaVto.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxFechaVto.Location = new System.Drawing.Point(230, 135);
+            this.textBoxFechaVto.Name = "textBoxFechaVto";
+            this.textBoxFechaVto.Size = new System.Drawing.Size(209, 26);
+            this.textBoxFechaVto.TabIndex = 1;
+            this.textBoxFechaVto.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // textBoxCompania
             // 
             this.textBoxCompania.Enabled = false;
-            this.textBoxCompania.Location = new System.Drawing.Point(208, 67);
+            this.textBoxCompania.Location = new System.Drawing.Point(230, 169);
             this.textBoxCompania.Name = "textBoxCompania";
             this.textBoxCompania.Size = new System.Drawing.Size(209, 24);
             this.textBoxCompania.TabIndex = 1;
@@ -205,7 +266,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(64, 70);
+            this.label7.Location = new System.Drawing.Point(64, 169);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(89, 18);
             this.label7.TabIndex = 0;
@@ -224,7 +285,7 @@
             // buttonCancel
             // 
             this.buttonCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonCancel.Location = new System.Drawing.Point(12, 338);
+            this.buttonCancel.Location = new System.Drawing.Point(12, 446);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(153, 44);
             this.buttonCancel.TabIndex = 3;
@@ -235,7 +296,7 @@
             // buttonLimpiar
             // 
             this.buttonLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonLimpiar.Location = new System.Drawing.Point(201, 338);
+            this.buttonLimpiar.Location = new System.Drawing.Point(201, 446);
             this.buttonLimpiar.Name = "buttonLimpiar";
             this.buttonLimpiar.Size = new System.Drawing.Size(153, 44);
             this.buttonLimpiar.TabIndex = 3;
@@ -246,18 +307,19 @@
             // buttonConfirm
             // 
             this.buttonConfirm.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonConfirm.Location = new System.Drawing.Point(387, 338);
+            this.buttonConfirm.Location = new System.Drawing.Point(387, 446);
             this.buttonConfirm.Name = "buttonConfirm";
             this.buttonConfirm.Size = new System.Drawing.Size(153, 44);
             this.buttonConfirm.TabIndex = 3;
             this.buttonConfirm.Text = "Confirmar";
             this.buttonConfirm.UseVisualStyleBackColor = true;
+            this.buttonConfirm.Click += new System.EventHandler(this.buttonConfirm_Click);
             // 
             // EspecificarPago
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(555, 397);
+            this.ClientSize = new System.Drawing.Size(555, 502);
             this.Controls.Add(this.buttonConfirm);
             this.Controls.Add(this.buttonLimpiar);
             this.Controls.Add(this.buttonCancel);
@@ -299,5 +361,10 @@
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonLimpiar;
         private System.Windows.Forms.Button buttonConfirm;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox textBoxClave;
+        private System.Windows.Forms.Button buttonFechaVto;
+        private System.Windows.Forms.TextBox textBoxFechaVto;
     }
 }

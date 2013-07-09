@@ -6,20 +6,24 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace FrbaBus.Compra_de_Pasajes
 {
     public partial class AgregarEncomienda : Form1
     {
         private int codigoViaje { get; set; }
+        private int numeroVoucher { get; set; }
         public int DNI_Pasajero = -1;
+        public int codigoEncomienda = -1;
         public String NombrePasajero = "";
         public String ApellidoPasajero = "";
         public decimal kilogramosPaquete = -1;
         
-        public AgregarEncomienda(int codigoViajeHeredado)
+        public AgregarEncomienda(int codigoViajeHeredado,int numVoucher)
         {
             InitializeComponent();
+            this.numeroVoucher = numVoucher;
             this.codigoViaje = codigoViajeHeredado;
         }
 
@@ -79,18 +83,49 @@ namespace FrbaBus.Compra_de_Pasajes
             {
                 this.validarCampos();
 
+                using (SqlConnection conexion = this.obtenerConexion())
+                {
+                    using (SqlCommand comand = new SqlCommand("LOS_VIAJEROS_DEL_ANONIMATO.InsertarEncomienda", conexion))
+                    {
+                        conexion.Open();
+                        comand.CommandType = CommandType.StoredProcedure;
+
+                        comand.Parameters.Add("@codigoViaje", SqlDbType.Int).Value = this.codigoViaje;
+                        comand.Parameters.Add("@numeroVoucher", SqlDbType.Int).Value = this.numeroVoucher;
+                        comand.Parameters.Add("@DNI_pasajero", SqlDbType.Int).Value = Convert.ToInt32(textBoxDNI.Text);
+                        comand.Parameters.Add("@kilosPaqueteString", SqlDbType.VarChar).Value = numericPeso.Value.ToString().Replace(',', '.');
+                        comand.Parameters.Add("@codigoEncomienda", SqlDbType.Int,18).Direction = ParameterDirection.Output;
+                        comand.ExecuteNonQuery();
+
+                        codigoEncomienda = Convert.ToInt32(comand.Parameters["@codigoEncomienda"].Value);
+                    }
+                }
+
                 DNI_Pasajero = Convert.ToInt32(textBoxDNI.Text);
                 NombrePasajero = textBoxNombre.Text;
                 ApellidoPasajero = textBoxApellido.Text;
                 kilogramosPaquete = numericPeso.Value;
-                
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
+            catch (SqlException ex)
+            {
+                this.Hide();
+                (new Dialogo(ex.Message, "Aceptar")).ShowDialog();
+                this.Show();
+            }
             catch (ParametrosIncorrectosException ex)
             {
+                this.Hide();
                 (new Dialogo(ex.Message, "Aceptar")).ShowDialog();
+                this.Show();
             }
+        }
+
+        private void buttonCancelar_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
 
     }

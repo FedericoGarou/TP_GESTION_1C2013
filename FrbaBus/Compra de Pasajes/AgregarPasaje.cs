@@ -6,12 +6,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace FrbaBus.Compra_de_Pasajes
 {
     public partial class AgregarPasaje : Form1
     {
         private int codigoViaje {get;set;}
+        private int numeroVoucher;
         public int DNI_Pasajero = -1;
         public String NombrePasajero = "";
         public String ApellidoPasajero = "";
@@ -19,10 +21,11 @@ namespace FrbaBus.Compra_de_Pasajes
         public int pisoButaca = -1;
         public String ubicacionButaca = "";
 
-        public AgregarPasaje(int codigoViajeHeredado)
+        public AgregarPasaje(int codigoViajeHeredado,int nroVoucherCompra)
         {
             InitializeComponent();
-            this.codigoViaje = codigoViajeHeredado;   
+            this.codigoViaje = codigoViajeHeredado;
+            this.numeroVoucher = nroVoucherCompra;
         }
 
         private void AgregarPasaje_Load(object sender, EventArgs e)
@@ -99,11 +102,48 @@ namespace FrbaBus.Compra_de_Pasajes
                 throw new ParametrosIncorrectosException(errorMensaje);    
         }
 
+        private int obtenerCodigoButaca(int numero, int codViaje)
+        {
+            using (SqlConnection conexion = this.obtenerConexion())
+            {
+                using (SqlCommand comando = new SqlCommand("LOS_VIAJEROS_DEL_ANONIMATO.SP_ObtenerCodigoButaca", conexion))
+                {
+                    conexion.Open();
+
+                    comando.CommandType = CommandType.StoredProcedure;
+                    comando.Parameters.Add("@codigoViaje", SqlDbType.Int).Value = this.codigoViaje;
+                    comando.Parameters.Add("@numeroButaca", SqlDbType.Int).Value = numero;
+                    comando.Parameters.Add("@codigoButaca", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                    comando.ExecuteNonQuery();
+
+                    return Convert.ToInt32(comando.Parameters["@codigoButaca"].Value);
+
+                }
+            }
+        }
+
         private void buttonConfirmar_Click(object sender, EventArgs e)
         {
             try
             {
                 this.validarCampos();
+
+                using (SqlConnection conexion = this.obtenerConexion())
+                { 
+                    using(SqlCommand comand = new SqlCommand("LOS_VIAJEROS_DEL_ANONIMATO.InsertarPasaje",conexion))
+                    {
+                        conexion.Open();
+                        comand.CommandType = CommandType.StoredProcedure;
+
+                        comand.Parameters.Add("@codigoViaje", SqlDbType.Int).Value = this.codigoViaje;
+		                comand.Parameters.Add("@numeroVoucher",SqlDbType.Int).Value = this.numeroVoucher;
+	                    comand.Parameters.Add("@DNI_pasajero",SqlDbType.Int).Value = Convert.ToInt32(textBoxDNI.Text);
+                        comand.Parameters.Add("@codigoButaca", SqlDbType.Int).Value = this.obtenerCodigoButaca(Convert.ToInt32(textBoxNumeroB.Text), this.codigoViaje);
+
+                        comand.ExecuteNonQuery();
+                    }
+                }
 
                 DNI_Pasajero = Convert.ToInt32(textBoxDNI.Text);
                 NombrePasajero = textBoxNombre.Text;
@@ -114,9 +154,18 @@ namespace FrbaBus.Compra_de_Pasajes
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
+            catch (SqlException ex)
+            {
+                this.Hide();
+                (new Dialogo(ex.Message, "Aceptar")).ShowDialog();
+                this.Show();
+            }
+
             catch (ParametrosIncorrectosException ex)
             {
+                this.Hide();
                 (new Dialogo(ex.Message,"Aceptar")).ShowDialog();
+                this.Show();
             }
         }
 

@@ -30,6 +30,7 @@
         {
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dataGVEncomienda = new System.Windows.Forms.DataGridView();
+            this.codEncomienda = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DNI_Enc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ApeDueño = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NombreDueño = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -79,6 +80,7 @@
             this.dataGVEncomienda.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.dataGVEncomienda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGVEncomienda.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.codEncomienda,
             this.DNI_Enc,
             this.ApeDueño,
             this.NombreDueño,
@@ -88,6 +90,15 @@
             this.dataGVEncomienda.Name = "dataGVEncomienda";
             this.dataGVEncomienda.Size = new System.Drawing.Size(641, 207);
             this.dataGVEncomienda.TabIndex = 0;
+            // 
+            // codEncomienda
+            // 
+            this.codEncomienda.Frozen = true;
+            this.codEncomienda.HeaderText = "Codigo Encomienda";
+            this.codEncomienda.Name = "codEncomienda";
+            this.codEncomienda.ReadOnly = true;
+            this.codEncomienda.Visible = false;
+            this.codEncomienda.Width = 127;
             // 
             // DNI_Enc
             // 
@@ -298,6 +309,7 @@
             this.buttonContinuar.TabIndex = 1;
             this.buttonContinuar.Text = "Continuar";
             this.buttonContinuar.UseVisualStyleBackColor = true;
+            this.buttonContinuar.Click += new System.EventHandler(this.buttonContinuar_Click);
             // 
             // label1
             // 
@@ -333,6 +345,7 @@
             this.Controls.Add(this.button5);
             this.Name = "EspecificarCompra";
             this.Text = "EspecificarCompra";
+            this.Load += new System.EventHandler(this.EspecificarCompra_Load);
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGVEncomienda)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -363,6 +376,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn PisoButaca;
         private System.Windows.Forms.DataGridViewTextBoxColumn UbiButaca;
         private System.Windows.Forms.DataGridViewTextBoxColumn MontoPasaje;
+        private System.Windows.Forms.DataGridViewTextBoxColumn codEncomienda;
         private System.Windows.Forms.DataGridViewTextBoxColumn DNI_Enc;
         private System.Windows.Forms.DataGridViewTextBoxColumn ApeDueño;
         private System.Windows.Forms.DataGridViewTextBoxColumn NombreDueño;

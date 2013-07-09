@@ -11,6 +11,12 @@ namespace FrbaBus.Compra_de_Pasajes
 {
     public partial class EspecificarPago : Form1
     {
+        public int DNI_Abonante = -1;
+        public String tipoPago = "";
+        public int numeroTarjeta = -1;
+        public String claveTarjeta = "";
+        public String companiaTarjeta = "";
+        
         public EspecificarPago()
         {
             InitializeComponent();
@@ -38,15 +44,21 @@ namespace FrbaBus.Compra_de_Pasajes
             if (comboBoxTipoPago.SelectedIndex == 1)
             {
                 numericNumTarjeta.Enabled = true;
+                textBoxClave.Enabled = true;
+                buttonFechaVto.Enabled = true;
                 textBoxCompania.Enabled = true;
                 checkBoxCuotas.Enabled = true;
             }
             else
             {
                 numericNumTarjeta.Enabled = false;
+                textBoxClave.Enabled = false;
+                buttonFechaVto.Enabled = false;
                 textBoxCompania.Enabled = false;
                 checkBoxCuotas.Enabled = false;
                 numericNumTarjeta.Value = 0;
+                textBoxFechaVto.Text = "";
+                textBoxClave.Text = "";
                 textBoxCompania.Text = "";
                 checkBoxCuotas.Checked = false;
             }
@@ -60,6 +72,8 @@ namespace FrbaBus.Compra_de_Pasajes
             textBoxNombre.Text = "";
             comboBoxTipoPago.SelectedIndex = 0;
             numericNumTarjeta.Value = 0;
+            textBoxFechaVto.Text = "";
+            textBoxClave.Text = "";
             textBoxCompania.Text = "";
             checkBoxCuotas.Checked = false;
         }
@@ -70,7 +84,99 @@ namespace FrbaBus.Compra_de_Pasajes
             this.Close();
         }
 
-        
-       
+        public void validarCampos()
+        {
+            Boolean hayError = false;
+            String errorMensaje = "";
+
+            if (textBoxDNI.Text.Equals(""))
+            {
+                hayError = true;
+                errorMensaje += "Falta completar DNI;";
+            }
+
+            if (textBoxApellido.Text.Equals(""))
+            {
+                hayError = true;
+                errorMensaje += "Falta completar apellido;";
+            }
+
+            if (textBoxNombre.Text.Equals(""))
+            {
+                hayError = true;
+                errorMensaje += "Falta completar nombre;";
+            }
+
+            if (comboBoxTipoPago.Text.Equals("Tipo de pago"))
+            {
+                hayError = true;
+                errorMensaje += "Falta especificar un tipo de pago;";
+            }
+
+            if (comboBoxTipoPago.Text.Equals("Con tarjeta"))
+            {
+                if (textBoxCompania.Text.Equals(""))
+                {
+                    hayError = true;
+                    errorMensaje += "Falta especificar un companía de tarjeta;";
+                }
+
+                if (numericNumTarjeta.Value == 0)
+                {
+                    hayError = true;
+                    errorMensaje += "Falta especificar un numero de tarjeta;";
+                }
+
+                if (Convert.ToDateTime(textBoxFechaVto.Text) <= this.getFechaActual())
+                {
+                    hayError = true;
+                    errorMensaje += "La tarjeta esta vencida;";
+                }
+
+            }
+
+            if (hayError)
+                throw new ParametrosIncorrectosException(errorMensaje);
+        }
+
+        private void buttonConfirm_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.validarCampos();
+
+                DNI_Abonante = Convert.ToInt32(textBoxDNI.Text);
+                tipoPago = comboBoxTipoPago.Text;
+                numeroTarjeta = Convert.ToInt32(numericNumTarjeta.Value);
+                companiaTarjeta = textBoxCompania.Text;
+                claveTarjeta = textBoxClave.Text;
+                
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (ParametrosIncorrectosException ex)
+            {
+                (new Dialogo(ex.Message, "Aceptar")).ShowDialog();
+            }
+        }
+
+        private void buttonFechaVto_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            try
+            {
+                (new CalendarioCompra()).ShowDialog();
+            }
+            catch (FechaElegidaExeption ex)
+            {
+                textBoxFechaVto.Text = ex.Message;
+            }
+            finally
+            {
+                this.Show();
+                this.Focus();
+            }
+        }
+
     }
 }

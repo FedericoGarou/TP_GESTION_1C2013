@@ -139,6 +139,11 @@
             // 
             this.numericPeso.DecimalPlaces = 2;
             this.numericPeso.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericPeso.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.numericPeso.Location = new System.Drawing.Point(197, 152);
             this.numericPeso.Maximum = new decimal(new int[] {
             1000000000,
@@ -159,6 +164,7 @@
             this.buttonCancelar.TabIndex = 2;
             this.buttonCancelar.Text = "Cancelar";
             this.buttonCancelar.UseVisualStyleBackColor = true;
+            this.buttonCancelar.Click += new System.EventHandler(this.buttonCancelar_Click);
             // 
             // buttonConfirmar
             // 
