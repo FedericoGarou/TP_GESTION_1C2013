@@ -163,7 +163,8 @@ CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.COMPRA
 (
 	NumeroVoucher int IDENTITY ( 1 , 1 ),
 	PasajesComprados int,
-	KG_por_encomienda numeric(18, 0),
+	KG_por_encomienda numeric(18, 2),
+	MontoAPagar numeric(18,2),
 	DNI_Pago numeric(18, 0),
 	NumeroTarjetaPago int,
 	CodigoViaje INT NOT NULL,
@@ -373,12 +374,9 @@ INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.MARCA(Marca)
 
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.MICRO
 (
-                Patente,Marca,Modelo,FechaAlta,
-		TipoServicio,KG_Disponibles,Cantidad_Butacas,BajaPorVidaUtil,
-		BajaPorFueraDeServicio
+        Patente,Marca,Modelo,FechaAlta,
+		TipoServicio,KG_Disponibles,Cantidad_Butacas,BajaPorVidaUtil
 )
-
-
 SELECT 
 		M.Micro_Patente,
 		MC.Id_Marca,
@@ -387,14 +385,9 @@ SELECT
 		M.Tipo_Servicio,
 		M.Micro_KG_Disponibles,
 		COUNT(DISTINCT (M.Butaca_Nro)) ,
-		0,
 		0
-         
-               
 FROM gd_esquema.Maestra M, LOS_VIAJEROS_DEL_ANONIMATO.MARCA MC
 WHERE(M.Micro_Marca = MC.Marca)
-             
-               
 GROUP BY 
           M.Micro_Patente,
           MC.Id_Marca,
@@ -484,7 +477,7 @@ VALUES ('Cartuchera-Infantil',2166,267);
 *	Insertar valores en la tabla COMPRA
 */
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.COMPRA 
-    (PasajesComprados, DNI_Pago, KG_por_encomienda,CodigoViaje, NumeroTarjetaPago, CodigoPasaje)
+    (PasajesComprados, DNI_Pago, KG_por_encomienda,CodigoViaje, NumeroTarjetaPago, CodigoPasaje, MontoAPagar)
 SELECT  
 	  (	SELECT CASE M.Paquete_KG
 		WHEN 0 THEN 1 --Si no tiene paquete entonces es un pasaje
@@ -497,7 +490,15 @@ SELECT
       (SELECT CASE M.Paquete_KG
 	  WHEN 0 THEN M.Pasaje_Codigo
 	  ELSE M.Paquete_Codigo
-	  END) -- Codigo Pasaje
+	  END), -- Codigo Pasaje
+	  
+	  (	SELECT CASE M.Paquete_KG
+		WHEN 0 THEN 
+			M.Pasaje_Precio
+		ELSE
+			M.Paquete_Precio
+		END )
+	  
 FROM gd_esquema.Maestra M, LOS_VIAJEROS_DEL_ANONIMATO.VIAJE V
 where M.Recorrido_Codigo = V.CodigoRecorrido AND 
 	  M.Micro_Patente = V.PatenteMicro AND
@@ -519,7 +520,7 @@ SELECT
 	 (SELECT CASE M.Paquete_KG
 	 WHEN 0 THEN 'P'
 	 ELSE 'E'
-	 END),--Tipo de compra
+	 END),--Tipo de compra	
 	 
 	 M.Cli_Dni,
 	 
