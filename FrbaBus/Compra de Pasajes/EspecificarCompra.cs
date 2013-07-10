@@ -21,8 +21,8 @@ namespace FrbaBus.Compra_de_Pasajes
         public EspecificarCompra(int codigoViaje)
         {
             InitializeComponent();
-            this.NroVoucher = this.GenerarCompra();
             this.codigoViaje = codigoViaje;
+            this.NroVoucher = this.GenerarCompra();
         }
 
         private int GenerarCompra()
@@ -35,6 +35,7 @@ namespace FrbaBus.Compra_de_Pasajes
                     conexion.Open();
                     comando.CommandType = CommandType.StoredProcedure;
 
+                    Console.Out.WriteLine("EL VIAJE ES : " + this.codigoViaje);
                     comando.Parameters.Add("@codigoViaje",SqlDbType.Int).Value = this.codigoViaje;
                     comando.Parameters.Add("@nroVoucher", SqlDbType.Int).Direction = ParameterDirection.Output;
 
@@ -322,7 +323,12 @@ namespace FrbaBus.Compra_de_Pasajes
 
         private void EspecificarCompra_Load(object sender, EventArgs e)
         {
+            this.ControlBox = false;
+        }
 
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
+        
         }
 
     }

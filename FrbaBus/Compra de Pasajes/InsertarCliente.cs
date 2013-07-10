@@ -168,6 +168,7 @@ namespace FrbaBus.Compra_de_Pasajes
          */
         private void button1_Click(object sender, EventArgs e)
         {
+            button1.Enabled = false;
             textBoxApellido.Enabled = true;
             textBoxNombre.Enabled = true;
             textBoxDireccion.Enabled = true;
@@ -187,7 +188,7 @@ namespace FrbaBus.Compra_de_Pasajes
                 DialogResult dr = (new DialogoInsertarCliente()).ShowDialog();
 
                 if(dr == DialogResult.Cancel)
-                    this.Close();
+                    this.Show();
                 if(dr == DialogResult.OK)
                 {
                     this.Show();
@@ -205,6 +206,7 @@ namespace FrbaBus.Compra_de_Pasajes
                     buttonTerminado.Enabled = true;
                 }
             }
+            button1.Enabled = true;
         }
 
         private void buttonTerminado_Click(object sender, EventArgs e)
@@ -275,6 +277,19 @@ namespace FrbaBus.Compra_de_Pasajes
         {
             command.CommandText = "LOS_VIAJEROS_DEL_ANONIMATO.SP_Insertar_Cliente";
             command.ExecuteNonQuery(); 
+        }
+
+        private void numericDNI_ValueChanged(object sender, EventArgs e)
+        {
+            textBoxApellido.Text = "";
+            textBoxNombre.Text = "";
+            textBoxDireccion.Text = "";
+            numericTelefono.Value = 0;
+            textBoxMail.Text = "";
+            textBoxFechaNac.Text = "";
+            radioBFemenino.Checked = false;
+            radioMasculino.Checked = false;
+            checkDiscapacidad.Checked = false;
         }
 
 

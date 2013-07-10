@@ -305,6 +305,7 @@
             this.numericDNI.Size = new System.Drawing.Size(179, 20);
             this.numericDNI.TabIndex = 1;
             this.numericDNI.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericDNI.ValueChanged += new System.EventHandler(this.numericDNI_ValueChanged);
             // 
             // buttonTerminado
             // 
