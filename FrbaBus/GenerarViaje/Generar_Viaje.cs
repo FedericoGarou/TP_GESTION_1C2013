@@ -61,13 +61,72 @@ namespace FrbaBus.GenerarViaje
             DateTime fechaActual = getFechaActual();
 
             // Fecha viaje posterior a Fecha Actual
-            if (fechaActual > dateTimePicker1.Value)
+            if (fechaActual > dateTimePicker1.Value.Date)
             {
                 hayError = true;
                 errorMensaje += "La fecha seleccionada es anterior a la fecha actual;";
             }
             
-            // Los campos origen y destino son distintos.
+            //a igual fecha comprobar que el horario es posterior
+            if (fechaActual == dateTimePicker1.Value.Date)
+            {
+                if (dateTimePicker1.Value.Hour == numericUpDown1.Value)
+                {
+                    if (dateTimePicker1.Value.Minute >= numericUpDown2.Value)
+                    {
+                        hayError = true;
+                        errorMensaje += "La fecha seleccionada es anterior a la fecha actual;";
+                    }
+                }
+                else
+                {
+                    if (dateTimePicker1.Value.Hour > numericUpDown1.Value)
+                    {
+                        hayError = true;
+                        errorMensaje += "La fecha seleccionada es anterior a la fecha actual;";
+                    }
+                }
+               
+            }
+
+
+            // Fecha llegada posterior o igual a fecha salida
+            if (dateTimePicker1.Value.Date == dateTimePicker2.Value.Date)
+            {
+                if (numericUpDown1.Value == numericUpDown3.Value)
+                {
+                    if (numericUpDown2.Value == numericUpDown4.Value)
+                    {
+                        hayError = true;
+                        errorMensaje += "La fecha de salida es igual a la fecha de llegada estimada;";
+                    }
+                    else
+                    {
+                        if (numericUpDown2.Value > numericUpDown4.Value)
+                        {
+                            hayError = true;
+                            errorMensaje += "La fecha de salida es posterior a la fecha de llegada estimada;";
+                        }
+                    }
+                }else
+                {
+                    if(numericUpDown1.Value > numericUpDown3.Value)
+                    {
+                    hayError = true;
+                    errorMensaje += "La fecha de salida es posterior a la fecha de llegada estimada;";
+                    }
+                }
+            }
+            else
+            {
+                if (dateTimePicker1.Value.Date > dateTimePicker2.Value.Date)
+                {
+                    hayError = true;
+                    errorMensaje += "La fecha de salida es posterior a la fecha de llegada estimada;";
+                }
+            }
+            
+            // Los campos origen y destino son iguales.
             if (comboBox1.Text.Equals(comboBox2.Text))
             {
                 hayError = true;
@@ -184,13 +243,19 @@ namespace FrbaBus.GenerarViaje
                 string origen = comboBox1.Text;
                 string destino = comboBox2.Text;
                 string tipoServicio = comboBox3.Text;
-                double horas = Convert.ToDouble(numericUpDown1.Value.ToString());
-                double minutos = Convert.ToDouble(numericUpDown2.Value.ToString());
+               
+                double horasSalida = Convert.ToDouble(numericUpDown1.Value.ToString());
+                double minutosSalida = Convert.ToDouble(numericUpDown2.Value.ToString());
+                DateTime fechaSalida = dateTimePicker1.Value;
+                DateTime fechaSalidaSinTiempo = fechaSalida.AddSeconds(-fechaSalida.Second).AddMinutes(-fechaSalida.Minute).AddHours(-fechaSalida.Hour);
+                DateTime fechaSalidaCompleta = fechaSalidaSinTiempo.AddHours(horasSalida).AddMinutes(minutosSalida);
 
-
-                DateTime fecha = dateTimePicker1.Value;                
-                DateTime fechaSinTiempo = fecha.AddSeconds(-fecha.Second).AddMinutes(-fecha.Minute).AddHours(-fecha.Hour);
-                DateTime fechaCompleta = fechaSinTiempo.AddHours(horas).AddMinutes(minutos);
+                double horasLlegada = Convert.ToDouble(numericUpDown3.Value.ToString());
+                double minutosLlegada = Convert.ToDouble(numericUpDown4.Value.ToString());
+                DateTime fechaLlegada = dateTimePicker2.Value;
+                DateTime fechaLlegadaSinTiempo = fechaLlegada.AddSeconds(-fechaLlegada.Second).AddMinutes(-fechaLlegada.Minute).AddHours(-fechaLlegada.Hour);
+                DateTime fechaLlegadaCompleta = fechaLlegadaSinTiempo.AddHours(horasLlegada).AddMinutes(minutosLlegada);
+                
                  
                 this.sePuedeCrearUnViaje();                
 
@@ -202,14 +267,15 @@ namespace FrbaBus.GenerarViaje
 
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@PatenteMicro", SqlDbType.NVarChar).Value = patenteMicro;
-                        cmd.Parameters.Add("@Fecha", SqlDbType.DateTime).Value = fechaCompleta;
+                        cmd.Parameters.Add("@FechaSalida", SqlDbType.DateTime).Value = fechaSalidaCompleta;
+                        cmd.Parameters.Add("@FechaLlegadaEstimada", SqlDbType.DateTime).Value = fechaLlegadaCompleta;
                         cmd.Parameters.Add("@Origen", SqlDbType.NVarChar).Value = origen;
                         cmd.Parameters.Add("@Destino", SqlDbType.NVarChar).Value = destino;
                         cmd.Parameters.Add("@TipoServicio", SqlDbType.NVarChar).Value = tipoServicio;
 
                         cmd.ExecuteNonQuery();
 
-                        (new Dialogo("Nuevo viaje creado;Micro: " +patenteMicro+ ";Fecha: " +fechaCompleta+ ";Origen: " +origen+ ";Destino: " +destino+ ";Tipo Servicio: " +tipoServicio, "Aceptar")).ShowDialog();
+                        (new Dialogo("Nuevo viaje creado;Micro: " +patenteMicro+ ";Fecha salida: " +fechaSalidaCompleta+ ";Fecha llegada estimada: " +fechaLlegadaCompleta+ ";Origen: " +origen+ ";Destino: " +destino+ ";Tipo Servicio: " +tipoServicio, "Aceptar")).ShowDialog();
                     }
                 }
             }
