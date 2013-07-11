@@ -73,29 +73,32 @@ namespace FrbaBus.Compra_de_Pasajes
 
         private void buttonAddPasaje_Click(object sender, EventArgs e)
         {
-            decimal monto = 0;
             this.Hide();
 
-            AgregarPasaje addPasaje = new AgregarPasaje(this.codigoViaje,this.NroVoucher);
-            DialogResult dr = addPasaje.ShowDialog();
-            if (dr == DialogResult.OK)
-            {
-                monto = this.obtenerMonto();
+            AgregarPasaje addPasaje = new AgregarPasaje(this.codigoViaje,this.NroVoucher,"Todos");
 
-                dataGVPasajes.Rows.Add(
-                    addPasaje.DNI_Pasajero,
-                    addPasaje.ApellidoPasajero,
-                    addPasaje.NombrePasajero,
-                    addPasaje.numeroButaca,
-                    addPasaje.pisoButaca,
-                    addPasaje.ubicacionButaca,
-                    monto);
+            addPasaje.ShowDialog();
 
-                textBoxTotal.Text = (Convert.ToDecimal(textBoxTotal.Text) + monto).ToString();
-                
-            }
+            this.ActualizarGridPasajes();
             
             this.Show();
+        }
+
+        private void ActualizarGridPasajes()
+        {
+            String query = "SELECT * FROM LOS_VIAJEROS_DEL_ANONIMATO.F_ObtenerPasajesDeUnaCompra( " + this.NroVoucher.ToString() + " , 'TODO' , 0 )";
+
+            using (SqlConnection conexion = this.obtenerConexion())
+            {
+
+                using (SqlCommand comando = new SqlCommand(query, conexion))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(comando);
+                    DataTable tablaPasajes = new DataTable();
+                    adapter.Fill(tablaPasajes);
+                    dataGVPasajes.DataSource = tablaPasajes;
+                }
+            }
         }
 
         // Eliminar pasaje.
@@ -106,10 +109,8 @@ namespace FrbaBus.Compra_de_Pasajes
             {
                 this.eliminarPasaje(filaEliminada);
 
-                textBoxTotal.Text = (Convert.ToDecimal(textBoxTotal.Text) - Convert.ToDecimal(filaEliminada.Cells["MontoPasaje"].Value)).ToString();
-
-                dataGVPasajes.Rows.RemoveAt(filaEliminada.Index);
             }
+            this.ActualizarGridPasajes();
         }
 
         private void eliminarPasaje(DataGridViewRow filaEliminada)
@@ -123,10 +124,10 @@ namespace FrbaBus.Compra_de_Pasajes
 
                     comando.Parameters.Add("@codigoViaje",SqlDbType.Int).Value = this.codigoViaje;
 		            comando.Parameters.Add("@numeroVoucher",SqlDbType.Int).Value = this.NroVoucher;
-		            comando.Parameters.Add("@DNI_pasajero",SqlDbType.Int).Value = filaEliminada.Cells["DNI"].Value;
-		            comando.Parameters.Add("@numeroButaca",SqlDbType.Int).Value = filaEliminada.Cells["Butaca"].Value;
-		            comando.Parameters.Add("@piso",SqlDbType.Int).Value = filaEliminada.Cells["PisoButaca"].Value;
-		            comando.Parameters.Add("@ubicacion",SqlDbType.NVarChar).Value = filaEliminada.Cells["UbiButaca"].Value;
+                    comando.Parameters.Add("@DNI_pasajero", SqlDbType.Int).Value = filaEliminada.Cells[0].Value;
+		            comando.Parameters.Add("@numeroButaca",SqlDbType.Int).Value = filaEliminada.Cells[3].Value;
+		            comando.Parameters.Add("@piso",SqlDbType.Int).Value = filaEliminada.Cells[4].Value;
+		            comando.Parameters.Add("@ubicacion",SqlDbType.NVarChar).Value = filaEliminada.Cells[5].Value;
 
                     try
                     {

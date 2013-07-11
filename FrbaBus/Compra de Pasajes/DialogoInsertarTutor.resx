@@ -117,4 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Nuestro registro de usuario ha detectado que usted posee una discapacidad. La empresa brinda la posibilidad de brindarle gratuitamente un pasaje para un tutor/acompañante ¿Desea utilizar esta facilidad?</value>
+  </data>
 </root>

@@ -14,6 +14,7 @@ namespace FrbaBus.Compra_de_Pasajes
     {
         private DateTime fechaNacimiento = DateTime.MinValue;
         private Boolean registrarNuevo = false;
+        public Boolean discapacidad = false;
         public int DNI_Cliente_Agregado;
         public String Apellido_Cliente_Agregado;
         public String Nombre_Cliente_Agregado;
@@ -247,6 +248,7 @@ namespace FrbaBus.Compra_de_Pasajes
                         else
                             this.terminarActualizando(comando);
 
+                        this.discapacidad = checkDiscapacidad.Checked;
                         this.DNI_Cliente_Agregado = Convert.ToInt32(numericDNI.Value);
                         this.Apellido_Cliente_Agregado = textBoxApellido.Text;
                         this.Nombre_Cliente_Agregado = textBoxNombre.Text;

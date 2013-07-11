@@ -126,7 +126,15 @@ namespace FrbaBus.Compra_de_Pasajes
                 dataGridView1.Columns[0].Visible = true;
                 dataGridView1.ReadOnly = true;
                 DataTable viajesCoincidentes = new DataTable();
-                this.cargarATablaParaDataGripView(ConsultaDeBusqueda,ref viajesCoincidentes,this.obtenerConexion());
+                using(SqlConnection conexion = this.obtenerConexion())
+                {
+                    using(SqlCommand cmd = new SqlCommand(ConsultaDeBusqueda, conexion))
+                    {
+                        conexion.Open();
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        adapter.Fill(viajesCoincidentes);
+                    }
+                }
                 dataGridView1.DataSource = viajesCoincidentes;
                 dataGridView1.Columns[0].ReadOnly = false;
                              

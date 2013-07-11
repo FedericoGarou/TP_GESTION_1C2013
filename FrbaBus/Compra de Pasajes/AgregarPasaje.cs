@@ -14,18 +14,19 @@ namespace FrbaBus.Compra_de_Pasajes
     {
         private int codigoViaje {get;set;}
         private int numeroVoucher;
-        public int DNI_Pasajero = -1;
-        public String NombrePasajero = "";
-        public String ApellidoPasajero = "";
-        public int numeroButaca = -1;
-        public int pisoButaca = -1;
-        public String ubicacionButaca = "";
-
-        public AgregarPasaje(int codigoViajeHeredado,int nroVoucherCompra)
+        private bool discapacidad;
+        private bool jubilado;
+        private String query;
+        
+        public AgregarPasaje(int codigoViajeHeredado,int nroVoucherCompra,String tipo)
         {
             InitializeComponent();
             this.codigoViaje = codigoViajeHeredado;
             this.numeroVoucher = nroVoucherCompra;
+            if(tipo.Equals("Por tutor"))
+                this.query = "LOS_VIAJEROS_DEL_ANONIMATO.InsertarPasajeTutor";
+            else
+                this.query = "LOS_VIAJEROS_DEL_ANONIMATO.InsertarPasaje";
         }
 
         private void AgregarPasaje_Load(object sender, EventArgs e)
@@ -40,6 +41,8 @@ namespace FrbaBus.Compra_de_Pasajes
             textBoxDNI.Text = insercion.DNI_Cliente_Agregado.ToString();
             textBoxApellido.Text = insercion.Apellido_Cliente_Agregado;
             textBoxNombre.Text = insercion.Nombre_Cliente_Agregado;
+            this.discapacidad = insercion.discapacidad;
+            //this.jubilado = insercion.jubilado;
             this.Show();
         }
 
@@ -98,6 +101,15 @@ namespace FrbaBus.Compra_de_Pasajes
                 errorMensaje += "Falta completar ubicación de butaca;";
             }
 
+            if (this.discapacidad)
+            {
+                if (this.HayOtroPasajeroConDiscapacidad())
+                {
+                    hayError = true;
+                    errorMensaje += "Ya hay un pasajero con alguna discapacidad en esta compra;";
+                }
+            }
+
             if (hayError)
                 throw new ParametrosIncorrectosException(errorMensaje);    
         }
@@ -131,7 +143,7 @@ namespace FrbaBus.Compra_de_Pasajes
 
                 using (SqlConnection conexion = this.obtenerConexion())
                 { 
-                    using(SqlCommand comand = new SqlCommand("LOS_VIAJEROS_DEL_ANONIMATO.InsertarPasaje",conexion))
+                    using(SqlCommand comand = new SqlCommand(this.query,conexion))
                     {
                         conexion.Open();
                         comand.CommandType = CommandType.StoredProcedure;
@@ -145,14 +157,20 @@ namespace FrbaBus.Compra_de_Pasajes
                     }
                 }
 
-                DNI_Pasajero = Convert.ToInt32(textBoxDNI.Text);
-                NombrePasajero = textBoxNombre.Text;
-                ApellidoPasajero = textBoxApellido.Text;
-                numeroButaca = Convert.ToInt32(textBoxNumeroB.Text);
-                pisoButaca = Convert.ToInt32(textBoxPisoB.Text);
-                ubicacionButaca = textBoxUbiB.Text;
-                this.DialogResult = DialogResult.OK;
+                if (this.discapacidad)
+                {
+                    this.Hide();
+                    DialogoInsertarTutor dialogo = new DialogoInsertarTutor(this.numeroVoucher, this.codigoViaje, Convert.ToInt32(textBoxDNI.Text));
+                    DialogResult dr = dialogo.ShowDialog();
+                }
+
                 this.Close();
+            }
+            catch (ParametrosIncorrectosException ex)
+            {
+                this.Hide();
+                (new Dialogo(ex.Message, "Aceptar")).ShowDialog();
+                this.Show();
             }
             catch (SqlException ex)
             {
@@ -160,13 +178,28 @@ namespace FrbaBus.Compra_de_Pasajes
                 (new Dialogo(ex.Message, "Aceptar")).ShowDialog();
                 this.Show();
             }
+        }
 
-            catch (ParametrosIncorrectosException ex)
+        private Boolean HayOtroPasajeroConDiscapacidad()
+        {
+            using (SqlConnection conexion = this.obtenerConexion())
             {
-                this.Hide();
-                (new Dialogo(ex.Message,"Aceptar")).ShowDialog();
-                this.Show();
-            }
+                using (SqlCommand comand = new SqlCommand("LOS_VIAJEROS_DEL_ANONIMATO.CantidadDiscapacitados", conexion))
+                {
+                    conexion.Open();
+                    comand.CommandType = CommandType.StoredProcedure;
+
+                    comand.Parameters.Add("@numeroVoucher",SqlDbType.Int).Value = this.numeroVoucher;
+                    comand.Parameters.Add("@cantidadDiscapacitados", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                    comand.ExecuteNonQuery();
+
+                    int cantidadPasajerosConDiscapacidad = Convert.ToInt32(comand.Parameters["@cantidadDiscapacitados"].Value);
+
+                    return cantidadPasajerosConDiscapacidad >= 1;
+                        
+                }
+            }    
         }
 
         // Cancelar
