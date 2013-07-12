@@ -167,6 +167,8 @@ CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.COMPRA
 	MontoAPagar numeric(18,2),
 	DNI_Pago numeric(18, 0),
 	NumeroTarjetaPago int,
+	ClaveTarjetaPago nvarchar(25),
+	CompaniaTarjetaPago nvarchar(255),
 	CodigoViaje INT NOT NULL,
 	CodigoPasaje numeric(18,0),-- Campo auxiliar despues será borrado
 							
@@ -182,6 +184,7 @@ CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE
 	Numero_Voucher int,
 	Butaca int,	
 	KilosPaquete numeric(18,2),
+	MontoUnitario numeric(18,2),
 	PRIMARY KEY (CodigoCompra),
 	FOREIGN KEY (DNI_Cliente) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.Usuario (DNI),
     FOREIGN KEY (Numero_Voucher) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.Compra (NumeroVoucher),
@@ -508,7 +511,7 @@ where M.Recorrido_Codigo = V.CodigoRecorrido AND
 *	Insertar valores en la tabla COMPRACLIENTE
 */	  
 INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE
-    (CodigoCompra,KilosPaquete, TipoCompra, DNI_Cliente,Numero_Voucher,Butaca) -- Cambio el nombre del atributo NombreButaca a Butaca
+    (CodigoCompra,KilosPaquete, TipoCompra, DNI_Cliente,Numero_Voucher,Butaca,MontoUnitario) -- Cambio el nombre del atributo NombreButaca a Butaca
 SELECT  
 	 (SELECT CASE M.Paquete_KG
 	 WHEN 0 THEN M.Pasaje_Codigo
@@ -540,8 +543,14 @@ SELECT
 		B2.Patente = M.Micro_Patente AND
 		B2.Piso = M.Butaca_Piso AND
 		B2.Ubicacion = M.Butaca_Tipo
-	)--Butaca
-	 
+	),--Butaca
+	
+	 (	SELECT CASE M.Paquete_KG
+		WHEN 0 THEN 
+			M.Pasaje_Precio
+		ELSE
+			M.Paquete_Precio
+		END ) -- Monto unitario
 	 
 FROM gd_esquema.Maestra M;
 
