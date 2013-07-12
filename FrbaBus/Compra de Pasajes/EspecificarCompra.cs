@@ -107,10 +107,40 @@ namespace FrbaBus.Compra_de_Pasajes
             DataGridViewSelectedRowCollection filasEliminadas = dataGVPasajes.SelectedRows;
             foreach (DataGridViewRow filaEliminada in filasEliminadas)
             {
+                //Estoy eliminando un tutor o un atutorado
+                if (Convert.ToInt32(filaEliminada.Cells[6].Value) == 0)
+                    this.EliminarAtutorado_Tutor(filaEliminada);
                 this.eliminarPasaje(filaEliminada);
-
             }
+            
             this.ActualizarGridPasajes();
+        }
+
+        private void EliminarAtutorado_Tutor(DataGridViewRow filaEliminada)
+        {
+            using (SqlConnection conexion = this.obtenerConexion())
+            {
+                using (SqlCommand comando = new SqlCommand("LOS_VIAJEROS_DEL_ANONIMATO.SP_EliminarTutorOAtutorado", conexion))
+                {
+                    conexion.Open();
+                    comando.CommandType = CommandType.StoredProcedure;
+
+                    comando.Parameters.Add("@numeroVoucher", SqlDbType.Int).Value = this.NroVoucher;
+                    comando.Parameters.Add("@DNI_Atutorado_Tutor", SqlDbType.Int).Value = filaEliminada.Cells[0].Value;
+                    
+                    try
+                    {
+                        comando.ExecuteNonQuery();
+                    }
+                    catch (SqlException ex)
+                    {
+                        this.Hide();
+                        (new Dialogo(ex.Message, "Aceptar")).ShowDialog();
+                        this.Show();
+                    }
+
+                }
+            }
         }
 
         private void eliminarPasaje(DataGridViewRow filaEliminada)
@@ -169,39 +199,42 @@ namespace FrbaBus.Compra_de_Pasajes
         
         private void buttonAddEncomienda_Click(object sender, EventArgs e)
         {
-            decimal monto = 0;
             this.Hide();
+
             AgregarEncomienda addEncomienda = new AgregarEncomienda(this.codigoViaje, this.NroVoucher);
-            DialogResult dr = addEncomienda.ShowDialog();
+            
+            addEncomienda.ShowDialog();
 
-            if (dr == DialogResult.OK)
-            {
-                monto = this.obtenerMontoEncomienda(addEncomienda.kilogramosPaquete);
-
-                dataGVEncomienda.Rows.Add(
-                     addEncomienda.codigoEncomienda,
-                     addEncomienda.DNI_Pasajero,
-                     addEncomienda.ApellidoPasajero,
-                     addEncomienda.NombrePasajero,
-                     addEncomienda.kilogramosPaquete,
-                     monto);
-
-                textBoxTotal.Text = (Convert.ToDecimal(textBoxTotal.Text) + monto).ToString();
-
-            }
-
+            this.actualizarGridEncomiendas();
+            
             this.Show();
+        }
+
+        private void actualizarGridEncomiendas()
+        {
+            String query = "SELECT * FROM LOS_VIAJEROS_DEL_ANONIMATO.F_ObtenerEncomiendasDeUnaCompra( " + this.NroVoucher.ToString() + " )";
+
+            using (SqlConnection conexion = this.obtenerConexion())
+            {
+
+                using (SqlCommand comando = new SqlCommand(query, conexion))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(comando);
+                    DataTable tablaEncomiendas = new DataTable();
+                    adapter.Fill(tablaEncomiendas);
+                    dataGVEncomienda.DataSource = tablaEncomiendas;
+                }
+            }
+            dataGVEncomienda.Columns[5].Visible = false;
         }
 
         private void buttonRemEncomienda_Click(object sender, EventArgs e)
         {
             DataGridViewSelectedRowCollection filasEliminadas = dataGVEncomienda.SelectedRows;
             foreach (DataGridViewRow filaEliminada in filasEliminadas)
-            {
                 this.eliminarEncomienda(filaEliminada);
-                textBoxTotal.Text = (Convert.ToDecimal(textBoxTotal.Text) - Convert.ToDecimal(filaEliminada.Cells["Monto"].Value)).ToString();
-                dataGVEncomienda.Rows.RemoveAt(filaEliminada.Index);
-            }
+            this.actualizarGridEncomiendas();
+            
         }
 
         private void eliminarEncomienda(DataGridViewRow filaEliminada)
@@ -214,8 +247,8 @@ namespace FrbaBus.Compra_de_Pasajes
                     comando.CommandType = CommandType.StoredProcedure;
 
                     comando.Parameters.Add("@numeroVoucher",SqlDbType.Int).Value = this.NroVoucher;
-		            comando.Parameters.Add("@kilosPaquete", SqlDbType.Decimal).Value = filaEliminada.Cells["KGPaquete"].Value;
-                    comando.Parameters.Add("@codigoEncomienda", SqlDbType.Int).Value = filaEliminada.Cells["codEncomienda"].Value;
+		            comando.Parameters.Add("@kilosPaquete", SqlDbType.Decimal).Value = filaEliminada.Cells[3].Value;
+                    comando.Parameters.Add("@codigoEncomienda", SqlDbType.Int).Value = filaEliminada.Cells[5].Value;
 
                     try
                     {

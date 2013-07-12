@@ -65,7 +65,7 @@
             this.dataGVEncomienda.AllowUserToDeleteRows = false;
             this.dataGVEncomienda.AllowUserToResizeColumns = false;
             this.dataGVEncomienda.AllowUserToResizeRows = false;
-            this.dataGVEncomienda.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.dataGVEncomienda.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGVEncomienda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGVEncomienda.Location = new System.Drawing.Point(7, 19);
             this.dataGVEncomienda.Name = "dataGVEncomienda";
@@ -112,6 +112,7 @@
             this.dataGVPasajes.AllowUserToDeleteRows = false;
             this.dataGVPasajes.AllowUserToResizeColumns = false;
             this.dataGVPasajes.AllowUserToResizeRows = false;
+            this.dataGVPasajes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGVPasajes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGVPasajes.Location = new System.Drawing.Point(7, 19);
             this.dataGVPasajes.Name = "dataGVPasajes";

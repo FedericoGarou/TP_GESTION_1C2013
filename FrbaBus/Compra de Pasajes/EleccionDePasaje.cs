@@ -153,7 +153,6 @@ namespace FrbaBus.Compra_de_Pasajes
             {
                 this.Hide();
                 int codigoViajeSeleccionado = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["CodigoViaje"].Value);
-                (new Dialogo("Vas a comprar un pasaje en el viaje "+codigoViajeSeleccionado, "Aceptar")).ShowDialog();
                 (new EspecificarCompra(codigoViajeSeleccionado)).ShowDialog();
                 this.Show();
 

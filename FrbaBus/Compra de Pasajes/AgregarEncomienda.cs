@@ -14,11 +14,6 @@ namespace FrbaBus.Compra_de_Pasajes
     {
         private int codigoViaje { get; set; }
         private int numeroVoucher { get; set; }
-        public int DNI_Pasajero = -1;
-        public int codigoEncomienda = -1;
-        public String NombrePasajero = "";
-        public String ApellidoPasajero = "";
-        public decimal kilogramosPaquete = -1;
         
         public AgregarEncomienda(int codigoViajeHeredado,int numVoucher)
         {
@@ -97,14 +92,9 @@ namespace FrbaBus.Compra_de_Pasajes
                         comand.Parameters.Add("@codigoEncomienda", SqlDbType.Int,18).Direction = ParameterDirection.Output;
                         comand.ExecuteNonQuery();
 
-                        codigoEncomienda = Convert.ToInt32(comand.Parameters["@codigoEncomienda"].Value);
                     }
                 }
 
-                DNI_Pasajero = Convert.ToInt32(textBoxDNI.Text);
-                NombrePasajero = textBoxNombre.Text;
-                ApellidoPasajero = textBoxApellido.Text;
-                kilogramosPaquete = numericPeso.Value;
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
