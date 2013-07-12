@@ -152,3 +152,5 @@ C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus
 C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Debug\FrbaBus.GenerarViaje.Generar_Viaje.resources
 C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Debug\FrbaBus.Registrar_LLegada_Micro.BuscarViajeSinRegistrar.resources
 C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Debug\FrbaBus.Registrar_LLegada_Micro.Registrar_LLegada.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Debug\FrbaBus.Top_Micros.TopMicrosMayorPeriodoBaja.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Debug\FrbaBus.Listado_Estadistico.ListadoEstadistico.resources

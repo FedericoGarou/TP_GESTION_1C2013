@@ -238,6 +238,12 @@
     <Compile Include="Herramientas Generales\MostrarRol.Designer.cs">
       <DependentUpon>MostrarRol.cs</DependentUpon>
     </Compile>
+    <Compile Include="Listado Estadistico\ListadoEstadistico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoEstadistico.Designer.cs">
+      <DependentUpon>ListadoEstadistico.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login\Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -324,6 +330,9 @@
     <EmbeddedResource Include="Herramientas Generales\MostrarRol.resx">
       <DependentUpon>MostrarRol.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\ListadoEstadistico.resx">
+      <DependentUpon>ListadoEstadistico.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Login\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
@@ -346,6 +355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Registrar LLegada Micro\Registrar_LLegada.resx">
       <DependentUpon>Registrar_LLegada.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Top Micros\TopMicrosMayorPeriodoBaja.resx">
+      <DependentUpon>TopMicrosMayorPeriodoBaja.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -407,6 +419,12 @@
     </Compile>
     <Compile Include="Top Destinos\Form3.Designer.cs">
       <DependentUpon>Form3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Top Micros\TopMicrosMayorPeriodoBaja.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Top Micros\TopMicrosMayorPeriodoBaja.Designer.cs">
+      <DependentUpon>TopMicrosMayorPeriodoBaja.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

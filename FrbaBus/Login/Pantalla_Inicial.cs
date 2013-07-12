@@ -11,6 +11,7 @@ using FrbaBus.Abm_Rol;
 using FrbaBus.Abm_Recorrido;
 using FrbaBus.GenerarViaje;
 using FrbaBus.Registrar_LLegada_Micro;
+using FrbaBus.Listado_Estadistico;
 
 namespace FrbaBus.Login
 {
@@ -115,6 +116,11 @@ namespace FrbaBus.Login
             if (String.Equals(funcionalidad, "Registro de llegada a destino"))
             {
                 (new BuscarViajeSinRegistrar()).Show();
+            }
+
+            if (String.Equals(funcionalidad, "Listado estadistico"))
+            {
+                (new ListadoEstadistico()).Show();
             }
 
 

@@ -67,3 +67,39 @@ C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\T
 C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\Trabajos Prácticos\TP_GESTION_1C2013.git\trunk\FrbaBus\bin\Release\FrbaBus.exe
 C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\Trabajos Prácticos\TP_GESTION_1C2013.git\trunk\FrbaBus\bin\Release\FrbaBus.pdb
 C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\Trabajos Prácticos\TP_GESTION_1C2013.git\trunk\FrbaBus\obj\Release\FrbaBus.exe
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\ResolveAssemblyReference.cache
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Ciudades.ABM_Ciudad_Pantalla_Inicial.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Ciudades.AltaCiudad.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Ciudades.BajaCiudad.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Ciudades.ListadoCiudades.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Ciudades.ModifCiudad.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Recorrido.BajaRecorrido.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Recorrido.ListadoRol.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Recorrido.ModifFormularioRecorrido.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Recorrido.ModifRecorrido.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Recorrido.VisualizarRecorrido.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Recorrido.ABM_Recorrido.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Recorrido.AltaRecorrido.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Rol.ABM_Rol.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Rol.AltaRol.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Rol.BajaRol.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Rol.ListadoModificarRol.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Rol.ListadoInhablitarRol.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Rol.ListadoRol.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Abm_Rol.ModifRol.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Dialogo.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.GenerarViaje.Generar_Viaje.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Alta_Rol.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Form1.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.MostrarRol.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Login.Login.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Login.Pantalla_Inicial.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Properties.Resources.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.PruebaSQL.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Prueba.Basico.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Registrar_LLegada_Micro.BuscarViajeSinRegistrar.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Registrar_LLegada_Micro.Registrar_LLegada.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Top_Micros.TopMicrosMayorPeriodoBaja.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.csproj.GenerateResource.Cache
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.exe
+C:\Users\elo\Documents\Visual Studio 2008\Projects\SVN_TP_GESTION_1C2013\FrbaBus\obj\Release\FrbaBus.Listado_Estadistico.ListadoEstadistico.resources
