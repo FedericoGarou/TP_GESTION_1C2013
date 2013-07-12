@@ -196,6 +196,12 @@
     <Compile Include="Dialogo.Designer.cs">
       <DependentUpon>Dialogo.cs</DependentUpon>
     </Compile>
+    <Compile Include="GenerarViaje\Generar_Viaje.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GenerarViaje\Generar_Viaje.Designer.cs">
+      <DependentUpon>Generar_Viaje.cs</DependentUpon>
+    </Compile>
     <Compile Include="Herramientas Generales\Alta_Rol.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -224,12 +230,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GenerarViaje\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GenerarViaje\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Herramientas Generales\MostrarRol.cs">
@@ -312,6 +312,9 @@
     <EmbeddedResource Include="Dialogo.resx">
       <DependentUpon>Dialogo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GenerarViaje\Generar_Viaje.resx">
+      <DependentUpon>Generar_Viaje.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Herramientas Generales\Alta_Rol.resx">
       <DependentUpon>Alta_Rol.cs</DependentUpon>
     </EmbeddedResource>
@@ -338,6 +341,12 @@
     <EmbeddedResource Include="Prueba\Basico.resx">
       <DependentUpon>Basico.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Registrar LLegada Micro\BuscarViajeSinRegistrar.resx">
+      <DependentUpon>BuscarViajeSinRegistrar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registrar LLegada Micro\Registrar_LLegada.resx">
+      <DependentUpon>Registrar_LLegada.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -363,11 +372,17 @@
     <Compile Include="Prueba\Basico.Designer.cs">
       <DependentUpon>Basico.cs</DependentUpon>
     </Compile>
-    <Compile Include="Registrar LLegada Micro\Form1.cs">
+    <Compile Include="Registrar LLegada Micro\BuscarViajeSinRegistrar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Registrar LLegada Micro\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Registrar LLegada Micro\BuscarViajeSinRegistrar.Designer.cs">
+      <DependentUpon>BuscarViajeSinRegistrar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registrar LLegada Micro\Registrar_LLegada.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registrar LLegada Micro\Registrar_LLegada.Designer.cs">
+      <DependentUpon>Registrar_LLegada.cs</DependentUpon>
     </Compile>
     <Compile Include="Top Clientes\Form1.cs">
       <SubType>Form</SubType>
