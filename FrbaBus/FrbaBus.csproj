@@ -356,6 +356,9 @@
     <EmbeddedResource Include="Registrar LLegada Micro\Registrar_LLegada.resx">
       <DependentUpon>Registrar_LLegada.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Top Destinos\DestinosMasPasajesComprados.resx">
+      <DependentUpon>DestinosMasPasajesComprados.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Top Micros\TopMicrosMayorPeriodoBaja.resx">
       <DependentUpon>TopMicrosMayorPeriodoBaja.cs</DependentUpon>
     </EmbeddedResource>
@@ -402,11 +405,11 @@
     <Compile Include="Top Clientes\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Top Destinos\Form1.cs">
+    <Compile Include="Top Destinos\DestinosMasPasajesComprados.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Top Destinos\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Top Destinos\DestinosMasPasajesComprados.Designer.cs">
+      <DependentUpon>DestinosMasPasajesComprados.cs</DependentUpon>
     </Compile>
     <Compile Include="Top Destinos\Form2.cs">
       <SubType>Form</SubType>

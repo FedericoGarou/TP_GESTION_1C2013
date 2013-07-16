@@ -60,6 +60,7 @@
             this.button1.TabIndex = 1;
             this.button1.Text = "Destinos con más pasajes comprados";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -131,7 +132,6 @@
             this.checkBox1.TabIndex = 11;
             this.checkBox1.Text = "Primero";
             this.checkBox1.UseVisualStyleBackColor = true;
-
             // 
             // checkBox2
             // 

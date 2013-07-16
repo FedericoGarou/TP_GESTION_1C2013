@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrbaBus.Top_Micros;
+using FrbaBus.Top_Destinos;
 
 
 namespace FrbaBus.Listado_Estadistico
@@ -47,7 +48,35 @@ namespace FrbaBus.Listado_Estadistico
             }
         }
 
-       
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.sePuedeGenerarListado();
+                año = textBox1.Text;
+
+                if (checkBox1.Checked)
+                {
+                    semestre = 1;
+                }
+                else
+                {
+                    semestre = 2;
+                }
+
+                (new DestinosMasPasajesComprados(año, semestre)).Show();
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
+                (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
+            }
+        }
+        
+        
+        
+        
         private void sePuedeGenerarListado()
         {
             String errorMensaje = "";
@@ -76,6 +105,8 @@ namespace FrbaBus.Listado_Estadistico
         
 
         }
+
+       
 
             
     }

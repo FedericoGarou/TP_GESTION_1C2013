@@ -1734,3 +1734,42 @@ RETURN @cantidadDias
 END
 GO
 
+CREATE FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.FcalcularPasajesCompradosEn(@ciudaDestino nvarchar(255), @año int, @semestre int)
+RETURNS int
+AS BEGIN
+
+declare @mesInicial int 
+declare @mesFinal int
+	
+if (@semestre = 1)
+begin
+	set @mesInicial = 1
+	set @mesFinal = 6
+end
+	
+if (@semestre = 2)
+begin
+	set @mesInicial = 7
+	set @mesFinal = 12
+end
+	
+
+declare @cantidadPasajes int = (
+select COUNT(r.CiudadDestino) AS PasajesComprados
+from LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE cc 
+join LOS_VIAJEROS_DEL_ANONIMATO.COMPRA c on (cc.Numero_Voucher = c.NumeroVoucher)
+join LOS_VIAJEROS_DEL_ANONIMATO.VIAJE v on (c.CodigoViaje = v.CodigoViaje)
+join LOS_VIAJEROS_DEL_ANONIMATO.RECORRIDO r on (v.CodigoRecorrido = r.CodigoRecorrido)
+
+where cc.TipoCompra='P' and YEAR(v.FechaSalida)=@año and YEAR(v.FechaLlegada)=@año and
+MONTH(v.FechaSalida) BETWEEN @mesInicial AND @mesFinal and
+MONTH(v.FechaLlegada) BETWEEN @mesInicial AND @mesFinal and
+r.CiudadDestino = @ciudaDestino
+
+group by r.CiudadDestino
+)
+
+RETURN @cantidadPasajes
+
+END
+GO
