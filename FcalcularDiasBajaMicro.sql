@@ -48,6 +48,9 @@ AS BEGIN
 	
 	end
 	
+	close cur 
+	deallocate cur
+	
 	
 RETURN @cantidadDias
 

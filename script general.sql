@@ -582,6 +582,39 @@ FROM gd_esquema.Maestra M;
 -- |||||||||| Stored procedures y funciones |||||||||| --
 
 GO
+create procedure  LOS_VIAJEROS_DEL_ANONIMATO.SPasignarPuntosVF (@codigoDeViaje int, @fechaExacta datetime)
+AS BEGIN
+
+declare @dni numeric(18,0)
+declare @monto numeric(18,2)
+declare @codCompra numeric(18,0)
+
+declare cur cursor
+
+for select cc.CodigoCompra, cc.DNI_Cliente, cc.MontoUnitario
+	from LOS_VIAJEROS_DEL_ANONIMATO.VIAJE v 
+		join LOS_VIAJEROS_DEL_ANONIMATO.COMPRA c on (v.CodigoViaje=c.CodigoViaje)
+		join LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE cc on (c.NumeroVoucher = cc.Numero_Voucher)
+	where v.CodigoViaje= @codigoDeViaje
+	
+open cur
+FETCH cur into @codCompra, @dni, @monto
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+
+	declare @puntos int = @monto / 5	
+	INSERT into LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF values (@dni, @puntos, @fechaExacta, @codCompra, NULL)
+	FETCH cur into @codCompra, @dni, @monto
+	
+END
+
+close cur
+deallocate cur
+	
+END;
+GO
+
 Create PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.SPRegistrarLLegada
  ( @CodigoViaje nvarchar(255), 
  @FechaExacta datetime 
@@ -590,6 +623,7 @@ AS
 BEGIN
     
     UPDATE LOS_VIAJEROS_DEL_ANONIMATO.VIAJE SET FechaLlegada=@FechaExacta WHERE CodigoViaje=@CodigoViaje
+    exec LOS_VIAJEROS_DEL_ANONIMATO.SPasignarPuntosVF @CodigoViaje, @FechaExacta
     
 END;
 GO
@@ -1729,6 +1763,9 @@ AS BEGIN
 		fetch cur into @fechaInicio, @fechaFin
 	
 	end
+	
+	close cur 
+	deallocate cur
 	
 	
 RETURN @cantidadDias
