@@ -47,10 +47,11 @@
             // 
             this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBox1.FormattingEnabled = true;
+            this.listBox1.HorizontalScrollbar = true;
             this.listBox1.Location = new System.Drawing.Point(27, 12);
             this.listBox1.Name = "listBox1";
             this.listBox1.ScrollAlwaysVisible = true;
-            this.listBox1.Size = new System.Drawing.Size(516, 147);
+            this.listBox1.Size = new System.Drawing.Size(492, 147);
             this.listBox1.TabIndex = 2;
             // 
             // Dialogo
@@ -61,7 +62,7 @@
             this.AutoScroll = true;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Red;
-            this.ClientSize = new System.Drawing.Size(555, 379);
+            this.ClientSize = new System.Drawing.Size(563, 379);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button1);
             this.Name = "Dialogo";
