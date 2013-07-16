@@ -12,7 +12,7 @@ namespace FrbaBus.Top_Micros
 {
     public partial class TopMicrosMayorPeriodoBaja : Form1
     {
-        public TopMicrosMayorPeriodoBaja()
+        public TopMicrosMayorPeriodoBaja(string unAño, int unSemestre)
         {
             InitializeComponent();
 
@@ -22,7 +22,7 @@ namespace FrbaBus.Top_Micros
                 
                 DataTable tabla = new DataTable();
 
-                cargarATablaParaDataGripView("USE GD1C2013 SELECT * from LOS_VIAJEROS_DEL_ANONIMATO_FTOP5MicrosMayorPeriodoBaja()", ref tabla, conexion);
+                cargarATablaParaDataGripView("USE GD1C2013 select TOP 5 Patente, LOS_VIAJEROS_DEL_ANONIMATO.FcalcularDiasBajaMicro(Patente," + unAño + "," + unSemestre + ") AS cantidadDias from LOS_VIAJEROS_DEL_ANONIMATO.PeridoFueraDeServicio where LOS_VIAJEROS_DEL_ANONIMATO.FcalcularDiasBajaMicro(Patente," + unAño + "," + unSemestre + ")!=0 group by Patente order by cantidadDias desc", ref tabla, conexion);
                 dataGridView1.DataSource = tabla;
                 dataGridView1.Columns[0].ReadOnly = true;
                 dataGridView1.Columns[1].ReadOnly = true;
