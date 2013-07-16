@@ -208,13 +208,18 @@ FOREIGN KEY (CodigoCompra) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE(C
 FOREIGN KEY (CodigoCanje)  REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.CANJE(CodigoCanje)
 );
 
+CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.NumeracionDevolucion(
+CodigoDevolucion INT
+PRIMARY KEY (CodigoDevolucion)
+);
+
 CREATE TABLE LOS_VIAJEROS_DEL_ANONIMATO.Devolucion(
-CodigoDevolucion  INT IDENTITY (1,1),
+CodigoDevolucion  INT,
 CodigoCompra   Numeric(18,0),
 NumeroVoucher   INT,
 Motivo nvarchar(255) ,
-PRIMARY KEY (CodigoDevolucion),
-FOREIGN KEY (CodigoCompra) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE(CodigoCompra),
+PRIMARY KEY (CodigoCompra,NumeroVoucher),
+FOREIGN KEY (CodigoDevolucion) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.NumeracionDevolucion(CodigoDevolucion),
 FOREIGN KEY (NumeroVoucher) REFERENCES LOS_VIAJEROS_DEL_ANONIMATO.COMPRA(NumeroVoucher)
 );
 
@@ -1812,3 +1817,103 @@ RETURN @cantidadPasajes
 
 END
 GO
+GO
+CREATE PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.Insertar_Devolucion
+(
+	@motivo nvarchar(255),
+	@codigoCompra int,
+	@numeroVoucher int,
+	@codigoDev int
+)
+AS
+BEGIN
+	INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.Devolucion(CodigoDevolucion,CodigoCompra,Motivo,NumeroVoucher)
+	VALUES (@codigoDev,@codigoCompra,@motivo,@numeroVoucher);
+	
+	DELETE FROM LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE
+	WHERE CodigoCompra = @codigoCompra;
+	
+	UPDATE LOS_VIAJEROS_DEL_ANONIMATO.COMPRA
+	SET 
+		MontoAPagar = (SELECT ISNULL(SUM(CC.MontoUnitario),0)
+					   FROM LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE CC
+					   WHERE CC.Numero_Voucher = @numeroVoucher),
+		KG_por_encomienda = (SELECT ISNULL(SUM(CC.KilosPaquete),0)
+							 FROM LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE CC
+						     WHERE CC.Numero_Voucher = @numeroVoucher),
+		PasajesComprados = (SELECT COUNT(CodigoCompra)
+							FROM LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE CC
+						    WHERE 
+								CC.Numero_Voucher = @numeroVoucher AND
+								CC.TipoCompra = 'P')
+	WHERE NumeroVoucher = @numeroVoucher;
+	
+END
+GO
+CREATE PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.GenerarDevolucion
+(
+	@codigoDev int output
+)
+AS
+BEGIN
+	SET @codigoDev = (SELECT ISNULL(MAX(ND.CodigoDevolucion),0) + 1 
+					  FROM LOS_VIAJEROS_DEL_ANONIMATO.NumeracionDevolucion ND);
+	INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.NumeracionDevolucion(CodigoDevolucion) VALUES (@codigoDev);
+	
+END
+GO
+CREATE FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.F_Voucher 
+(
+	@origen nvarchar(255),
+	@destino nvarchar(255),
+	@fechaSalida datetime
+)
+RETURNS TABLE
+AS
+RETURN (SELECT 0 as RN,-1 as NumeroVoucher
+	    UNION
+	    SELECT 
+	    ROW_NUMBER() OVER(ORDER BY C.NumeroVoucher ASC) as RN,
+	    C.NumeroVoucher
+	    FROM LOS_VIAJEROS_DEL_ANONIMATO.COMPRA C
+	    WHERE
+			C.CodigoViaje IN (SELECT V.CodigoViaje 
+							  FROM LOS_VIAJEROS_DEL_ANONIMATO.VIAJE V
+							  WHERE 
+							 	 V.CodigoRecorrido = (SELECT R.CodigoRecorrido
+								  					  FROM LOS_VIAJEROS_DEL_ANONIMATO.RECORRIDO R
+													  WHERE 
+														R.CiudadOrigen = @origen AND
+														R.CiudadDestino = @destino
+													 ) AND
+							  @fechaSalida = ( SELECT DATEADD( dd, 0, DATEDIFF(dd, 0, V.FechaSalida) ) )
+							  )
+	    );
+GO
+CREATE FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.F_PasajesDeVoucher( @voucher int )
+RETURNS TABLE
+AS
+RETURN (SELECT 0 as RN,-1 as CodigoCompra
+	    UNION
+	    SELECT 
+	    ROW_NUMBER() OVER(ORDER BY CC.CodigoCompra ASC) as RN,
+	    CC.CodigoCompra
+	    FROM LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE CC
+	    WHERE 
+			CC.Numero_Voucher = @voucher AND 
+			CC.TipoCompra = 'P' 
+);
+GO
+CREATE FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.F_EncomiendasDeVoucher( @voucher int )
+RETURNS TABLE
+AS
+RETURN (SELECT 0 as RN,-1 as CodigoCompra
+	    UNION
+	    SELECT 
+	    ROW_NUMBER() OVER(ORDER BY CC.CodigoCompra ASC) as RN,
+	    CC.CodigoCompra
+	    FROM LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE CC
+	    WHERE 
+			CC.Numero_Voucher = @voucher AND 
+			CC.TipoCompra = 'E'
+	    );
