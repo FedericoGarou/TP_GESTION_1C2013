@@ -199,7 +199,7 @@ CodigoPuntuacion INT IDENTITY (1,1)NOT NULL,
 DNI_Usuario NUMERIC(18, 0)NOT NULL ,
 Puntos  NUMERIC(18, 0) NOT NULL,
 Fecha  DATETIME ,
-CodigoCompra NUMERIC(18, 0)NOT NULL ,
+CodigoCompra NUMERIC(18, 0) ,
 CodigoCanje INT ,
 
 PRIMARY KEY (CodigoPuntuacion),

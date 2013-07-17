@@ -13,6 +13,7 @@ using FrbaBus.GenerarViaje;
 using FrbaBus.Registrar_LLegada_Micro;
 using FrbaBus.Listado_Estadistico;
 using FrbaBus.Consulta_Puntos_Adquiridos;
+using FrbaBus.Canje_de_Ptos;
 
 namespace FrbaBus.Login
 {
@@ -129,6 +130,10 @@ namespace FrbaBus.Login
                 (new ConsultaPuntos()).Show();
             }
 
+            if (String.Equals(funcionalidad, "Canje de puntos de pasajero frecuente"))
+            {
+                (new CanjePuntos()).Show();
+            }
 
 
 
