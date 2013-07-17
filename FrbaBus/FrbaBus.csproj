@@ -233,6 +233,12 @@
     <Compile Include="Compra de Pasajes\CalendarioCompra.Designer.cs">
       <DependentUpon>CalendarioCompra.cs</DependentUpon>
     </Compile>
+    <Compile Include="Compra de Pasajes\Comprobante.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Compra de Pasajes\Comprobante.Designer.cs">
+      <DependentUpon>Comprobante.cs</DependentUpon>
+    </Compile>
     <Compile Include="Compra de Pasajes\DialogoEspecificarTutor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -416,6 +422,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Compra de Pasajes\CalendarioCompra.resx">
       <DependentUpon>CalendarioCompra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Compra de Pasajes\Comprobante.resx">
+      <DependentUpon>Comprobante.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Compra de Pasajes\DialogoEspecificarTutor.resx">
       <DependentUpon>DialogoEspecificarTutor.cs</DependentUpon>

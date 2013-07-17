@@ -317,6 +317,7 @@ namespace FrbaBus.Compra_de_Pasajes
             if (dr == DialogResult.OK)
             {
                 this.EstablecerPago(addPago);
+                (new Comprobante(this.NroVoucher)).ShowDialog();
                 this.Close();
             }
             else
