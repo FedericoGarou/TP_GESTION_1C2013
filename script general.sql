@@ -1340,7 +1340,7 @@ BEGIN
 							WHERE M.Patente = @patenteMicro);
 		
 	SET @KGOcupados = 
-		(SELECT SUM(C.KG_por_encomienda)
+		(SELECT ISNULL(SUM(C.KG_por_encomienda),0)
 		 FROM LOS_VIAJEROS_DEL_ANONIMATO.COMPRA C
 		 WHERE @codigoViaje = C.CodigoViaje
 		);
@@ -1366,7 +1366,7 @@ BEGIN
 							WHERE M.Patente = @patenteMicro);
 		
 	SET @butacasOcupadas = 
-		(SELECT SUM(C.PasajesComprados)
+		(SELECT ISNULL(SUM(C.PasajesComprados),0)
 		FROM LOS_VIAJEROS_DEL_ANONIMATO.COMPRA C
 		WHERE @codigoViaje = C.CodigoViaje
 		);
