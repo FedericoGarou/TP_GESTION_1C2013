@@ -40,14 +40,12 @@ namespace FrbaBus.Consulta_Puntos_Adquiridos
                     conexion.Open();
                     DataTable tabla = new DataTable();
 
-                    DateTime fechaMenosUnAño = (getFechaActual().AddYears(-1));
-
-                    (new Dialogo("ERROR - " + fechaMenosUnAño, "Aceptar")).ShowDialog();
+                    DateTime fechaMenosUnAño = (getFechaActual().AddYears(-1));                    
 
                     SqlCommand borrarPuntosVencidos = new SqlCommand("USE GD1C2013 DELETE FROM LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF WHERE DNI_Usuario = " + dni + "and Fecha < '" + fechaMenosUnAño + "'", conexion);
                     borrarPuntosVencidos.ExecuteNonQuery();
                     
-                    cargarATablaParaDataGripView("USE GD1C2013 SELECT Puntos, Fecha, CodigoCompra, CodigoCanje FROM LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF WHERE DNI_Usuario = " + dni, ref tabla, conexion);
+                    cargarATablaParaDataGripView("USE GD1C2013 SELECT Puntos, Fecha, CodigoCompra, CodigoCanje FROM LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF WHERE DNI_Usuario = " + dni +" order by 2", ref tabla, conexion);
 
                     dataGridView1.Columns.Clear();
                     dataGridView1.DataSource = tabla;
