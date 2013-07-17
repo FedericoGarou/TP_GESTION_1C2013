@@ -32,7 +32,13 @@ namespace FrbaBus.Canje_de_Ptos
                     }
 
                     conexion.Open();
-                    DataTable tabla = new DataTable();                   
+                    DataTable tabla = new DataTable();
+
+                    DateTime fechaMenosUnAño = (getFechaActual().AddYears(-1));
+
+                    SqlCommand borrarPuntosVencidos = new SqlCommand("USE GD1C2013 DELETE FROM LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF WHERE DNI_Usuario = " + dni + "and Fecha < '" + fechaMenosUnAño + "'", conexion);
+                    borrarPuntosVencidos.ExecuteNonQuery();
+                    
 
                     SqlCommand cmd = new SqlCommand("USE GD1C2013 SELECT SUM(Puntos) FROM LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF WHERE DNI_Usuario = " + dni, conexion);
                     string totalPuntos = cmd.ExecuteScalar().ToString();
