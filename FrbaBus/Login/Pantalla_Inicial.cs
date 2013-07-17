@@ -14,6 +14,8 @@ using FrbaBus.Registrar_LLegada_Micro;
 using FrbaBus.Listado_Estadistico;
 using FrbaBus.Consulta_Puntos_Adquiridos;
 using FrbaBus.Canje_de_Ptos;
+using FrbaBus.Compra_de_Pasajes;
+using FrbaBus.Cancelar_Viaje;
 
 namespace FrbaBus.Login
 {
@@ -135,6 +137,17 @@ namespace FrbaBus.Login
                 (new CanjePuntos()).Show();
             }
 
+            if (String.Equals(funcionalidad, "Compra de pasaje/encomienda"))
+            {
+                (new EleccionDePasaje()).Show();
+            }
+
+            if (String.Equals(funcionalidad, "Devolucion/cancelacion de pasaje y/o encomienda"))
+            {
+                (new CancelarPasajeEncomienda()).Show();
+            }
+
+            
 
 
 

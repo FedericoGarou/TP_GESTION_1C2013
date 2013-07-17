@@ -336,6 +336,7 @@
     <Compile Include="Login\Pantalla_Inicial.Designer.cs">
       <DependentUpon>Pantalla_Inicial.cs</DependentUpon>
     </Compile>
+    <Compile Include="ParametrosIncorrectosException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Abm Ciudades\ABM_Ciudad_Pantalla_Inicial.resx">
