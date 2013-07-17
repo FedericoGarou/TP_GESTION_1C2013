@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using FrbaBus.Top_Micros;
 using FrbaBus.Top_Destinos;
+using FrbaBus.Top_Clientes;
 
 
 namespace FrbaBus.Listado_Estadistico
@@ -104,6 +105,31 @@ namespace FrbaBus.Listado_Estadistico
                 throw new Exception(errorMensaje);
         
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.sePuedeGenerarListado();
+                año = textBox1.Text;
+
+                if (checkBox1.Checked)
+                {
+                    semestre = 1;
+                }
+                else
+                {
+                    semestre = 2;
+                }
+
+                (new TopPuntos(año, semestre)).Show();
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
+                (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
+            }
         }
 
        
