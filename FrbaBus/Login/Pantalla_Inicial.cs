@@ -12,6 +12,7 @@ using FrbaBus.Abm_Recorrido;
 using FrbaBus.GenerarViaje;
 using FrbaBus.Registrar_LLegada_Micro;
 using FrbaBus.Listado_Estadistico;
+using FrbaBus.Consulta_Puntos_Adquiridos;
 
 namespace FrbaBus.Login
 {
@@ -122,6 +123,12 @@ namespace FrbaBus.Login
             {
                 (new ListadoEstadistico()).Show();
             }
+
+            if (String.Equals(funcionalidad, "Consulta de puntos de pasajero frecuente"))
+            {
+                (new ConsultaPuntos()).Show();
+            }
+
 
 
 
