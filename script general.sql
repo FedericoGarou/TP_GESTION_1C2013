@@ -1996,3 +1996,15 @@ BEGIN
 		C.NumeroVoucher = @numeroVoucher
 END
 GO
+
+create FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.FcalcularTOP5PuntosObtenidosEn(
+@anio int, @mesInicial int, @mesFinal int)
+RETURNS TABLE
+AS 
+RETURN (select TOP 5 DNI_Usuario, SUM(Puntos) AS Puntos 
+		from LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF
+		where YEAR(Fecha)=@anio and MONTH(Fecha) BETWEEN @mesInicial AND @mesFinal
+		group by DNI_Usuario 
+		order by 2 desc);
+GO
+
