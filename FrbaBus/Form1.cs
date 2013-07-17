@@ -7,22 +7,54 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace FrbaBus
 {
     public partial class Form1 : Form
     {
-        private String stringDeConexion = "Server=localhost\\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;";
-        private DateTime fechaActual = new DateTime(2012,2,1); // Ajustar estos dos parametros por archivo de configuración
+        private String stringDeConexion;
+        private DateTime fechaActual;
 
         public Form1()
         {
             InitializeComponent();
+            this.configurarse();
+            Console.Out.WriteLine("Conexion: " + this.stringDeConexion);
+            Console.Out.WriteLine("fecha: " + this.fechaActual.ToString("yyyy/MM/dd"));
+            
+        }
+
+        private void configurarse()
+        {
+            String linea;
+
+            String ruta = Application.StartupPath+@"\FRBABUS.txt";
+            
+            StreamReader archivo = new StreamReader(ruta,Encoding.ASCII);
+
+            while ((linea = archivo.ReadLine()) != null)
+            {
+                String[] renglon = linea.Split(':');
+                String primerPalabra = renglon[0];
+
+                if (primerPalabra.Equals("conexion"))
+                    this.stringDeConexion = renglon[1];
+                
+                if (primerPalabra.Equals("fecha"))
+                {
+                    String[] fecha = renglon[1].Split('/');
+                    this.fechaActual = new DateTime(Convert.ToInt32(fecha[0]),Convert.ToInt32(fecha[1]),Convert.ToInt32(fecha[2]));
+                }
+            }
+            
+            archivo.Close();
+            
         }
         
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         public DateTime getFechaActual()
