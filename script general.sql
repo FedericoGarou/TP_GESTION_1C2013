@@ -1917,3 +1917,74 @@ RETURN (SELECT 0 as RN,-1 as CodigoCompra
 			CC.Numero_Voucher = @voucher AND 
 			CC.TipoCompra = 'E'
 	    );
+GO
+create procedure LOS_VIAJEROS_DEL_ANONIMATO.SP_CanjearPremio( 
+@DNI nvarchar(255),
+@Premio nvarchar(255), 
+@Puntos int, 
+@Cantidad int, 
+@PuntosCliente int,
+@FechaActual datetime, 
+@retorno bit output )
+AS
+BEGIN
+	declare @PuntosTotalesPremio int = (@Puntos*@Cantidad)
+	
+	declare @CodigoProducto int = (select CodigoProducto 
+									from LOS_VIAJEROS_DEL_ANONIMATO.PREMIO
+									WHERE DetalleProducto=@Premio)
+	
+	if (@PuntosTotalesPremio>@PuntosCliente)
+	BEGIN
+		SET @retorno = 0 --no le alcanzan los puntos
+	END
+	else
+	BEGIN
+		INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.CANJE values (@DNI, @Cantidad, @FechaActual, @CodigoProducto)
+		
+		declare @CodigoCanje int = (select CodigoCanje 
+									from LOS_VIAJEROS_DEL_ANONIMATO.CANJE
+									WHERE DNI_Usuario = @DNI and
+										CantidadElegida = @Cantidad and
+										Fecha = @FechaActual and
+										CodigoProducto = @CodigoProducto)
+									
+		
+		INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF values (@DNI, -@PuntosTotalesPremio, @FechaActual, NULL, @CodigoCanje)
+		
+		SET @retorno = 1 --se realiazo el canje
+	END
+	
+END;
+GO
+create procedure  LOS_VIAJEROS_DEL_ANONIMATO.SPasignarPuntosVF (@codigoDeViaje int, @fechaExacta datetime)
+AS BEGIN
+
+declare @dni numeric(18,0)
+declare @monto numeric(18,2)
+declare @codCompra numeric(18,0)
+
+declare cur cursor
+
+for select cc.CodigoCompra, cc.DNI_Cliente, cc.MontoUnitario
+	from LOS_VIAJEROS_DEL_ANONIMATO.VIAJE v 
+		join LOS_VIAJEROS_DEL_ANONIMATO.COMPRA c on (v.CodigoViaje=c.CodigoViaje)
+		join LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE cc on (c.NumeroVoucher = cc.Numero_Voucher)
+	where v.CodigoViaje= @codigoDeViaje
+	
+open cur
+FETCH cur into @codCompra, @dni, @monto
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+
+	declare @puntos int = @monto / 5	
+	INSERT into LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF values (@dni, @puntos, @fechaExacta, @codCompra, NULL)
+	FETCH cur into @codCompra, @dni, @monto
+	
+END
+
+close cur
+deallocate cur
+	
+END;
