@@ -1956,4 +1956,43 @@ BEGIN
 	END
 	
 END;
-
+GO
+CREATE PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.ObtenerDatosDeCompra
+(
+	@numeroVoucher int,
+	@origen nvarchar(255) output,
+	@destino nvarchar(255) output,
+	@servicio nvarchar(255) output,
+	@fechaSalida datetime output,
+	@fechaLlegada datetime output,
+	@patente nvarchar(255) output,
+	@cantidadPasajes int output,
+	@kilosEncomiendas numeric(18,2) output,
+	@total numeric(18,2) output
+)
+AS
+BEGIN
+	SELECT
+		@origen = R.CiudadOrigen,
+		@destino = R.CiudadDestino,
+		@servicio = R.TipoServicio,
+		@fechaSalida = V.FechaSalida,
+		@fechaLlegada = V.FechaLlegadaEstimada,
+		@patente = V.PatenteMicro,
+		@cantidadPasajes = C.PasajesComprados,
+		@kilosEncomiendas = C.KG_por_encomienda,
+		@total = C.MontoAPagar
+	FROM 
+		LOS_VIAJEROS_DEL_ANONIMATO.COMPRA C
+	JOIN
+		LOS_VIAJEROS_DEL_ANONIMATO.VIAJE V
+	ON
+		(C.CodigoViaje = V.CodigoViaje)
+	JOIN 
+		LOS_VIAJEROS_DEL_ANONIMATO.RECORRIDO R
+	ON
+		(R.CodigoRecorrido = V.CodigoRecorrido)
+	WHERE
+		C.NumeroVoucher = @numeroVoucher
+END
+GO
