@@ -209,6 +209,12 @@
       <DependentUpon>EspecificarCancelacion.cs</DependentUpon>
     </Compile>
     <Compile Include="Cancelar Viaje\FechaElegidaExeption.cs" />
+    <Compile Include="Canje de Ptos\CanjePuntos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Canje de Ptos\CanjePuntos.Designer.cs">
+      <DependentUpon>CanjePuntos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Compra de Pasajes\AgregarEncomienda.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -227,7 +233,6 @@
     <Compile Include="Compra de Pasajes\CalendarioCompra.Designer.cs">
       <DependentUpon>CalendarioCompra.cs</DependentUpon>
     </Compile>
-    <Compile Include="Compra de Pasajes\Cliente.cs" />
     <Compile Include="Compra de Pasajes\DialogoEspecificarTutor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -277,12 +282,6 @@
     <Compile Include="Compra de Pasajes\MostrarButacasDisponibles.Designer.cs">
       <DependentUpon>MostrarButacasDisponibles.cs</DependentUpon>
     </Compile>
-    <Compile Include="Canje de Ptos\CanjePuntos.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Canje de Ptos\CanjePuntos.Designer.cs">
-      <DependentUpon>CanjePuntos.cs</DependentUpon>
-    </Compile>
     <Compile Include="Consulta Puntos Adquiridos\ConsultaPuntos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -306,18 +305,6 @@
     </Compile>
     <Compile Include="Herramientas Generales\Alta_Rol.Designer.cs">
       <DependentUpon>Alta_Rol.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Canje de Ptos\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Canje de Ptos\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Consulta Puntos Adquiridos\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Consulta Puntos Adquiridos\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -408,7 +395,7 @@
     <EmbeddedResource Include="Abm Rol\ModifRol.resx">
       <DependentUpon>ModifRol.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< .mine    <EmbeddedResource Include="Cancelar Viaje\CalendarioCompra.resx">
+    <EmbeddedResource Include="Cancelar Viaje\CalendarioCompra.resx">
       <DependentUpon>CalendarioCompra.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cancelar Viaje\CancelarPasajeEncomienda.resx">
@@ -416,6 +403,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cancelar Viaje\EspecificarCancelacion.resx">
       <DependentUpon>EspecificarCancelacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Canje de Ptos\CanjePuntos.resx">
+      <DependentUpon>CanjePuntos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Compra de Pasajes\AgregarEncomienda.resx">
       <DependentUpon>AgregarEncomienda.cs</DependentUpon>
@@ -450,13 +440,10 @@
     <EmbeddedResource Include="Compra de Pasajes\MostrarButacasDisponibles.resx">
       <DependentUpon>MostrarButacasDisponibles.cs</DependentUpon>
     </EmbeddedResource>
-=======    <EmbeddedResource Include="Canje de Ptos\CanjePuntos.resx">
-      <DependentUpon>CanjePuntos.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Consulta Puntos Adquiridos\ConsultaPuntos.resx">
       <DependentUpon>ConsultaPuntos.cs</DependentUpon>
     </EmbeddedResource>
->>>>>>> .theirs    <EmbeddedResource Include="Dialogo.resx">
+    <EmbeddedResource Include="Dialogo.resx">
       <DependentUpon>Dialogo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GenerarViaje\Generar_Viaje.resx">
@@ -593,11 +580,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-<<<<<<< .mine=======  <ItemGroup>
-    <Folder Include="Cancelar Viaje\" />
-    <Folder Include="Compra de Pasajes\" />
-  </ItemGroup>
->>>>>>> .theirs  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
