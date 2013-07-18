@@ -1943,7 +1943,7 @@ BEGIN
 	declare cur cursor
 	for select CodigoPuntuacion, Puntos, Fecha, CodigoCompra 
 		from LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF 
-		where DNI_Usuario = @DNI and CodigoCanje is NULL
+		where DNI_Usuario = @DNI and CodigoCanje is NULL and Fecha > (@FechaActual-365)
 		order by 3	
 	
 	if (@PuntosTotalesPremio>@PuntosCliente)

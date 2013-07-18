@@ -35,12 +35,12 @@ namespace FrbaBus.Canje_de_Ptos
                     DataTable tabla = new DataTable();
 
                     DateTime fechaMenosUnAño = (getFechaActual().AddYears(-1));
-
+                    /*
                     SqlCommand borrarPuntosVencidos = new SqlCommand("USE GD1C2013 DELETE FROM LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF WHERE DNI_Usuario = " + dni + "and Fecha < '" + fechaMenosUnAño + "'", conexion);
                     borrarPuntosVencidos.ExecuteNonQuery();
-                    
+                    */
 
-                    SqlCommand cmd = new SqlCommand("USE GD1C2013 SELECT SUM(Puntos) FROM LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF WHERE DNI_Usuario = " + dni + "and CodigoCanje is NULL", conexion);
+                    SqlCommand cmd = new SqlCommand("USE GD1C2013 SELECT SUM(Puntos) FROM LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF WHERE DNI_Usuario = " + dni + "and CodigoCanje is NULL and Fecha > '" + fechaMenosUnAño + "' ", conexion);
                     string totalPuntos = cmd.ExecuteScalar().ToString();
 
                     textBox2.Text = totalPuntos;
@@ -82,6 +82,7 @@ namespace FrbaBus.Canje_de_Ptos
                     int puntos = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString());
                     int cantidad = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());
                     int puntosCliente = Convert.ToInt32(textBox2.Text);
+                    DateTime fechaMenosUnAño = (getFechaActual().AddYears(-1));
 
                     using (SqlConnection conexion = this.obtenerConexion())
                     {
@@ -105,7 +106,7 @@ namespace FrbaBus.Canje_de_Ptos
                                 int seRealizoCanje = Convert.ToInt32(cmd.Parameters["@retorno"].Value);
                                 if (seRealizoCanje == 1)
                                 {
-                                    SqlCommand cmd2 = new SqlCommand("USE GD1C2013 SELECT SUM(Puntos) FROM LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF WHERE DNI_Usuario = " + textBox1.Text + "and CodigoCanje is NULL", conexion);
+                                    SqlCommand cmd2 = new SqlCommand("USE GD1C2013 SELECT SUM(Puntos) FROM LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF WHERE DNI_Usuario = " + textBox1.Text + "and CodigoCanje is NULL and Fecha > '" + fechaMenosUnAño + "'", conexion);
                                     string totalPuntos = cmd2.ExecuteScalar().ToString();
 
                                     textBox2.Text = totalPuntos;

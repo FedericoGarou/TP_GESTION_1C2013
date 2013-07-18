@@ -1,2 +1,2 @@
 conexion:Server=localhost\SQLSERVER2008;Database=GD1C2013;User Id=gd;Password=gd2013;
-fecha:2012/2/1
+fecha:2013/7/17
