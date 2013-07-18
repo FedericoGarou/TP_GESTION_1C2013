@@ -48,7 +48,7 @@ namespace FrbaBus.Registrar_LLegada_Micro
                 comboBox3.DisplayMember = "NombreServicio";
                 comboBox3.DataSource = tiposDeServicio; // Tipos de servicio
 
-                comboBox4.Text = "No Seleccionado";
+                comboBox4.Text = "No seleccionado";
             }
         }
 
@@ -85,6 +85,8 @@ namespace FrbaBus.Registrar_LLegada_Micro
                 string origen = comboBox1.Text;
                 string destino = comboBox2.Text;
                 string tipoServicio = comboBox3.Text;
+                string Filtro = "and CodigoRecorrido = @codigo and PatenteMicro= '" + patenteMicro + "'";
+                string FiltroFuncion = "declare @codigo numeric(18,0) = (LOS_VIAJEROS_DEL_ANONIMATO.F_ObetenerRecorrido('" + patenteMicro + "', '" + origen + "', '" + destino + "', '" + tipoServicio + "'))";
 
                 // this.sePuedeCrearUnViaje();
 
@@ -92,11 +94,22 @@ namespace FrbaBus.Registrar_LLegada_Micro
                 {
                     conexion.Open();
 
-                    // SqlCommand recorrido = new SqlCommand("USE GD1C2013 SELECT * FROM LOS_VIAJEROS_DEL_ANONIMATO.Recorrido WHERE CiudadOrigen = '" + origen + "' and CiudadDestino = '" + destino + "' and TipoServicio = '" + tipoServicio + "'", conexion);
-                    // Numeric(18,0) codigoRecorrido = recorrido.ExecuteScalar().ToString();
+                    if (String.Equals(patenteMicro, "No seleccionado") && String.Equals(tipoServicio, "No seleccionado") && String.Equals(origen, "No seleccionado") && String.Equals(destino, "No seleccionado"))
+                    {
+                        Filtro = "";
+                        FiltroFuncion = "";
+                    }
+                    else
+                    {
+                        if (String.Equals(patenteMicro, "No seleccionado") || String.Equals(tipoServicio, "No seleccionado") || String.Equals(origen, "No seleccionado") || String.Equals(destino, "No seleccionado"))
+                        {
+                            throw new Exception("Seleccione todos los filtros, o ninguno para mostrar todos los viajes");
+                        }
+                    }
 
+                    DateTime fechaActual = getFechaActual();
                     DataTable tabla = new DataTable();
-                    cargarATablaParaDataGripView("declare @codigo numeric(18,0) = (LOS_VIAJEROS_DEL_ANONIMATO.F_ObetenerRecorrido('FWX-674', 'Santa Fe', 'Corrientes', 'Ejecutivo')) SELECT CodigoViaje, FechaSalida, PatenteMicro, FechaLlegadaEstimada, FechaLlegada FROM LOS_VIAJEROS_DEL_ANONIMATO.VIAJE WHERE CodigoRecorrido = @codigo and PatenteMicro= '" + patenteMicro + "'", ref tabla, conexion);
+                    cargarATablaParaDataGripView(FiltroFuncion + "SELECT CodigoViaje, PatenteMicro, FechaSalida, FechaLlegadaEstimada, FechaLlegada FROM LOS_VIAJEROS_DEL_ANONIMATO.VIAJE WHERE DATEADD(dd, 0, DATEDIFF(dd, 0, FechaLlegadaEstimada)) = '" + fechaActual + "'" + Filtro, ref tabla, conexion);
                     
                     dataGridView1.Columns.Clear();
                     dataGridView1.DataSource = tabla;
@@ -138,6 +151,17 @@ namespace FrbaBus.Registrar_LLegada_Micro
 
 
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            comboBox1.Text = "No seleccionado";
+            comboBox2.Text = "No seleccionado";
+            comboBox3.Text = "No seleccionado";
+            comboBox4.Text = "No seleccionado";
+
+            dataGridView1.Columns.Clear();
+
         }
 
         
