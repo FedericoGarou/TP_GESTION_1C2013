@@ -40,7 +40,7 @@ namespace FrbaBus.Canje_de_Ptos
                     borrarPuntosVencidos.ExecuteNonQuery();
                     
 
-                    SqlCommand cmd = new SqlCommand("USE GD1C2013 SELECT SUM(Puntos) FROM LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF WHERE DNI_Usuario = " + dni, conexion);
+                    SqlCommand cmd = new SqlCommand("USE GD1C2013 SELECT SUM(Puntos) FROM LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF WHERE DNI_Usuario = " + dni + "and CodigoCanje is NULL", conexion);
                     string totalPuntos = cmd.ExecuteScalar().ToString();
 
                     textBox2.Text = totalPuntos;
@@ -105,7 +105,7 @@ namespace FrbaBus.Canje_de_Ptos
                                 int seRealizoCanje = Convert.ToInt32(cmd.Parameters["@retorno"].Value);
                                 if (seRealizoCanje == 1)
                                 {
-                                    SqlCommand cmd2 = new SqlCommand("USE GD1C2013 SELECT SUM(Puntos) FROM LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF WHERE DNI_Usuario = " + textBox1.Text, conexion);
+                                    SqlCommand cmd2 = new SqlCommand("USE GD1C2013 SELECT SUM(Puntos) FROM LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF WHERE DNI_Usuario = " + textBox1.Text + "and CodigoCanje is NULL", conexion);
                                     string totalPuntos = cmd2.ExecuteScalar().ToString();
 
                                     textBox2.Text = totalPuntos;
