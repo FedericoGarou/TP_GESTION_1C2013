@@ -1934,12 +1934,25 @@ BEGIN
 									from LOS_VIAJEROS_DEL_ANONIMATO.PREMIO
 									WHERE DetalleProducto=@Premio)
 	
+	declare @AcumuladorPuntos int = 0
+	declare @codigoPuntuacion int
+	declare @PuntosParciales int
+	declare @FechaPuntos datetime
+	declare @CodigoCompra int
+					
+	declare cur cursor
+	for select CodigoPuntuacion, Puntos, Fecha, CodigoCompra 
+		from LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF 
+		where DNI_Usuario = @DNI and CodigoCanje is NULL
+		order by 3	
+	
 	if (@PuntosTotalesPremio>@PuntosCliente)
 	BEGIN
 		SET @retorno = 0 --no le alcanzan los puntos
 	END
 	else
 	BEGIN
+						
 		INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.CANJE values (@DNI, @Cantidad, @FechaActual, @CodigoProducto)
 		
 		declare @CodigoCanje int = (select CodigoCanje 
@@ -1948,11 +1961,38 @@ BEGIN
 										CantidadElegida = @Cantidad and
 										Fecha = @FechaActual and
 										CodigoProducto = @CodigoProducto)
-									
 		
-		INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF values (@DNI, -@PuntosTotalesPremio, @FechaActual, NULL, @CodigoCanje)
+		open cur 
+		FETCH cur into @codigoPuntuacion, @PuntosParciales, @FechaPuntos, @CodigoCompra
 		
+		WHILE @AcumuladorPuntos < @PuntosTotalesPremio
+		begin							
+		
+			UPDATE LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF SET CodigoCanje = @CodigoCanje 
+			where CodigoPuntuacion = @codigoPuntuacion
+			
+			SET @AcumuladorPuntos = @AcumuladorPuntos + @PuntosParciales			
+			
+			IF @AcumuladorPuntos < @PuntosTotalesPremio
+			begin
+				FETCH cur into @codigoPuntuacion, @PuntosParciales, @FechaPuntos, @CodigoCompra
+			end
+			else
+			begin
+				declare @difPuntos int = @AcumuladorPuntos - @PuntosTotalesPremio
+				
+				UPDATE LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF SET Puntos = @PuntosParciales - @difPuntos 
+				where CodigoPuntuacion = @codigoPuntuacion
+				
+				INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.PUNTOVF values (@DNI, @difPuntos, @FechaPuntos , @CodigoCompra, NULL) 
+				--inserto una linea con los mismos datos con los puntos restantes
+			
+			end
+			
+		end
+			
 		SET @retorno = 1 --se realiazo el canje
+		
 	END
 	
 END;
