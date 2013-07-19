@@ -57,9 +57,40 @@ namespace FrbaBus.Abm_Micro
 
                         comando.ExecuteNonQuery();
 
+                        this.comprobarViajes();
+
                         this.Close();
 
                     }
+                }
+            }
+        }
+
+        private void comprobarViajes()
+        {
+            using (SqlConnection conexion = this.obtenerConexion())
+            {
+                using (SqlCommand comando = new SqlCommand("LOS_VIAJEROS_DEL_ANONIMATO.SP_TieneViajesProgramados_Def", conexion))
+                {
+                    conexion.Open();
+                    comando.CommandType = CommandType.StoredProcedure;
+
+                    comando.Parameters.Add("@patente", SqlDbType.NVarChar).Value = comboPatentes.Text;
+                    comando.Parameters.Add("@FechaInicio", SqlDbType.DateTime).Value = this.getFechaActual();
+                    comando.Parameters.Add("@tieneViajes", SqlDbType.Bit).Direction = ParameterDirection.Output;
+
+                    comando.ExecuteNonQuery();
+
+                    Boolean tieneViajes = Convert.ToBoolean(comando.Parameters["@tieneViajes"].Value);
+
+                    if (tieneViajes)
+                    {
+                        this.Hide();
+                        (new DialogoMicroFSTieneViajes("Definitivamente", comboPatentes.Text,this.getFechaActual())).ShowDialog();
+                    }
+
+                    this.Close();
+
                 }
             }
         }

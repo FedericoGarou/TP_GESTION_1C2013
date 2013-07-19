@@ -190,7 +190,7 @@ namespace FrbaBus.Abm_Micro
                     if (tieneViajes)
                     {
                         this.Hide();
-                        (new DialogoMicroFSTieneViajes(comboPatentes.Text, fechaInicio, fechaFin)).ShowDialog();
+                        (new DialogoMicroFSTieneViajes("PorModificacion", comboPatentes.Text, fechaInicio, fechaFin)).ShowDialog();
                     }
 
                     this.Close();

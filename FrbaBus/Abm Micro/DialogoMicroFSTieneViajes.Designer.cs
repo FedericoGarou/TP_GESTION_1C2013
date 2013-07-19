@@ -42,7 +42,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "El micro al cual se le ha programado un mantenimiento tenía viajes programados en" +
                 "tre esas fechas. ¿Que desea hacer?";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // buttonReemplazar
             // 
@@ -77,7 +76,6 @@
             this.Controls.Add(this.label1);
             this.Name = "DialogoMicroFSTieneViajes";
             this.Text = "DialogoMicroFSTieneViajes";
-            this.Load += new System.EventHandler(this.DialogoMicroFSTieneViajes_Load);
             this.ResumeLayout(false);
 
         }
