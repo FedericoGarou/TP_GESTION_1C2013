@@ -2362,3 +2362,158 @@ MONTH(v.FechaLlegadaEstimada) BETWEEN @mesInicial AND @mesFinal
 group by r.CiudadDestino
 order by 2 desc);
 GO
+CREATE PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.SP_TieneViajesProgramados_Def
+(
+	@patente nvarchar(255),
+	@FechaInicio datetime,
+	@tieneViajes bit output
+)
+AS
+BEGIN
+	IF(EXISTS
+		(
+			SELECT 1
+			FROM LOS_VIAJEROS_DEL_ANONIMATO.VIAJE V
+			WHERE
+				V.PatenteMicro = @patente AND
+				( @FechaInicio <= V.FechaSalida OR
+				  (@FechaInicio BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) )
+		)
+	  )
+	BEGIN
+		SET @tieneViajes = 1;
+	END
+	ELSE
+	BEGIN
+		SET @tieneViajes = 0;
+	END	
+END
+GO
+CREATE PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.HayMicroParaReemplazo_Def
+(
+	@patente nvarchar(255),
+	@FechaInicio datetime,
+	@hayMicros bit output
+)
+AS
+BEGIN
+	
+	DECLARE @servicio nvarchar(255);
+	DECLARE @marca int;
+	
+	SELECT @servicio = M.TipoServicio, @marca = M.Marca
+	FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M
+	WHERE M.Patente = @patente
+	
+-- Un micro que no sea EL micro, que sea de características iguales, que este disponible y no tenga viajes en ese periodo.
+	
+	IF EXISTS (SELECT 1
+			   FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M2
+			   WHERE 
+			    -- No es el mismo micro que quiero reemplazar
+				M2.Patente != @patente AND
+				-- Tiene características similares
+				M2.TipoServicio = @servicio AND
+				M2.Marca = @marca AND
+				-- No tiene viajes asignados en el periodo
+				(NOT EXISTS ( SELECT 1
+							  FROM LOS_VIAJEROS_DEL_ANONIMATO.VIAJE V
+							  WHERE
+								V.PatenteMicro = M2.Patente AND
+								( @FechaInicio <= V.FechaSalida OR
+								 (@FechaInicio BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) )
+							)
+				) AND
+				-- No esta dado de baja por mantenimiento en el periodo
+				(NOT EXISTS ( SELECT 1
+							  FROM LOS_VIAJEROS_DEL_ANONIMATO.PeridoFueraDeServicio PFS
+							  WHERE
+								PFS.Patente = M2.Patente AND
+								( @FechaInicio <= PFS.FechaFin OR
+								 (@FechaInicio BETWEEN PFS.FechaInicio AND PFS.FechaFin) )
+							)
+				) AND
+				-- No fue dado de baja
+				M2.FechaBajaDefinitiva IS NULL
+			  )
+	BEGIN
+		SET @hayMicros = 1;
+	END
+	ELSE
+	BEGIN
+		SET @hayMicros = 0;
+	END
+END
+GO
+CREATE FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.ComprasDelMicroEnPeriodo_Def
+(
+	@patente nvarchar(255),
+	@FechaInicio datetime
+)
+RETURNS TABLE
+AS
+RETURN
+(
+	SELECT C.NumeroVoucher
+	FROM LOS_VIAJEROS_DEL_ANONIMATO.COMPRA C
+	JOIN LOS_VIAJEROS_DEL_ANONIMATO.VIAJE V
+	ON V.CodigoViaje = C.CodigoViaje
+	WHERE
+		V.PatenteMicro = @patente AND
+		( @FechaInicio <= V.FechaSalida OR
+		 (@FechaInicio BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) )
+)
+GO
+CREATE FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.F_MicrosDeReemplazo_Def
+(
+	@patente nvarchar(255),
+	@FechaInicio datetime
+)
+RETURNS TABLE
+AS
+RETURN
+ (SELECT M2.Patente,M2.Cantidad_Butacas,M2.KG_Disponibles,M2.NumeroDeMicro
+  FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M2
+  WHERE
+    M2.Patente != @patente AND
+	M2.TipoServicio = (SELECT M.TipoServicio
+					   FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M
+					   WHERE M.Patente = @patente) AND
+	M2.Marca = (SELECT M.Marca
+				FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M
+				WHERE M.Patente = @patente) AND
+	(NOT EXISTS ( SELECT 1
+				  FROM LOS_VIAJEROS_DEL_ANONIMATO.VIAJE V
+				  WHERE
+						V.PatenteMicro = M2.Patente AND
+						( @FechaInicio <= V.FechaSalida OR
+						 (@FechaInicio BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) )
+				)
+	) AND
+	(NOT EXISTS ( SELECT 1
+				  FROM LOS_VIAJEROS_DEL_ANONIMATO.PeridoFueraDeServicio PFS
+				  WHERE
+						PFS.Patente = M2.Patente AND
+						( @FechaInicio <= PFS.FechaFin OR
+						 (@FechaInicio BETWEEN PFS.FechaInicio AND PFS.FechaFin) )
+				)
+	) AND
+	M2.FechaBajaDefinitiva IS NULL
+)
+GO
+CREATE PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.ReemplazarMicro_Def
+(
+	@patenteReemplazado nvarchar(255),
+	@patenteReemplazo nvarchar(255),
+	@FechaInicio datetime
+)
+AS
+BEGIN
+	UPDATE LOS_VIAJEROS_DEL_ANONIMATO.VIAJE
+		SET PatenteMicro = @patenteReemplazo
+	WHERE
+		PatenteMicro = @patenteReemplazado AND
+		( @FechaInicio <= FechaSalida OR
+		 (@FechaInicio BETWEEN FechaSalida AND FechaLlegadaEstimada) )
+END
+GO
