@@ -1725,47 +1725,60 @@ CREATE FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.FcalcularDiasBajaMicro(@patente nvarc
 RETURNS int
 AS BEGIN
 	declare @cantidadDias int = 0
-	declare @fechaInicio datetime
-	declare @fechaFin datetime
-	declare @mesInicial int 
-	declare @mesFinal int
+	declare @fechaInicioPeriodo datetime
+	declare @fechaFinPeriodo datetime
+	declare @fechaInicioSemestre datetime 
+	declare @fechaFinSemestre datetime
 	
 	if (@semestre = 1)
 	begin
-		set @mesInicial = 1
-		set @mesFinal = 6
+		set @fechaInicioSemestre  = '01-01-'+CAST(@año as nvarchar(255))
+		set @fechaFinSemestre = '30-06-'+CAST(@año as nvarchar(255))
 	end
 	
 	if (@semestre = 2)
 	begin
-		set @mesInicial = 7
-		set @mesFinal = 12
+		set @fechaInicioSemestre  = '01-07-'+CAST(@año as nvarchar(255))
+		set @fechaFinSemestre = '30-12-'+CAST(@año as nvarchar(255))
 	end
 		
 	declare cur cursor 
 	for select FechaInicio, FechaFin 
 		from LOS_VIAJEROS_DEL_ANONIMATO.PeridoFueraDeServicio 
-		where Patente = @patente and 
-			YEAR(fechaInicio)=@año and YEAR(FechaFin)=@año and 
-			MONTH(FechaInicio) BETWEEN @mesInicial AND @mesFinal and
-			MONTH(FechaFin) BETWEEN @mesInicial AND @mesFinal
+		where Patente = @patente 			
 		
 	open cur 
-	fetch cur into @fechaInicio, @fechaFin
+	fetch cur into @fechaInicioPeriodo, @fechaFinPeriodo
 	
 	while @@FETCH_STATUS = 0
 	begin	
 			
-			--A FINES PRACTICOS TOMAMOS TODOS LOS MESES DE 30 DIAS
+		if ((@fechaInicioPeriodo < @fechaInicioSemestre) and  (@fechaFinPeriodo > @fechaFinSemestre))
+		begin
+			close cur 
+			deallocate cur
+			RETURN 180
+		end
+		
 			
-			set @cantidadDias = @cantidadDias + ((YEAR(@fechaFin) - YEAR(@fechaInicio))*360)
+		if ((@fechaInicioPeriodo BETWEEN @fechaInicioSemestre AND @fechaFinSemestre) or (@fechaFinPeriodo BETWEEN @fechaInicioSemestre AND @fechaFinSemestre))
+		begin
+	
+			if (@fechaInicioPeriodo < @fechaInicioSemestre)
+			begin
+				set @fechaInicioPeriodo = @fechaInicioSemestre
+			end
+	
+			if @fechaFinPeriodo > @fechaFinSemestre
+			begin
+				set @fechaFinPeriodo = @fechaFinSemestre
+			end			
 			
-			set @cantidadDias = @cantidadDias + ((MONTH(@fechaFin) - MONTH(@fechaInicio))*30)
-			
-			set @cantidadDias = @cantidadDias +  (DAY(@fechaFin) - DAY(@fechaInicio))
-			
-			
-		fetch cur into @fechaInicio, @fechaFin
+			set @cantidadDias = @cantidadDias + DATEDIFF(day, @fechaInicioPeriodo,@fechaFinPeriodo);
+					
+		end
+		
+		fetch cur into @fechaInicioPeriodo, @fechaFinPeriodo
 	
 	end
 	
@@ -2361,159 +2374,4 @@ MONTH(v.FechaLlegadaEstimada) BETWEEN @mesInicial AND @mesFinal
 
 group by r.CiudadDestino
 order by 2 desc);
-GO
-CREATE PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.SP_TieneViajesProgramados_Def
-(
-	@patente nvarchar(255),
-	@FechaInicio datetime,
-	@tieneViajes bit output
-)
-AS
-BEGIN
-	IF(EXISTS
-		(
-			SELECT 1
-			FROM LOS_VIAJEROS_DEL_ANONIMATO.VIAJE V
-			WHERE
-				V.PatenteMicro = @patente AND
-				( @FechaInicio <= V.FechaSalida OR
-				  (@FechaInicio BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) )
-		)
-	  )
-	BEGIN
-		SET @tieneViajes = 1;
-	END
-	ELSE
-	BEGIN
-		SET @tieneViajes = 0;
-	END	
-END
-GO
-CREATE PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.HayMicroParaReemplazo_Def
-(
-	@patente nvarchar(255),
-	@FechaInicio datetime,
-	@hayMicros bit output
-)
-AS
-BEGIN
-	
-	DECLARE @servicio nvarchar(255);
-	DECLARE @marca int;
-	
-	SELECT @servicio = M.TipoServicio, @marca = M.Marca
-	FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M
-	WHERE M.Patente = @patente
-	
--- Un micro que no sea EL micro, que sea de características iguales, que este disponible y no tenga viajes en ese periodo.
-	
-	IF EXISTS (SELECT 1
-			   FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M2
-			   WHERE 
-			    -- No es el mismo micro que quiero reemplazar
-				M2.Patente != @patente AND
-				-- Tiene características similares
-				M2.TipoServicio = @servicio AND
-				M2.Marca = @marca AND
-				-- No tiene viajes asignados en el periodo
-				(NOT EXISTS ( SELECT 1
-							  FROM LOS_VIAJEROS_DEL_ANONIMATO.VIAJE V
-							  WHERE
-								V.PatenteMicro = M2.Patente AND
-								( @FechaInicio <= V.FechaSalida OR
-								 (@FechaInicio BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) )
-							)
-				) AND
-				-- No esta dado de baja por mantenimiento en el periodo
-				(NOT EXISTS ( SELECT 1
-							  FROM LOS_VIAJEROS_DEL_ANONIMATO.PeridoFueraDeServicio PFS
-							  WHERE
-								PFS.Patente = M2.Patente AND
-								( @FechaInicio <= PFS.FechaFin OR
-								 (@FechaInicio BETWEEN PFS.FechaInicio AND PFS.FechaFin) )
-							)
-				) AND
-				-- No fue dado de baja
-				M2.FechaBajaDefinitiva IS NULL
-			  )
-	BEGIN
-		SET @hayMicros = 1;
-	END
-	ELSE
-	BEGIN
-		SET @hayMicros = 0;
-	END
-END
-GO
-CREATE FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.ComprasDelMicroEnPeriodo_Def
-(
-	@patente nvarchar(255),
-	@FechaInicio datetime
-)
-RETURNS TABLE
-AS
-RETURN
-(
-	SELECT C.NumeroVoucher
-	FROM LOS_VIAJEROS_DEL_ANONIMATO.COMPRA C
-	JOIN LOS_VIAJEROS_DEL_ANONIMATO.VIAJE V
-	ON V.CodigoViaje = C.CodigoViaje
-	WHERE
-		V.PatenteMicro = @patente AND
-		( @FechaInicio <= V.FechaSalida OR
-		 (@FechaInicio BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) )
-)
-GO
-CREATE FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.F_MicrosDeReemplazo_Def
-(
-	@patente nvarchar(255),
-	@FechaInicio datetime
-)
-RETURNS TABLE
-AS
-RETURN
- (SELECT M2.Patente,M2.Cantidad_Butacas,M2.KG_Disponibles,M2.NumeroDeMicro
-  FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M2
-  WHERE
-    M2.Patente != @patente AND
-	M2.TipoServicio = (SELECT M.TipoServicio
-					   FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M
-					   WHERE M.Patente = @patente) AND
-	M2.Marca = (SELECT M.Marca
-				FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M
-				WHERE M.Patente = @patente) AND
-	(NOT EXISTS ( SELECT 1
-				  FROM LOS_VIAJEROS_DEL_ANONIMATO.VIAJE V
-				  WHERE
-						V.PatenteMicro = M2.Patente AND
-						( @FechaInicio <= V.FechaSalida OR
-						 (@FechaInicio BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) )
-				)
-	) AND
-	(NOT EXISTS ( SELECT 1
-				  FROM LOS_VIAJEROS_DEL_ANONIMATO.PeridoFueraDeServicio PFS
-				  WHERE
-						PFS.Patente = M2.Patente AND
-						( @FechaInicio <= PFS.FechaFin OR
-						 (@FechaInicio BETWEEN PFS.FechaInicio AND PFS.FechaFin) )
-				)
-	) AND
-	M2.FechaBajaDefinitiva IS NULL
-)
-GO
-CREATE PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.ReemplazarMicro_Def
-(
-	@patenteReemplazado nvarchar(255),
-	@patenteReemplazo nvarchar(255),
-	@FechaInicio datetime
-)
-AS
-BEGIN
-	UPDATE LOS_VIAJEROS_DEL_ANONIMATO.VIAJE
-		SET PatenteMicro = @patenteReemplazo
-	WHERE
-		PatenteMicro = @patenteReemplazado AND
-		( @FechaInicio <= FechaSalida OR
-		 (@FechaInicio BETWEEN FechaSalida AND FechaLlegadaEstimada) )
-END
 GO
