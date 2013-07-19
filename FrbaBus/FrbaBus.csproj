@@ -93,6 +93,49 @@
     <Compile Include="Abm Ciudades\ModifCiudad.Designer.cs">
       <DependentUpon>ModifCiudad.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Micro\BajaDefinitiva.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\BajaDefinitiva.Designer.cs">
+      <DependentUpon>BajaDefinitiva.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Micro\BajaFueraDeServicio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\BajaFueraDeServicio.Designer.cs">
+      <DependentUpon>BajaFueraDeServicio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Micro\BajaMicro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\BajaMicro.Designer.cs">
+      <DependentUpon>BajaMicro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Micro\CalendarioCompra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\CalendarioCompra.Designer.cs">
+      <DependentUpon>CalendarioCompra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Micro\DialogoMicroFSTieneViajes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\DialogoMicroFSTieneViajes.Designer.cs">
+      <DependentUpon>DialogoMicroFSTieneViajes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Micro\FechaElegidaExeption.cs" />
+    <Compile Include="Abm Micro\NoExisteMicro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\NoExisteMicro.Designer.cs">
+      <DependentUpon>NoExisteMicro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Micro\ReemplazarMicro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\ReemplazarMicro.Designer.cs">
+      <DependentUpon>ReemplazarMicro.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Recorrido\BajaRecorrido.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,12 +166,6 @@
     </Compile>
     <Compile Include="Abm Recorrido\VisualizarRecorrido.Designer.cs">
       <DependentUpon>VisualizarRecorrido.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Abm Micro\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Abm Micro\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Permisos\Form1.cs">
       <SubType>Form</SubType>
@@ -359,6 +396,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Ciudades\ModifCiudad.resx">
       <DependentUpon>ModifCiudad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\BajaDefinitiva.resx">
+      <DependentUpon>BajaDefinitiva.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\BajaFueraDeServicio.resx">
+      <DependentUpon>BajaFueraDeServicio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\BajaMicro.resx">
+      <DependentUpon>BajaMicro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\CalendarioCompra.resx">
+      <DependentUpon>CalendarioCompra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\DialogoMicroFSTieneViajes.resx">
+      <DependentUpon>DialogoMicroFSTieneViajes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\NoExisteMicro.resx">
+      <DependentUpon>NoExisteMicro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\ReemplazarMicro.resx">
+      <DependentUpon>ReemplazarMicro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Recorrido\BajaRecorrido.resx">
       <DependentUpon>BajaRecorrido.cs</DependentUpon>

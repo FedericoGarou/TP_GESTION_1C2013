@@ -235,3 +235,8 @@ C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\R
 C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Release\FrbaBus.csproj.GenerateResource.Cache
 C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Release\FrbaBus.exe
 C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Release\FrbaBus.pdb
+C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Release\FrbaBus.Top_Clientes.TopPuntos.resources
+C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Release\FrbaBus.Abm_Micro.BajaDefinitiva.resources
+C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Release\FrbaBus.Abm_Micro.BajaFueraDeServicio.resources
+C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Release\FrbaBus.Abm_Micro.BajaMicro.resources
+C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Release\FrbaBus.Abm_Micro.CalendarioCompra.resources

@@ -2047,4 +2047,283 @@ RETURN (select TOP 5 DNI_Usuario, SUM(Puntos) AS Puntos
 		group by DNI_Usuario 
 		order by 2 desc);
 GO
-
+CREATE PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.ReemplazarMicro
+(
+	@patenteReemplazado nvarchar(255),
+	@patenteReemplazo nvarchar(255),
+	@FechaInicio datetime,
+	@FechaFin datetime
+)
+AS
+BEGIN
+	UPDATE LOS_VIAJEROS_DEL_ANONIMATO.VIAJE
+		SET PatenteMicro = @patenteReemplazo
+	WHERE
+		PatenteMicro = @patenteReemplazado AND
+		((@FechaInicio BETWEEN FechaSalida AND FechaLlegadaEstimada) OR
+		(@FechaFin BETWEEN FechaSalida AND FechaLlegadaEstimada) OR
+		(FechaSalida BETWEEN @FechaInicio AND @FechaFin) OR
+		(FechaLlegadaEstimada BETWEEN @FechaInicio AND @FechaFin))
+END
+GO
+CREATE FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.F_MicrosDeReemplazo
+(
+	@patente nvarchar(255),
+	@FechaInicio datetime,
+	@FechaFin datetime
+)
+RETURNS TABLE
+AS
+RETURN
+ (SELECT M2.Patente,M2.Cantidad_Butacas,M2.KG_Disponibles,M2.NumeroDeMicro
+  FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M2
+  WHERE 
+    M2.Patente != @patente AND
+	M2.TipoServicio = (SELECT M.TipoServicio
+					   FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M
+					   WHERE M.Patente = @patente) AND
+	M2.Marca = (SELECT M.Marca
+				FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M
+				WHERE M.Patente = @patente) AND
+	(NOT EXISTS ( SELECT 1
+				  FROM LOS_VIAJEROS_DEL_ANONIMATO.VIAJE V
+				  WHERE
+						V.PatenteMicro = M2.Patente AND
+						((@FechaInicio BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) OR
+						(@FechaFin BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) OR
+						(V.FechaSalida BETWEEN @FechaInicio AND @FechaFin) OR
+						(V.FechaLlegadaEstimada BETWEEN @FechaInicio AND @FechaFin))
+				)
+	) AND
+	(NOT EXISTS ( SELECT 1
+				  FROM LOS_VIAJEROS_DEL_ANONIMATO.PeridoFueraDeServicio PFS
+				  WHERE
+						PFS.Patente = M2.Patente AND
+						((@FechaInicio BETWEEN PFS.FechaInicio AND PFS.FechaFin) OR
+						 (@FechaFin BETWEEN PFS.FechaInicio AND PFS.FechaFin) OR
+						 (PFS.FechaInicio BETWEEN @FechaInicio AND @FechaFin) OR
+						 (PFS.FechaFin BETWEEN @FechaInicio AND @FechaFin))
+				)
+	) AND
+	M2.FechaBajaDefinitiva IS NULL
+)
+GO
+CREATE PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.HayMicroParaReemplazo
+(
+	@patente nvarchar(255),
+	@FechaInicio datetime,
+	@FechaFin datetime,
+	@hayMicros bit output
+)
+AS
+BEGIN
+	
+	DECLARE @servicio nvarchar(255);
+	DECLARE @marca int;
+	
+	SELECT @servicio = M.TipoServicio, @marca = M.Marca
+	FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M
+	WHERE M.Patente = @patente
+	
+-- Un micro que no sea EL micro, que sea de características iguales, que este disponible y no tenga viajes en ese periodo.
+	
+	IF EXISTS (SELECT 1
+			   FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M2
+			   WHERE 
+			    -- No es el mismo micro que quiero reemplazar
+				M2.Patente != @patente AND
+				-- Tiene características similares
+				M2.TipoServicio = @servicio AND
+				M2.Marca = @marca AND
+				-- No tiene viajes asignados en el periodo
+				(NOT EXISTS ( SELECT 1
+							  FROM LOS_VIAJEROS_DEL_ANONIMATO.VIAJE V
+							  WHERE
+								V.PatenteMicro = M2.Patente AND
+								((@FechaInicio BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) OR
+								(@FechaFin BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) OR
+								(V.FechaSalida BETWEEN @FechaInicio AND @FechaFin) OR
+								(V.FechaLlegadaEstimada BETWEEN @FechaInicio AND @FechaFin))
+							)
+				) AND
+				-- No esta dado de baja por mantenimiento en el periodo
+				(NOT EXISTS ( SELECT 1
+							  FROM LOS_VIAJEROS_DEL_ANONIMATO.PeridoFueraDeServicio PFS
+							  WHERE
+								PFS.Patente = M2.Patente AND
+								((@FechaInicio BETWEEN PFS.FechaInicio AND PFS.FechaFin) OR
+								 (@FechaFin BETWEEN PFS.FechaInicio AND PFS.FechaFin) OR
+								 (PFS.FechaInicio BETWEEN @FechaInicio AND @FechaFin) OR
+								 (PFS.FechaFin BETWEEN @FechaInicio AND @FechaFin))
+							)
+				) AND
+				-- No fue dado de baja
+				M2.FechaBajaDefinitiva IS NULL
+			  )
+	BEGIN
+		SET @hayMicros = 1;
+	END
+	ELSE
+	BEGIN
+		SET @hayMicros = 0;
+	END
+END
+GO
+CREATE FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.F_PatentesTodas()
+RETURNS TABLE
+AS
+RETURN
+(SELECT 0 as RN,'No seleccionado' as Patente
+ UNION
+ SELECT 
+	    ROW_NUMBER() OVER(ORDER BY M.Patente ASC) as RN,
+	    M.Patente
+	    FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M
+	    WHERE M.FechaBajaDefinitiva IS NULL
+)
+GO
+CREATE PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.SP_TieneViajesProgramados
+(
+	@patente nvarchar(255),
+	@FechaInicio datetime,
+	@FechaFin datetime,
+	@tieneViajes bit output
+)
+AS
+BEGIN
+	IF(EXISTS
+		(
+			SELECT 1
+			FROM LOS_VIAJEROS_DEL_ANONIMATO.VIAJE V
+			WHERE
+				V.PatenteMicro = @patente AND
+				((@FechaInicio BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) OR
+				 (@FechaFin BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) OR
+				 (V.FechaSalida BETWEEN @FechaInicio AND @FechaFin) OR
+				 (V.FechaLlegadaEstimada BETWEEN @FechaInicio AND @FechaFin))
+		)
+	  )
+	BEGIN
+		SET @tieneViajes = 1;
+	END
+	ELSE
+	BEGIN
+		SET @tieneViajes = 0;
+	END	
+END
+GO
+CREATE PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.SP_DarDeBajaPorMantenimiento
+(
+	@patente nvarchar(255),
+	@FechaInicio datetime,
+	@FechaFin datetime
+)
+AS
+BEGIN TRANSACTION
+	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE ;
+	
+	IF( EXISTS (SELECT 1
+				FROM LOS_VIAJEROS_DEL_ANONIMATO.PeridoFueraDeServicio FS
+				WHERE 
+					FS.Patente = @patente AND
+					(
+						(@FechaInicio BETWEEN FS.FechaInicio AND FS.FechaFin) OR
+						(@FechaFin BETWEEN FS.FechaInicio AND FS.FechaFin) OR
+						(FS.FechaInicio BETWEEN @FechaInicio AND @FechaFin) OR
+						(FS.FechaFin BETWEEN @FechaInicio AND @FechaFin)
+					)
+					
+				) 
+	)
+	BEGIN
+		ROLLBACK;
+		RAISERROR ('El micro ya tiene programada un periodo de mantenimiento entre esas fechas', 11, 0);
+	END
+	ELSE
+	BEGIN
+		INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.PeridoFueraDeServicio (Patente,FechaInicio,FechaFin)
+		VALUES(@patente, @FechaInicio,@FechaFin);
+		
+		COMMIT;
+		
+	END
+GO
+CREATE PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.SP_DarDeBajaDefinitivamente
+(
+	@patente nvarchar(255),
+	@Fecha datetime
+)
+AS
+BEGIN
+	UPDATE LOS_VIAJEROS_DEL_ANONIMATO.MICRO
+		SET FechaBajaDefinitiva = @Fecha
+	WHERE Patente = @patente
+END
+GO
+CREATE FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.F_Patentes ()
+RETURNS TABLE
+AS
+RETURN 
+(SELECT 0 as RN,'No seleccionado' as Patente
+ UNION
+ SELECT 
+	    ROW_NUMBER() OVER(ORDER BY M.Patente ASC) as RN,
+	    M.Patente
+	    FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M
+	    WHERE
+			(NOT EXISTS (SELECT 1
+						FROM LOS_VIAJEROS_DEL_ANONIMATO.PeridoFueraDeServicio FS
+						WHERE FS.Patente = M.Patente) AND
+			(M.FechaBajaDefinitiva IS NULL))
+		
+)
+GO
+CREATE FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.ComprasDelMicroEnPeriodo
+(
+	@patente nvarchar(255),
+	@FechaInicio datetime,
+	@FechaFin datetime
+)
+RETURNS TABLE
+AS
+RETURN
+(
+	SELECT C.NumeroVoucher
+	FROM LOS_VIAJEROS_DEL_ANONIMATO.COMPRA C
+	JOIN LOS_VIAJEROS_DEL_ANONIMATO.VIAJE V
+	ON V.CodigoViaje = C.CodigoViaje
+	WHERE
+		V.PatenteMicro = @patente AND
+		((@FechaInicio BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) OR
+		 (@FechaFin BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) OR
+		 (V.FechaSalida BETWEEN @FechaInicio AND @FechaFin) OR
+		 (V.FechaLlegadaEstimada BETWEEN @FechaInicio AND @FechaFin))
+)
+GO
+CREATE PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.CancelarCompra(@numVoucher int)
+AS
+BEGIN
+	DECLARE @codigoDev int;
+	DECLARE @codigoCompra numeric(18,0);
+	
+	EXEC LOS_VIAJEROS_DEL_ANONIMATO.GenerarDevolucion @codigoDev OUTPUT;
+	
+	DECLARE Cursor_Compras CURSOR FOR
+	SELECT CC.CodigoCompra
+	FROM LOS_VIAJEROS_DEL_ANONIMATO.COMPRACLIENTE CC
+	WHERE CC.Numero_Voucher = @numVoucher;
+		
+	OPEN Cursor_Compras;
+	
+	FETCH NEXT FROM Cursor_Compras INTO @codigoCompra;
+	
+	WHILE (@@FETCH_STATUS = 0)
+	BEGIN
+		EXEC LOS_VIAJEROS_DEL_ANONIMATO.Insertar_Devolucion 'Micro no disponible',@codigoCompra,@numVoucher,@codigoDev;
+		FETCH NEXT FROM Cursor_Compras INTO @codigoCompra;
+	END
+	
+	CLOSE Cursor_Compras
+	DEALLOCATE Cursor_Compras;
+	
+END

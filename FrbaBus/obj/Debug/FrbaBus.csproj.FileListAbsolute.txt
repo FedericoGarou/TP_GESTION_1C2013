@@ -340,3 +340,11 @@ C:\Users\elo\Documents\Visual Studio 2008\Projects\Nueva carpeta (2)\FrbaBus\obj
 C:\Users\elo\Documents\Visual Studio 2008\Projects\Nueva carpeta (2)\FrbaBus\bin\Debug\FrbaBus.exe
 C:\Users\elo\Documents\Visual Studio 2008\Projects\Nueva carpeta (2)\FrbaBus\bin\Debug\FrbaBus.pdb
 C:\Users\elo\Documents\Visual Studio 2008\Projects\Nueva carpeta (2)\FrbaBus\obj\Debug\FrbaBus.Top_Clientes.TopPuntos.resources
+C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Micro.BajaDefinitiva.resources
+C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Micro.BajaMicro.resources
+C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Debug\FrbaBus.Top_Clientes.TopPuntos.resources
+C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Micro.BajaFueraDeServicio.resources
+C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Micro.CalendarioCompra.resources
+C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Micro.DialogoMicroFSTieneViajes.resources
+C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Micro.NoExisteMicro.resources
+C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Micro.ReemplazarMicro.resources
