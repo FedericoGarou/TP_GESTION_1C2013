@@ -348,3 +348,5 @@ C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\R
 C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Micro.DialogoMicroFSTieneViajes.resources
 C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Micro.NoExisteMicro.resources
 C:\Users\Lucas Costas\Documents\UTN\2013\Primer cuatrimestre\Gestión de datos\REPO\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Micro.ReemplazarMicro.resources
+C:\Users\elo\Documents\Visual Studio 2008\Projects\Nueva carpeta\FrbaBus\obj\Debug\FrbaBus.exe
+C:\Users\elo\Documents\Visual Studio 2008\Projects\Nueva carpeta\FrbaBus\obj\Debug\FrbaBus.pdb

@@ -1805,9 +1805,9 @@ join LOS_VIAJEROS_DEL_ANONIMATO.COMPRA c on (cc.Numero_Voucher = c.NumeroVoucher
 join LOS_VIAJEROS_DEL_ANONIMATO.VIAJE v on (c.CodigoViaje = v.CodigoViaje)
 join LOS_VIAJEROS_DEL_ANONIMATO.RECORRIDO r on (v.CodigoRecorrido = r.CodigoRecorrido)
 
-where cc.TipoCompra='P' and YEAR(v.FechaSalida)=@año and YEAR(v.FechaLlegada)=@año and
+where cc.TipoCompra='P' and YEAR(v.FechaSalida)=@año and YEAR(v.FechaLlegadaEstimada)=@año and
 MONTH(v.FechaSalida) BETWEEN @mesInicial AND @mesFinal and
-MONTH(v.FechaLlegada) BETWEEN @mesInicial AND @mesFinal and
+MONTH(v.FechaLlegadaEstimada) BETWEEN @mesInicial AND @mesFinal and
 r.CiudadDestino = @ciudaDestino
 
 group by r.CiudadDestino
@@ -2327,3 +2327,38 @@ BEGIN
 	DEALLOCATE Cursor_Compras;
 	
 END
+GO
+
+create function LOS_VIAJEROS_DEL_ANONIMATO.FTOP5MicrosVaciosDestinos(@anio int, @mesInicial int, @mesFinal int)
+RETURNS TABLE
+AS
+RETURN(
+select TOP 5 r.CiudadDestino, 
+Cast((SUM(LOS_VIAJEROS_DEL_ANONIMATO.F_ButacasLibres(v.CodigoViaje)))/(COUNT(r.CiudadDestino)*1.0)AS decimal(10,2)) AS PromedioButacasVacias
+ 
+from LOS_VIAJEROS_DEL_ANONIMATO.VIAJE v 
+join LOS_VIAJEROS_DEL_ANONIMATO.RECORRIDO r on (v.CodigoRecorrido = r.CodigoRecorrido)
+
+where YEAR(v.FechaLlegadaEstimada)=@anio and MONTH(v.FechaLlegadaEstimada) BETWEEN @mesInicial AND @mesFinal
+
+group by r.CiudadDestino
+order by 2 desc);
+GO
+
+create FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.FTOP5PasajesCancelados(@anio int, @mesInicial int, @mesFinal int)
+RETURNS TABLE
+AS
+RETURN(
+select TOP 5 r.CiudadDestino, COUNT(r.CiudadDestino) AS pasajesCancelados
+from LOS_VIAJEROS_DEL_ANONIMATO.Devolucion d
+join LOS_VIAJEROS_DEL_ANONIMATO.COMPRA c on (d.NumeroVoucher = c.NumeroVoucher)
+join LOS_VIAJEROS_DEL_ANONIMATO.VIAJE v on (c.CodigoViaje = v.CodigoViaje)
+join LOS_VIAJEROS_DEL_ANONIMATO.RECORRIDO r on (v.CodigoRecorrido = r.CodigoRecorrido)
+
+WHERE YEAR(v.FechaSalida)=@anio and YEAR(v.FechaLlegadaEstimada)=@anio and
+MONTH(v.FechaSalida) BETWEEN @mesInicial AND @mesFinal and
+MONTH(v.FechaLlegadaEstimada) BETWEEN @mesInicial AND @mesFinal
+
+group by r.CiudadDestino
+order by 2 desc);
+GO

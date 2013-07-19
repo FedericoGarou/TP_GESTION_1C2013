@@ -71,6 +71,7 @@
             this.button2.TabIndex = 2;
             this.button2.Text = "Destinos con micros más vacíos";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -79,7 +80,7 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(332, 32);
             this.button3.TabIndex = 3;
-            this.button3.Text = "Clientes con más puntos acumulados a la fecha";
+            this.button3.Text = "Clientes con más puntos acumulados\r\n";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -92,6 +93,7 @@
             this.button4.TabIndex = 4;
             this.button4.Text = "Destinos con pasajes cancelados";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 

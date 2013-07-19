@@ -132,8 +132,55 @@ namespace FrbaBus.Listado_Estadistico
             }
         }
 
-       
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.sePuedeGenerarListado();
+                año = textBox1.Text;
 
-            
+                if (checkBox1.Checked)
+                {
+                    semestre = 1;
+                }
+                else
+                {
+                    semestre = 2;
+                }
+
+                (new TopDestinosMicrosVacios(año, semestre)).Show();
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
+                (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.sePuedeGenerarListado();
+                año = textBox1.Text;
+
+                if (checkBox1.Checked)
+                {
+                    semestre = 1;
+                }
+                else
+                {
+                    semestre = 2;
+                }
+
+                (new TopDestinosPasajesCancelados(año, semestre)).Show();
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
+                (new Dialogo("ERROR - " + ex.Message, "Aceptar")).ShowDialog();
+            }
+        }             
+  
     }
 }

@@ -558,6 +558,12 @@
     <EmbeddedResource Include="Top Destinos\DestinosMasPasajesComprados.resx">
       <DependentUpon>DestinosMasPasajesComprados.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Top Destinos\TopDestinosMicrosVacios.resx">
+      <DependentUpon>TopDestinosMicrosVacios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Top Destinos\TopDestinosPasajesCancelados.resx">
+      <DependentUpon>TopDestinosPasajesCancelados.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Top Micros\TopMicrosMayorPeriodoBaja.resx">
       <DependentUpon>TopMicrosMayorPeriodoBaja.cs</DependentUpon>
     </EmbeddedResource>
@@ -610,17 +616,17 @@
     <Compile Include="Top Destinos\DestinosMasPasajesComprados.Designer.cs">
       <DependentUpon>DestinosMasPasajesComprados.cs</DependentUpon>
     </Compile>
-    <Compile Include="Top Destinos\Form2.cs">
+    <Compile Include="Top Destinos\TopDestinosMicrosVacios.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Top Destinos\Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <Compile Include="Top Destinos\TopDestinosMicrosVacios.Designer.cs">
+      <DependentUpon>TopDestinosMicrosVacios.cs</DependentUpon>
     </Compile>
-    <Compile Include="Top Destinos\Form3.cs">
+    <Compile Include="Top Destinos\TopDestinosPasajesCancelados.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Top Destinos\Form3.Designer.cs">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <Compile Include="Top Destinos\TopDestinosPasajesCancelados.Designer.cs">
+      <DependentUpon>TopDestinosPasajesCancelados.cs</DependentUpon>
     </Compile>
     <Compile Include="Top Micros\TopMicrosMayorPeriodoBaja.cs">
       <SubType>Form</SubType>
