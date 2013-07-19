@@ -2531,3 +2531,11 @@ BEGIN
      (@FechaInicio BETWEEN FechaSalida AND FechaLlegadaEstimada) )
 END
 GO
+CREATE FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.F_Roles ()
+RETURNS TABLE
+AS
+RETURN (SELECT 0 as RN,'No seleccionado' as NombreRol
+	    UNION
+	    SELECT ROW_NUMBER() OVER(ORDER BY r.Nombre_rol ASC) as RN,r.Nombre_rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol r
+	    );
+GO

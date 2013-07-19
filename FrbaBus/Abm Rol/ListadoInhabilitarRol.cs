@@ -22,15 +22,15 @@ namespace FrbaBus.Abm_Rol
                     //cargar comboBox
                     conexion.Open();
 
-                    SqlCommand cmd = new SqlCommand("USE GD1C2013 SELECT * FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol WHERE (Nombre_Rol = 'Cliente') or (Nombre_Rol = 'Administrador')", conexion);
+                    SqlCommand cmd = new SqlCommand("USE GD1C2013 SELECT NombreRol FROM LOS_VIAJEROS_DEL_ANONIMATO.F_Roles () ORDER BY RN", conexion);
 
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     DataTable tablaDeNombres = new DataTable();
 
                     adapter.Fill(tablaDeNombres);
 
-                    comboBox1.DisplayMember = "Nombre_Rol";
-                    comboBox1.DataSource = tablaDeNombres;
+                    comboBox1.DisplayMember = "NombreRol";
+                    comboBox1.DataSource = tablaDeNombres;   
 
                     
 
@@ -49,14 +49,13 @@ namespace FrbaBus.Abm_Rol
         {
             string varFiltro1 = "";
             string varFiltro2 = "";
-            string varFiltro3 = "";
+
             string textoFiltro1;
             string textoFiltro2;
-            string textoFiltro3;
 
-            textoFiltro1 = textBox1.Text;
-            textoFiltro2 = textBox2.Text;
-            textoFiltro3 = comboBox1.Text;
+            textoFiltro1 = comboBox1.Text;
+            textoFiltro2 = textBox1.Text;
+
 
             using (SqlConnection conexion = this.obtenerConexion())
             {
@@ -64,42 +63,28 @@ namespace FrbaBus.Abm_Rol
                 {
                     conexion.Open();
                     DataTable tabla = new DataTable();
-                    
-                    if (textoFiltro1.Length > 0)
+
+                    if (!(String.Equals(textoFiltro1, "No seleccionado")))
                     {
-                        varFiltro1 = "WHERE Nombre_Rol LIKE '%" + textoFiltro1 + "%'";
-                        
+                        varFiltro1 = "WHERE r.Nombre_Rol = '" + textoFiltro1 + "'";
+
                         if (textoFiltro2.Length > 0)
                         {
-                            varFiltro2 = "or Nombre_Rol = '" + textoFiltro2 + "'";
-                        }
-                        if (textoFiltro3.Length > 0)
-                        {
-                            varFiltro3 = "or Nombre_Rol = '" + textoFiltro3 + "'";
+
+                            varFiltro2 = "and f.Nombre_Funcionalidad LIKE '%" + textoFiltro2 + "%'";
                         }
                     }
                     else
                     {
                         if (textoFiltro2.Length > 0)
                         {
-                            varFiltro2 = "WHERE Nombre_Rol = '" + textoFiltro2 + "'";
+                            varFiltro2 = "WHERE f.Nombre_Funcionalidad LIKE '%" + textoFiltro2 + "%'";
 
-                            if (textoFiltro3.Length > 0)
-                            {
-                                varFiltro3 = "or Nombre_Rol = '" + textoFiltro3 + "'";
-                            }
-                        }
-                        else
-                        {
-                            if (textoFiltro3.Length > 0)
-                            {
-                                varFiltro3 = "WHERE Nombre_Rol = '" + textoFiltro3 + "'";
-                            }
                         }
                     }
 
-                    
-                    cargarATablaParaDataGripView("USE GD1C2013 SELECT Nombre_Rol, Habilitacion FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol " + varFiltro1 + varFiltro2 + varFiltro3, ref tabla, conexion);
+
+                    cargarATablaParaDataGripView("USE GD1C2013 SELECT DISTINCT(r.Nombre_Rol), r.Habilitacion FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol r join LOS_VIAJEROS_DEL_ANONIMATO.Rol_Funcionalidad rf on (r.Codigo_Rol = rf.Codigo_Rol) join LOS_VIAJEROS_DEL_ANONIMATO.Funcionalidad f on (rf.Codigo_Funcionalidad = f.Codigo_Funcionalidad) " + varFiltro1 + varFiltro2, ref tabla, conexion);
                     
                     dataGridView1.Columns.Clear();
                     dataGridView1.DataSource = tabla;
@@ -125,11 +110,8 @@ namespace FrbaBus.Abm_Rol
         private void button1_Click(object sender, EventArgs e)
         {
             textBox1.Text = "";
-            textBox2.Text = "";
-            comboBox1.Text = "";
-            dataGridView1.DataSource = "";
+            comboBox1.Text = "No seleccionado";
             dataGridView1.Columns.Clear();
-            dataGridView2.DataSource = "";
             dataGridView2.Columns.Clear();
         }
        
