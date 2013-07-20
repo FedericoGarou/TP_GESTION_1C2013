@@ -99,6 +99,12 @@
     <Compile Include="Abm Micro\ABMMicroInicio.Designer.cs">
       <DependentUpon>ABMMicroInicio.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Micro\AgregarButaca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\AgregarButaca.Designer.cs">
+      <DependentUpon>AgregarButaca.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Micro\AltaMicro.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,6 +159,24 @@
     </Compile>
     <Compile Include="Abm Micro\ListadoMicro2.Designer.cs">
       <DependentUpon>ListadoMicro2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Micro\ModifButacas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\ModifButacas.Designer.cs">
+      <DependentUpon>ModifButacas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Micro\ModifMarca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\ModifMarca.Designer.cs">
+      <DependentUpon>ModifMarca.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Micro\ModifMicro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\ModifMicro.Designer.cs">
+      <DependentUpon>ModifMicro.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Micro\NoExisteMicro.cs">
       <SubType>Form</SubType>
@@ -430,6 +454,9 @@
     <EmbeddedResource Include="Abm Micro\ABMMicroInicio.resx">
       <DependentUpon>ABMMicroInicio.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\AgregarButaca.resx">
+      <DependentUpon>AgregarButaca.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Abm Micro\AltaMicro.resx">
       <DependentUpon>AltaMicro.cs</DependentUpon>
     </EmbeddedResource>
@@ -456,6 +483,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Micro\ListadoMicro2.resx">
       <DependentUpon>ListadoMicro2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\ModifButacas.resx">
+      <DependentUpon>ModifButacas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\ModifMarca.resx">
+      <DependentUpon>ModifMarca.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\ModifMicro.resx">
+      <DependentUpon>ModifMicro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Micro\NoExisteMicro.resx">
       <DependentUpon>NoExisteMicro.cs</DependentUpon>

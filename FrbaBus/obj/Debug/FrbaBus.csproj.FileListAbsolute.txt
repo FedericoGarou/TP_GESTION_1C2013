@@ -421,3 +421,8 @@ C:\Users\Lucas Costas\Desktop\BACKUP\TP_GESTION_1C2013.git\trunk\FrbaBus\obj\Deb
 C:\Users\Lucas Costas\Desktop\BACKUP\TP_GESTION_1C2013.git\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Micro.EspecificarPiso.resources
 C:\Users\Lucas Costas\Desktop\BACKUP\TP_GESTION_1C2013.git\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Micro.ListadoMicro.resources
 C:\Users\Lucas Costas\Desktop\BACKUP\TP_GESTION_1C2013.git\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Micro.ListadoMicro2.resources
+C:\Users\Lucas Costas\Desktop\BACKUP\TP_GESTION_1C2013.git\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Micro.ABMMicroInicio.resources
+C:\Users\Lucas Costas\Desktop\BACKUP\TP_GESTION_1C2013.git\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Micro.ModifButacas.resources
+C:\Users\Lucas Costas\Desktop\BACKUP\TP_GESTION_1C2013.git\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Micro.ModifMarca.resources
+C:\Users\Lucas Costas\Desktop\BACKUP\TP_GESTION_1C2013.git\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Micro.ModifMicro.resources
+C:\Users\Lucas Costas\Desktop\BACKUP\TP_GESTION_1C2013.git\trunk\FrbaBus\obj\Debug\FrbaBus.Abm_Micro.AgregarButaca.resources
