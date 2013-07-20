@@ -130,7 +130,7 @@ namespace FrbaBus.Abm_Micro
                         conexion.Open();
                         if (e.ColumnIndex == 3)
                         {
-                            SqlCommand borrarButaca = new SqlCommand("USE GD1C2013 DELETE FROM LOS_VIAJEROS_DEL_ANONIMATO.BUTACA_MICRO WHERE Patente='"+patente+" and NumeroButaca='"+numeroButaca+"'", conexion);
+                            SqlCommand borrarButaca = new SqlCommand("USE GD1C2013 DELETE FROM LOS_VIAJEROS_DEL_ANONIMATO.BUTACA_MICRO WHERE Patente='"+patente+"' and NumeroButaca='"+numeroButaca+"'", conexion);
                             borrarButaca.ExecuteNonQuery();
                             (new Dialogo("Butaca "+numeroButaca+" borrada", "Aceptar")).ShowDialog();
                         }
