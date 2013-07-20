@@ -2660,3 +2660,37 @@ RETURN
 		( @KGDesde = 0 OR M.KG_Disponibles > @KGDesde ) AND
 		( @KGHasta = 0 OR M.KG_Disponibles < @KGHasta ))
 );
+GO
+create PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.SPModificarMarca(@patente nvarchar(255), @otraMarca nvarchar(255))
+AS BEGIN 
+
+declare @codigoOtraMarca int = (select Id_Marca from los_viajeros_del_anonimato.marca where MARCA=@otraMarca)
+UPDATE LOS_VIAJEROS_DEL_ANONIMATO.MICRO SET Marca=@codigoOtraMarca WHERE Patente=@patente
+
+END
+GO
+CREATE FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.F_PisosBucatasDe (@patente nvarchar(255))
+RETURNS TABLE
+AS
+RETURN (SELECT 0 as RN,0 as Piso
+	    UNION
+	    SELECT ROW_NUMBER() OVER(ORDER BY b.Piso ASC) as RN,b.Piso FROM LOS_VIAJEROS_DEL_ANONIMATO.BUTACA_MICRO b WHERE Patente = @patente
+	    );
+GO
+CREATE PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.SPInsertarButaca(
+@Patente nvarchar(255),
+@Ubicacion nvarchar(255),
+@Piso nvarchar(255)
+)
+
+AS BEGIN
+
+declare @numeroButaca numeric(18,0) = ((select MAX(NumeroButaca) from LOS_VIAJEROS_DEL_ANONIMATO.BUTACA_MICRO WHERE Patente=@Patente)+1)
+INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.BUTACA_MICRO Values(@Patente, @numeroButaca, @Ubicacion, @Piso)
+
+UPDATE LOS_VIAJEROS_DEL_ANONIMATO.MICRO SET Cantidad_Butacas=Cantidad_Butacas+1 WHERE Patente=@Patente
+
+END
+GO
+
+
