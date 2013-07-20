@@ -25,7 +25,7 @@ namespace FrbaBus.Abm_Micro
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            // Lanzar un formulario de alta
+            (new AltaMicro()).ShowDialog(); // Despues hacer que sea un alta especifico
             this.Close();
         }
     }

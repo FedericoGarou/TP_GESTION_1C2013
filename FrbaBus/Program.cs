@@ -4,7 +4,8 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using FrbaBus.Login;
-
+using FrbaBus.Compra_de_Pasajes;//Borrar
+using FrbaBus.Abm_Micro;// Borrar
 
 
 
@@ -24,8 +25,6 @@ namespace FrbaBus
 
             Application.Run(new Pantalla_Inicial());
             
-            
-
         }
 
         

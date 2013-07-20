@@ -2539,3 +2539,124 @@ RETURN (SELECT 0 as RN,'No seleccionado' as NombreRol
 	    SELECT ROW_NUMBER() OVER(ORDER BY r.Nombre_rol ASC) as RN,r.Nombre_rol FROM LOS_VIAJEROS_DEL_ANONIMATO.Rol r
 	    );
 GO
+CREATE FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.F_Marcas()
+RETURNS TABLE
+AS
+RETURN 
+(SELECT 0 as RN,'No seleccionado' as Marca
+ UNION
+ SELECT 
+	 ROW_NUMBER() OVER(ORDER BY M.Marca ASC) as RN,
+	 M.Marca
+ FROM LOS_VIAJEROS_DEL_ANONIMATO.MARCA M
+ );
+ GO
+ CREATE PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.DarDeAltaButaca
+(
+	@patente nvarchar(255),
+	@numero numeric(18,0),
+	@ubicacion nvarchar(255),
+	@piso numeric(18,0)
+)
+AS
+BEGIN
+	INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.BUTACA_MICRO (Patente,NumeroButaca,Ubicacion,Piso)
+	VALUES (@patente,@numero,@ubicacion,@piso);
+END
+GO
+CREATE PROCEDURE LOS_VIAJEROS_DEL_ANONIMATO.DarDeAltaMicro
+(
+	@patente nvarchar(255),
+	@marca nvarchar(255),
+	@modelo nvarchar(255),
+	@fechaAlta datetime,
+	@servicio nvarchar(255),
+	@KG_bodega numeric(18,2),
+	@CantidadButacas int
+)
+AS
+BEGIN
+	DECLARE @ID_Marca int;
+	
+	SET @ID_Marca = (SELECT M.Id_Marca
+					 FROM LOS_VIAJEROS_DEL_ANONIMATO.MARCA M
+					 WHERE M.Marca = @marca);
+	IF EXISTS (SELECT 1 FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO MI WHERE MI.Patente = @patente)
+	BEGIN 
+		RAISERROR ('Ya existe un micro con esa patente', 11, 0);
+	END
+
+	INSERT INTO LOS_VIAJEROS_DEL_ANONIMATO.MICRO 
+	(Patente,Marca,Modelo,FechaAlta,TipoServicio,KG_Disponibles,Cantidad_Butacas,BajaPorVidaUtil)
+	VALUES (@patente,@ID_Marca,@modelo,@fechaAlta,@servicio,@KG_bodega,@CantidadButacas,0);
+END
+GO
+CREATE FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.AplicarFiltrosMicro
+(
+	@patente nvarchar(255),
+	@marca nvarchar(255),
+	@modelo nvarchar(255),
+	@servicio nvarchar(255),
+	@cantidadTotal int,
+	@libreDesde datetime,
+	@libreHasta datetime,
+	@KGDesde numeric(18,2),
+	@KGHasta numeric(18,2)
+)
+RETURNS TABLE
+AS
+RETURN
+(
+	SELECT *
+	FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M
+	WHERE
+		( 
+		NOT EXISTS 
+		(SELECT 1
+		 FROM LOS_VIAJEROS_DEL_ANONIMATO.VIAJE V			
+		 WHERE
+	 		( @libreDesde != '20120101' AND 
+	 		  @libreHasta != '20120101' AND
+	 		 ((@libreDesde BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) OR
+			 (@libreHasta BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) OR
+			 (V.FechaSalida BETWEEN @libreDesde AND @libreHasta) OR
+			 (V.FechaLlegadaEstimada BETWEEN @libreDesde AND @libreHasta)) )) AND
+		( @patente = 'Ninguna' OR @patente = M.Patente) AND
+		( @marca = 'Ninguna' OR 
+			(SELECT MAR.Id_Marca
+			 FROM LOS_VIAJEROS_DEL_ANONIMATO.MARCA MAR
+			 WHERE MAR.Marca = @marca) = M.Marca) AND
+		( @modelo = 'Ninguna' OR @modelo = M.Modelo) AND
+		( @servicio = 'Ninguna' OR @servicio = M.TipoServicio) AND
+		( @cantidadTotal = 0 OR @cantidadTotal = M.Cantidad_Butacas) AND
+		( @KGDesde = 0 OR M.KG_Disponibles > @KGDesde ) AND
+		( @KGHasta = 0 OR M.KG_Disponibles < @KGHasta ))
+);
+GO
+CREATE FUNCTION LOS_VIAJEROS_DEL_ANONIMATO.AplicarFiltros2
+(
+	@libreDesde datetime,
+	@libreHasta datetime,
+	@KGDesde numeric(18,2),
+	@KGHasta numeric(18,2)
+)
+RETURNS TABLE
+AS
+RETURN
+(
+	SELECT *
+	FROM LOS_VIAJEROS_DEL_ANONIMATO.MICRO M
+	WHERE
+		(NOT EXISTS 
+		(SELECT 1
+		 FROM LOS_VIAJEROS_DEL_ANONIMATO.VIAJE V			
+		 WHERE
+	 		( @libreDesde != '20120101' AND 
+	 		  @libreHasta != '20120101' AND
+	 		 ((@libreDesde BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) OR
+			 (@libreHasta BETWEEN V.FechaSalida AND V.FechaLlegadaEstimada) OR
+			 (V.FechaSalida BETWEEN @libreDesde AND @libreHasta) OR
+			 (V.FechaLlegadaEstimada BETWEEN @libreDesde AND @libreHasta)) )) AND 
+		( @KGDesde = 0 OR M.KG_Disponibles > @KGDesde ) AND
+		( @KGHasta = 0 OR M.KG_Disponibles < @KGHasta ))
+);

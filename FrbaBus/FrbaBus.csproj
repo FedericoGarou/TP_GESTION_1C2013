@@ -93,6 +93,18 @@
     <Compile Include="Abm Ciudades\ModifCiudad.Designer.cs">
       <DependentUpon>ModifCiudad.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Micro\ABMMicroInicio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\ABMMicroInicio.Designer.cs">
+      <DependentUpon>ABMMicroInicio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Micro\AltaMicro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\AltaMicro.Designer.cs">
+      <DependentUpon>AltaMicro.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Micro\BajaDefinitiva.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,7 +135,25 @@
     <Compile Include="Abm Micro\DialogoMicroFSTieneViajes.Designer.cs">
       <DependentUpon>DialogoMicroFSTieneViajes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Micro\EspecificarPiso.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\EspecificarPiso.Designer.cs">
+      <DependentUpon>EspecificarPiso.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Micro\FechaElegidaExeption.cs" />
+    <Compile Include="Abm Micro\ListadoMicro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\ListadoMicro.Designer.cs">
+      <DependentUpon>ListadoMicro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Micro\ListadoMicro2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\ListadoMicro2.Designer.cs">
+      <DependentUpon>ListadoMicro2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Micro\NoExisteMicro.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -397,6 +427,12 @@
     <EmbeddedResource Include="Abm Ciudades\ModifCiudad.resx">
       <DependentUpon>ModifCiudad.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\ABMMicroInicio.resx">
+      <DependentUpon>ABMMicroInicio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\AltaMicro.resx">
+      <DependentUpon>AltaMicro.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Abm Micro\BajaDefinitiva.resx">
       <DependentUpon>BajaDefinitiva.cs</DependentUpon>
     </EmbeddedResource>
@@ -411,6 +447,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Micro\DialogoMicroFSTieneViajes.resx">
       <DependentUpon>DialogoMicroFSTieneViajes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\EspecificarPiso.resx">
+      <DependentUpon>EspecificarPiso.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\ListadoMicro.resx">
+      <DependentUpon>ListadoMicro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\ListadoMicro2.resx">
+      <DependentUpon>ListadoMicro2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Micro\NoExisteMicro.resx">
       <DependentUpon>NoExisteMicro.cs</DependentUpon>
