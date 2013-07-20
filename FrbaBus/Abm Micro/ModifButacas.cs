@@ -132,6 +132,15 @@ namespace FrbaBus.Abm_Micro
                         {
                             SqlCommand borrarButaca = new SqlCommand("USE GD1C2013 DELETE FROM LOS_VIAJEROS_DEL_ANONIMATO.BUTACA_MICRO WHERE Patente='"+patente+"' and NumeroButaca='"+numeroButaca+"'", conexion);
                             borrarButaca.ExecuteNonQuery();
+
+                            SqlCommand actualizarTotButacas = new SqlCommand("USE GD1C2013 UPDATE LOS_VIAJEROS_DEL_ANONIMATO.MICRO SET Cantidad_Butacas=Cantidad_Butacas-1 WHERE Patente= '" + patente + "'", conexion);
+                            actualizarTotButacas.ExecuteNonQuery();
+
+                            SqlCommand butacas = new SqlCommand("USE GD1C2013 select Cantidad_Butacas from LOS_VIAJEROS_DEL_ANONIMATO.MICRO where Patente = '" + patente + "'", conexion);
+                            string butacasTotales = butacas.ExecuteScalar().ToString();
+
+                            textBox1.Text = butacasTotales;
+
                             (new Dialogo("Butaca "+numeroButaca+" borrada", "Aceptar")).ShowDialog();
                         }
 

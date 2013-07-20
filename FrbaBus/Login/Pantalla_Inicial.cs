@@ -16,6 +16,7 @@ using FrbaBus.Consulta_Puntos_Adquiridos;
 using FrbaBus.Canje_de_Ptos;
 using FrbaBus.Compra_de_Pasajes;
 using FrbaBus.Cancelar_Viaje;
+using FrbaBus.Abm_Micro;
 
 namespace FrbaBus.Login
 {
@@ -110,6 +111,11 @@ namespace FrbaBus.Login
             if (String.Equals(funcionalidad, "ABM Recorrido"))
             {
                 (new ABM_Recorrido()).Show();
+            }
+
+            if (String.Equals(funcionalidad, "ABM Micro"))
+            {
+                (new ABMMicroInicio()).Show();
             }
 
             if (String.Equals(funcionalidad, "Generacion de viaje"))

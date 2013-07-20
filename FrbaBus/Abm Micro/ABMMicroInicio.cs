@@ -36,5 +36,12 @@ namespace FrbaBus.Abm_Micro
             (new ListadoMicro()).ShowDialog();
             this.Show();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            (new ModifMicro()).ShowDialog();
+            this.Show();
+        }
     }
 }
